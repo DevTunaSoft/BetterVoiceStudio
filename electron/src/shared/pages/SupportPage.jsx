@@ -35,7 +35,7 @@ export default function SupportPage({ onBack, initialView = 'support' }) {
           <Button variant="subtle" leading={<Github size={15} />} onClick={() => openExternal(REPO_URL)}>
             Fork source
           </Button>
-          <Button variant="subtle" leading={<BookOpen size={15} />} onClick={() => openExternal(REPO_URL + '/blob/main/docs/FORK_AND_ATTRIBUTION.md')}>
+          <Button variant="subtle" leading={<BookOpen size={15} />} onClick={() => openExternal(REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md')}>
             Credits and licenses
           </Button>
           <Button variant="subtle" leading={<ShieldAlert size={15} />} onClick={() => openExternal(SECURITY_URL)}>
