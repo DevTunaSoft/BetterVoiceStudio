@@ -3,6 +3,22 @@ name: Electron packaging rehearsal
 # Explicitly artifact-only: no tag, schedule, release, or publishing permission.
 on:
   workflow_dispatch:
+  # Build artifacts automatically on development-branch changes that can affect
+  # the packaged desktop application. No publishing or release permissions.
+  push:
+    branches:
+      - engineering/modernization-foundation
+    paths:
+      - '.github/workflows/electron-build.yml'
+      - '.github/workflows/build-omnivoice-tts.yml'
+      - 'electron/**'
+      - 'backend/**'
+      - 'native/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'bun.lock'
+      - 'uv.lock'
+      - 'pyproject.toml'
 
 permissions:
   contents: read
