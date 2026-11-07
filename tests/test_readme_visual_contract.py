@@ -27,12 +27,12 @@ def test_readme_gallery_uses_existing_local_images():
     for path in EXPECTED:
         assert path in gallery
     # Every image must stay repository-local and include an accessible alt.
-    images = re.findall(r'<img\\b[^>]*>', gallery)
+    images = re.findall(r'<img\b[^>]*>', gallery)
     assert len(images) >= 4
     for image in images:
-        source = re.search(r'\\bsrc="([^"]+)"', image)
+        source = re.search(r'\bsrc="([^"]+)"', image)
         assert source, image
-        assert re.search(r'\\balt="[^"]+"', image), image
+        assert re.search(r'\balt="[^"]+"', image), image
         path = ROOT / source.group(1)
         assert path.is_file(), f"README image missing: {path}"
         assert path.resolve().is_relative_to(ROOT.resolve()), "README image escaped repository"
