@@ -4,7 +4,7 @@
 
 BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). We are modernizing its voice production experience, improving its existing capabilities, and retaining upstream attribution.
 
-[Features](#what-bettervoicestudio-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Credits](#open-source-credits-and-licensing)
+[Features](#what-bettervoicestudio-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Credits](#open-source-credits-and-licensing)
 
 [![Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml/badge.svg?branch=engineering%2Fmodernization-foundation)](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml) [![AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
 
@@ -18,7 +18,7 @@ BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://g
 > **Actively in development; no official BetterVoiceStudio release is published yet.** Windows x64 packaging has passed automated acceptance once, but real-hardware production acceptance remains outstanding. Windows ARM64 remains experimental. See [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) and [live GitHub Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions). An upstream VoiceStudio download **will not contain the changes made in this fork**.
 
 > [!NOTE]
-> **Independent fork, not affiliated with the original authors.** Some inherited application screens and executables still say `VoiceStudio` for compatibility. The original project's commercial subscriptions, cloud offerings, website, sponsor programs, installers, and community channels are **not** operated by BetterVoiceStudio.
+> **Independent fork, not affiliated with the original authors.** Some inherited application screens and executables still say `VoiceStudio` for compatibility. The original project's commercial subscriptions, cloud offerings, website, sponsor programs, installers, and community channels are not BetterVoiceStudio offerings.
 
 ## What BetterVoiceStudio is
 
