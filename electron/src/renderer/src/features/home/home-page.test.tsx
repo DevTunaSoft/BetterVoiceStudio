@@ -79,11 +79,11 @@ it('credits qualifying contributors and opens their GitHub profiles externally',
   const all = screen.getByRole('link', { name: 'homeUi.allContributors' });
   expect(all).toHaveAttribute(
     'href',
-    'https://github.com/debpalash/VoiceStudio/graphs/contributors',
+    'https://github.com/DevTunaSoft/BetterVoiceStudio/graphs/contributors',
   );
   fireEvent.click(all);
   expect(files.openExternal).toHaveBeenCalledWith(
-    'https://github.com/debpalash/VoiceStudio/graphs/contributors',
+    'https://github.com/DevTunaSoft/BetterVoiceStudio/graphs/contributors',
   );
   for (const { login } of homeContributors) {
     if (login === 'debpalash' || login === 'velixio') continue;
