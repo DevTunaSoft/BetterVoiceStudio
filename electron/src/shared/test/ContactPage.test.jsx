@@ -1,13 +1,3 @@
-// Contact channels — render-level coverage for every guidance section
-// (bug / feature / community / support / security), each channel pointing at
-// the right URL, and the in-app bug-report affordance.
-//
-// Contact is a SECTION of SupportPage now, not a page of its own: sponsoring,
-// commercial licensing and getting in touch answered one question between them
-// and each used to be somewhere else. What is pinned here is the content and
-// its links — the page shell (header, back button) belongs to the host and is
-// covered by SupportPage's own suite. openExternal is mocked so no real
-// browser navigation happens; the store is the real one.
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -16,67 +6,43 @@ const { openExternal } = vi.hoisted(() => ({ openExternal: vi.fn() }));
 vi.mock('../api/external', () => ({ openExternal }));
 
 import { ContactSections } from '../pages/ContactPage';
-import { useAppStore } from '../store';
+import { REPO_URL, ISSUES_URL, SECURITY_URL } from '../utils/contactLinks';
 
-const REPO = 'https://github.com/debpalash/VoiceStudio';
+beforeEach(() => openExternal.mockClear());
 
-beforeEach(() => {
-  openExternal.mockClear();
-  useAppStore.getState().setMode?.('launchpad');
-});
-
-describe('contact sections', () => {
-  it('renders every guidance section', () => {
+describe('fork-owned contact sections', () => {
+  it('provides issue, feature and private security guidance without upstream promotions', () => {
     render(<ContactSections />);
-    for (const name of [
-      'Report a bug',
-      'Request a feature or ask',
-      'Get help & community',
-      'Support the project',
-      'Report a security issue',
-    ]) {
+    for (const name of ['Report a bug', 'Request a feature or ask', 'Report a security issue']) {
       expect(screen.getByRole('heading', { name })).toBeInTheDocument();
     }
-  });
-
-  it('exposes the in-app bug-report affordance', () => {
-    render(<ContactSections />);
     expect(screen.getByRole('button', { name: /open bug reporter/i })).toBeInTheDocument();
+    expect(screen.queryByText(/Donate to VoiceStudio Project|Join the Discord|Become a sponsor/i)).toBeNull();
   });
 
-  it('points each external channel at the right URL', () => {
+  it('routes each public and private support channel to this fork', () => {
     render(<ContactSections />);
-    const href = (name) => screen.getByRole('link', { name }).getAttribute('href');
-    expect(href('Open GitHub Issues')).toBe(`${REPO}/issues`);
-    expect(href('Join the Discord')).toBe('https://discord.gg/bzQavDfVV9');
-    expect(href('Follow on X')).toBe('https://x.com/idebpalash');
-    expect(href('Report privately')).toBe(`${REPO}/security/advisories/new`);
-    expect(href(/licensing/i)).toBe(`mailto:hi@voicestudio.sh`);
-    expect(href(/more about the project/i)).toBe('https://palash.dev');
+    expect(screen.getByRole('link', { name: 'Open GitHub Issues' })).toHaveAttribute('href', ISSUES_URL);
+    expect(screen.getByRole('link', { name: 'Report privately' })).toHaveAttribute('href', SECURITY_URL);
+    expect(screen.getByRole('link', { name: /BetterVoiceStudio source/i })).toHaveAttribute('href', REPO_URL);
+    expect(ISSUES_URL).toBe('https://github.com/DevTunaSoft/BetterVoiceStudio/issues');
+    expect(SECURITY_URL).toBe('https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories/new');
   });
 
-  it('opens external links via the shared opener and marks them noreferrer', () => {
+  it('uses the secure external opener without double browser navigation', () => {
     render(<ContactSections />);
-    const link = screen.getByRole('link', { name: 'Join the Discord' });
+    const link = screen.getByRole('link', { name: 'Report privately' });
     expect(link).toHaveAttribute('rel', 'noreferrer');
     expect(link).toHaveAttribute('target', '_blank');
     fireEvent.click(link);
-    expect(openExternal).toHaveBeenCalledWith('https://discord.gg/bzQavDfVV9');
+    expect(openExternal).toHaveBeenCalledExactlyOnceWith(SECURITY_URL);
   });
 
-  it('sends "Support the project" to the support section, not out to Ko-fi', () => {
-    // The support surface is on this same page now, so the CTA scrolls rather
-    // than navigating — and must still never duplicate the Ko-fi/PayPal links.
-    const target = document.createElement('div');
-    target.id = 'support-give';
-    target.scrollIntoView = vi.fn();
-    document.body.appendChild(target);
-
+  it('retains accessible original-project credits without a donation CTA', () => {
     render(<ContactSections />);
-    fireEvent.click(screen.getByRole('button', { name: 'See ways to support' }));
-
-    expect(target.scrollIntoView).toHaveBeenCalled();
-    expect(openExternal).not.toHaveBeenCalled();
-    target.remove();
+    const credits = screen.getByRole('link', { name: 'Credits and attribution' });
+    expect(credits.getAttribute('href')).toContain('/docs/FORK_AND_ATTRIBUTION.md');
+    expect(credits.getAttribute('href')).toContain(REPO_URL);
+    expect(screen.queryByRole('button', { name: /ways to support/i })).toBeNull();
   });
 });
