@@ -1,5 +1,3 @@
-import { WEBSITE_URL, X_URL } from '../../../../shared/utils/contactLinks.js';
-
 /** Core team hover cards: name, role and the profiles people can follow. */
 export const homeMaintainerCards: Record<
   string,
@@ -13,13 +11,13 @@ export const homeMaintainerCards: Record<
     name: 'homeUi.maintainerPalash',
     role: 'homeUi.creatorCoreTeam',
     links: [
-      { kind: 'website', handle: 'palash.dev', href: WEBSITE_URL },
+      { kind: 'website', handle: 'palash.dev', href: 'https://palash.dev' },
       {
         kind: 'github',
         handle: '@debpalash',
         href: 'https://github.com/debpalash',
       },
-      { kind: 'x', handle: '@idebpalash', href: X_URL },
+      { kind: 'x', handle: '@idebpalash', href: 'https://x.com/idebpalash' },
     ],
   },
   velixio: {
