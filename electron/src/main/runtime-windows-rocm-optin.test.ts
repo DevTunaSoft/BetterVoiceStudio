@@ -7,11 +7,14 @@ import {
   RUNTIME_TORCH_MARKER,
   windowsRocmInstalled,
   windowsRocmRequested,
+  windowsRocmSelected,
 } from './runtime-windows-rocm';
 
 it('never throws when ROCm is requested on a host that cannot run it', () => {
   expect(windowsRocmRequested('rocm', 'win32', 'arm64')).toBe(false);
+  expect(windowsRocmSelected('rocm', 'win32', 'arm64')).toBe(false);
   expect(windowsRocmRequested('rocm', 'win32', 'x64')).toBe(true);
+  expect(windowsRocmSelected('rocm', 'win32', 'x64')).toBe(true);
   expect(windowsRocmRequested('rocm', 'linux', 'x64')).toBe(false);
   expect(windowsRocmRequested(undefined, 'win32', 'x64')).toBe(false);
 });
@@ -40,8 +43,15 @@ it('shows the Windows ROCm torch source as AMD, not the Linux PyTorch index', as
   }
 });
 
-it('reports ROCm on Windows ARM64 as not ready instead of rejecting', async () => {
-  const { runtimeDependenciesReady } = await import('./runtime-project');
+it('uses x64 Python 3.11 with CPU torch for a stale ROCm choice on Windows ARM64', async () => {
+  const {
+    runtimeDependenciesReady,
+    managedPythonRequest,
+    resolveTorchVariant,
+    rocmTorchOptIn,
+    WIN_ARM64_PYTHON_REQUEST,
+    runtimeDownloadHosts,
+  } = await import('./runtime-project');
   const platform = Object.getOwnPropertyDescriptor(process, 'platform')!;
   const arch = Object.getOwnPropertyDescriptor(process, 'arch')!;
   const previous = process.env.OMNIVOICE_TORCH_VARIANT;
@@ -49,11 +59,19 @@ it('reports ROCm on Windows ARM64 as not ready instead of rejecting', async () =
   Object.defineProperty(process, 'arch', { value: 'arm64', configurable: true });
   process.env.OMNIVOICE_TORCH_VARIANT = 'rocm';
   try {
+    expect(resolveTorchVariant()).toEqual({ variant: 'cpu', explicit: true });
+    expect(managedPythonRequest()).toBe(WIN_ARM64_PYTHON_REQUEST);
+    expect(rocmTorchOptIn()).toBe(false);
+    expect(windowsRocmSelected()).toBe(false);
+    const hosts = await runtimeDownloadHosts(join(__dirname, '..', '..', '..'));
+    expect(hosts.get('torch')).not.toBe('repo.radeon.com');
+    // A missing Python environment is still not ready; it must not fail merely
+    // because an AMD-specific choice was carried over from another device.
     const reasons: string[] = [];
     await expect(
       runtimeDependenciesReady(tmpdir(), (reason) => reasons.push(reason)),
     ).resolves.toBe(false);
-    expect(reasons.join('\n')).toContain('x64');
+    expect(reasons.join('\n')).not.toContain('Windows ROCm requires');
   } finally {
     Object.defineProperty(process, 'platform', platform);
     Object.defineProperty(process, 'arch', arch);
