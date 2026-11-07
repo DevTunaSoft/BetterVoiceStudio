@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Github, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, BookOpen, GitBranch, ShieldAlert } from 'lucide-react';
 import { Button } from '../ui';
 import { openExternal } from '../api/external';
 import { ContactSections } from './ContactPage';
@@ -32,7 +32,7 @@ export default function SupportPage({ onBack, initialView = 'support' }) {
           )}
         </header>
         <div className="flex flex-wrap justify-center gap-3">
-          <Button variant="subtle" leading={<Github size={15} />} onClick={() => openExternal(REPO_URL)}>
+          <Button variant="subtle" leading={<GitBranch size={15} />} onClick={() => openExternal(REPO_URL)}>
             Fork source
           </Button>
           <Button variant="subtle" leading={<BookOpen size={15} />} onClick={() => openExternal(REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md')}>
