@@ -45,5 +45,25 @@ class HandoffValidatorTests(unittest.TestCase):
             self.assertTrue(any("Duplicate action ID" in e for e in module.validate(root)))
 
 
+    def test_invalid_timestamps_and_blank_checkpoints_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "handoff").mkdir()
+            (root / "handoff" / "MASTER_HANDOFF.md").write_text(
+                (MODULE_PATH.parents[1] / "handoff" / "MASTER_HANDOFF.md").read_text()
+            )
+            records = []
+            for i, stamp in enumerate(("not-a-date", "2026-11-07T07:00:00", "2026-11-07T07:00:00Z")):
+                record = {field: "value" for field in module.REQUIRED_ACTION_FIELDS}
+                record["action_id"] = f"case-{i}"
+                record["timestamp"] = stamp
+                records.append(json.dumps(record))
+            (root / "handoff" / "ACTION_LOG.jsonl").write_text("\\n".join(records) + "\\n\\n")
+            errors = module.validate(root)
+            self.assertEqual(sum("invalid timezone-aware ISO timestamp" in e for e in errors), 2)
+            self.assertTrue(any("blank checkpoint" in e for e in errors))
+
+
+
 if __name__ == "__main__":
     unittest.main()
