@@ -58,7 +58,7 @@ class HandoffValidatorTests(unittest.TestCase):
                 record["action_id"] = f"case-{i}"
                 record["timestamp"] = stamp
                 records.append(json.dumps(record))
-            (root / "handoff" / "ACTION_LOG.jsonl").write_text("\\n".join(records) + "\\n\\n")
+            (root / "handoff" / "ACTION_LOG.jsonl").write_text("\n".join(records) + "\n\n")
             errors = module.validate(root)
             self.assertEqual(sum("invalid timezone-aware ISO timestamp" in e for e in errors), 2)
             self.assertTrue(any("blank checkpoint" in e for e in errors))
