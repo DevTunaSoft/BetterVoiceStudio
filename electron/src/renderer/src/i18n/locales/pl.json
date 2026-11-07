@@ -4603,6 +4603,7 @@
     "stalled_hint": "Pobieranie nie postępuje od pięciu minut. Poczekaj, anuluj i spróbuj ponownie lub poproś o pomoc. Pobierz dziennik konfiguracji, aby go udostępnić.",
     "download_log": "Pobierz dziennik konfiguracji",
     "discord": "Uzyskaj pomoc na Discordzie",
+    "community": "Community discussions",
     "check_connection": "Sprawdź połączenie pobierania",
     "checking": "Sprawdzanie połączenia…",
     "use_cpu": "Zainstaluj wersję CPU",
