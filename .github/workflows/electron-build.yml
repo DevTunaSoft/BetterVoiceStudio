@@ -156,7 +156,15 @@ jobs:
           node ../scripts/create_store_artifact_manifest.mjs --platform=${{ matrix.platform }} --arch=${{ matrix.arch }}
       - name: Packaged startup smoke test
         working-directory: electron
+        # The setup screen initializes backend status before the installation
+        # step. Force the supported CPU torch path here as well; otherwise
+        # Windows ARM64 could fail during the setup gate before install starts.
+        env:
+          OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
+          if [ "$RUNNER_OS" = Windows ]; then
+            node -e "const assert=require('node:assert/strict'); assert.equal(process.env.OMNIVOICE_TORCH_VARIANT,'cpu'); console.log('PASS: Windows first-run setup uses CPU torch')"
+          fi
           if [ "$RUNNER_OS" = Linux ]; then
             for image in release/VoiceStudio-*-linux-x64.AppImage; do
               VOICESTUDIO_PACKAGED_EXE="electron/$image" xvfb-run -a node tests/packaged-smoke.mjs --setup
