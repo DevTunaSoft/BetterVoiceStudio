@@ -113,10 +113,13 @@ export function rocmTorchApplies(
   return platform !== 'darwin' && (platform !== 'win32' || arch === 'x64');
 }
 /** The user explicitly asked for ROCm torch AND this OS can have it. */
-export function rocmTorchOptIn(platform: NodeJS.Platform = process.platform): boolean {
+export function rocmTorchOptIn(
+  platform: NodeJS.Platform = process.platform,
+  arch: string = process.arch,
+): boolean {
   return (
     process.env.OMNIVOICE_TORCH_VARIANT?.trim().toLowerCase() === 'rocm' &&
-    rocmTorchApplies(platform, process.arch)
+    rocmTorchApplies(platform, arch)
   );
 }
 /**
