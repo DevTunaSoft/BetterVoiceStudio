@@ -7,7 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_readme_installs_skills_from_the_canonical_repository() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
-    assert "npx skills add debpalash/VoiceStudio" in readme
+    # The independent fork README must not prescribe installing upstream skills
+    # as if they were fork-owned. Historical skills remain available in source.
+    assert "BetterVoiceStudio" in readme
+    assert "docs/README.md" in readme
+    assert "npx skills add debpalash/VoiceStudio" not in readme
     assert "npx skills add debpalash/omnivoice-studio" not in readme
 
 
