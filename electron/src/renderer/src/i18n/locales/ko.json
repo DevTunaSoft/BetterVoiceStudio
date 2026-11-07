@@ -4575,6 +4575,7 @@
     "stalled_hint": "5분 동안 다운로드가 진행되지 않았습니다. 기다리거나 취소 후 재시도하거나 도움을 요청하세요. 공유하려면 설정 로그를 다운로드하세요.",
     "download_log": "설정 로그 다운로드",
     "discord": "Discord에서 도움받기",
+    "community": "Community discussions",
     "check_connection": "다운로드 연결 확인",
     "checking": "연결 확인 중…",
     "use_cpu": "대신 CPU 버전 설치",
