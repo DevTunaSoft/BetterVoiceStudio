@@ -7,7 +7,9 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
+    # Development changes must get full CI even when GitHub's REST branch-ref
+    # updates do not emit the expected draft-PR synchronize event.
+    branches: [main, engineering/modernization-foundation]
   # The merge queue tests each PR on top of the latest main (and the PRs queued
   # before it) once, instead of every PR re-running CI each time main moves.
   merge_group:
