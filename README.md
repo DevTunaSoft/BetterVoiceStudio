@@ -1,12 +1,24 @@
 # BetterVoiceStudio
 
-**A community-minded, independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio), built to improve reliability, performance, accessibility, audio quality and production workflows.**
+**A local-first AI voice production suite focused on reliability, performance, accessibility, audio quality and professional workflows.**
 
-[Source](https://github.com/DevTunaSoft/BetterVoiceStudio) · [Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Documentation](docs/README.md) · [Feature catalog](docs/feature-catalog.md) · [Roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Credits and licensing](docs/FORK_AND_ATTRIBUTION.md)
+BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). We are modernizing its voice production experience, improving its existing capabilities, and retaining upstream attribution.
 
-> **Independent fork — no upstream affiliation.** BetterVoiceStudio is developed from the open-source [VoiceStudio](https://github.com/debpalash/VoiceStudio) codebase and its incorporated projects. We value sharing, retaining original copyright and license notices, and crediting upstream authors. The original VoiceStudio website, installers, subscriptions, cloud services, sponsorships, and community channels are **not BetterVoiceStudio offerings** and are intentionally not promoted here.
+[Features](#what-bettervoicestudio-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Credits](#open-source-credits-and-licensing)
 
-> **Development status.** This fork is under active modernization. The roadmap is a direction, **not a list of shipped features**. Much of the existing application still uses the original VoiceStudio name and identifiers for compatibility. Check [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) for any published BetterVoiceStudio artifacts; **do not install an upstream release expecting fork changes**.
+[![Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml/badge.svg?branch=engineering%2Fmodernization-foundation)](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml) [![AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
+
+<p align="center">
+  <img src="docs/media/electron/overview.webp" width="880" alt="Inherited VoiceStudio desktop workspace preview" />
+  <br />
+  <sub>Inherited desktop interface preview; modernization builds may differ from this image.</sub>
+</p>
+
+> [!IMPORTANT]
+> **Actively in development; no official BetterVoiceStudio release is published yet.** Windows x64 packaging has passed automated acceptance once, but real-hardware production acceptance remains outstanding. Windows ARM64 remains experimental. See [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) and [live GitHub Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions). An upstream VoiceStudio download **will not contain the changes made in this fork**.
+
+> [!NOTE]
+> **Independent fork, not affiliated with the original authors.** Some inherited application screens and executables still say `VoiceStudio` for compatibility. The original project's commercial subscriptions, cloud offerings, website, sponsor programs, installers, and community channels are **not** operated by BetterVoiceStudio.
 
 ## What BetterVoiceStudio is
 
@@ -26,15 +38,18 @@ The fork's mission is to strengthen and extend those workflows without replacing
 | **Trust and openness** | Consent-aware voice use, local-first processing, clear licensing, upstream credit and reproducible builds |
 | **Engineering quality** | Fuzzing, fault injection, cross-platform regression tests, real-audio verification and honest release gates |
 
-**Planned does not mean implemented.** See the [consolidated capability program](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) for the complete backlog and verification standards.
+**Planned does not mean implemented.** See the [consolidated capability program](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) for the complete backlog and verification standards.
 
 ## Development progress
 
-- Established a modernization roadmap, baseline audit and non-duplication policy.
-- Added initial Electron IPC caller-authorization checks and regression contracts.
-- Committed a queue shutdown/restart correction and accompanying regression tests.
-- A prior baseline GitHub Actions run [passed its scheduled jobs](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42343938623). This run predates later commits; check the [current workflow results](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) for their verification.
-- Full production qualification, representative GPU inference, audio quality and every target OS/hardware combination remain **unverified** unless separately documented.
+We are strengthening the inherited desktop application through code review, regression coverage, security hardening, fault injection, packaging tests and documentation.
+
+- The [modernization branch](https://github.com/DevTunaSoft/BetterVoiceStudio/tree/engineering/modernization-foundation) contains the current engineering work: runtime stability improvements, queue-recovery fixes, Electron IPC checks, test contracts and ongoing quality improvements.
+- On November 7, 2026, [packaging run #42414196153](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42414196153) passed Windows x64, Linux x64 and both macOS packaging jobs. The **experimental Windows ARM64 job failed** during first-run runtime setup.
+- Additional CPU/ROCm runtime-selection fixes for Windows ARM64 are committed and [under further verification](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/electron-build.yml).
+- The [full development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml) exercises automated application and cross-platform checks. Actual Windows hardware, microphone/speaker capture, GPU compatibility, long-running generation and complete installer acceptance are **not yet certified**.
+
+A passing automated build is **not** a claim of a stable release or universal hardware compatibility.
 
 ## Existing functionality and technical guides
 
@@ -50,15 +65,43 @@ These describe the **inherited application** and are maintained as the fork evol
 | Automation | [Local API](docs/speech-platform.md) · [MCP](docs/mcp.md) |
 | Developer reference | [Architecture](docs/STRUCTURE.md) · [Development documentation](docs/README.md) |
 
+## Try a development build
+
+There is **no signed, stable BetterVoiceStudio installer yet**. Technically experienced testers can inspect and try CI-generated artifacts:
+
+1. Open the [Electron packaging workflow](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/electron-build.yml).
+2. Choose a completed run and confirm the **Windows x64 package job** itself passed; the overall workflow status may not reflect an experimental ARM64 failure.
+3. Under **Artifacts**, download `electron-rehearsal-win32-x64`, if available. Sign-in may be required. Extract the ZIP and locate the installer or packaged application.
+4. Run only artifacts from this repository that you trust. Development builds may be unsigned. Do not turn off operating-system protections solely to run a build.
+5. On first launch, follow the local-runtime setup prompts, then obtain any speech models you want to use. Initial installation needs internet access, sufficient disk space and the correct permissions.
+
+A [verified Windows x64 packaging artifact](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42414196153) was created on November 7, 2026; CI artifacts expire, so use a newer successful run if unavailable. Windows ARM64 is experimental and uses an emulated x64 Python backend with CPU inference.
+
+When a stable version is published, use the [BetterVoiceStudio releases page](https://github.com/DevTunaSoft/BetterVoiceStudio/releases), not upstream downloads. The inherited [Windows installation guide](docs/install/windows.md) may not yet cover fork-specific packaging.
+
+## How to use the app
+
+After the runtime and appropriate models are installed:
+
+1. **Clone:** select or record permitted reference speech, enter your script, choose an engine, generate, preview and export.
+2. **Voice design:** describe the desired voice, choose a compatible model and generate a sample.
+3. **Transcription and dictation:** provide an audio file or microphone input and review the speech-to-text output.
+4. **Dubbing:** import a video, configure source/target language and voice options, generate and check the resulting video before export.
+5. **Stories and audiobooks:** create longer narration, review sections and manage output or projects.
+6. **Model management and automation:** download supported local models, manage projects, and explore the local API, recipes and integrations.
+
+The app's available workflows depend on the build, operating system, installed engines, model licenses and available CPU/GPU resources. Start with the [feature catalog](docs/feature-catalog.md), [model download guide](docs/downloading-models.md), [Electron app instructions](electron/README.md) and [documentation index](docs/README.md). Offline inference is possible with compatible local engines after their model files have been downloaded. Optional online services remain separate.
+
 ## Build and test from source
 
 This repository currently retains upstream build identifiers and development tooling. These commands are **developer workflows**, not a claim that an independently packaged BetterVoiceStudio installer is available.
 
-**Prerequisites:** Follow the relevant [development and platform documentation](docs/README.md); the monorepo declares Bun 1.4.2 and Python 3.11+.
+**Prerequisites:** Git, Bun 1.4.2, a supported Python runtime and the platform-specific build tools described in the [development documentation](docs/README.md). The modernization work currently lives on its own branch.
 
 ```sh
 git clone https://github.com/DevTunaSoft/BetterVoiceStudio.git
 cd BetterVoiceStudio
+git switch engineering/modernization-foundation
 bun install
 bun run typecheck
 bun run lint
@@ -76,26 +119,26 @@ Every substantive change should include a reproducible test, regression verifica
 
 ## Historical upstream translations
 
-The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain available for historical reference and attribution. **They describe the original upstream application, not the current BetterVoiceStudio fork**, and may contain upstream installation, sponsorship, commercial or community links. Do not interpret them as translated BetterVoiceStudio documentation. Their original English reference is pinned in `tests/fixtures/legacy_upstream_readme.md` for regression checking until fork-specific translations are authored and verified.
+The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain available for historical reference and attribution. **They describe the original upstream application, not the current BetterVoiceStudio fork**, and may contain upstream installation, sponsorship, commercial or community links. Do not interpret them as translated BetterVoiceStudio documentation. Their English reference is preserved in the modernization branch at [legacy_upstream_readme.md](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/tests/fixtures/legacy_upstream_readme.md) until verified fork-specific translations are available.
 
 ## Open source, credits and licensing
 
-**BetterVoiceStudio stands on the work of others.** The primary upstream is [VoiceStudio by Palash Debnath and contributors](https://github.com/debpalash/VoiceStudio). The inherited repository also includes the [OmniVoice](https://github.com/k2-fsa/OmniVoice) ecosystem and components adapted from other open-source projects. See [fork attribution and third-party credits](docs/FORK_AND_ATTRIBUTION.md), [LICENSE-NOTICE.md](LICENSE-NOTICE.md), [model credits](docs/model-credits.md), and the original copyright and license notices in the source tree.
+**BetterVoiceStudio stands on the work of others.** The primary upstream is [VoiceStudio by Palash Debnath and contributors](https://github.com/debpalash/VoiceStudio). The inherited repository also includes the [OmniVoice](https://github.com/k2-fsa/OmniVoice) ecosystem and components adapted from other open-source projects. See [fork attribution and third-party credits](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md), [LICENSE-NOTICE.md](LICENSE-NOTICE.md), [model credits](docs/model-credits.md), and the original copyright and license notices in the source tree.
 
 The application declares **AGPL-3.0-only** for its main codebase; certain incorporated components, model weights, tokenizers, datasets and media assets have **different licenses**. In particular, some model weights have non-commercial restrictions. The application license alone does not grant rights to use every model or voice commercially. Read the applicable terms before use or redistribution.
 
-We retain upstream Git history and attribution rather than taking credit for inherited work. If you find missing credit, please [open an issue](https://github.com/DevTunaSoft/BetterVoiceStudio/issues).
+We retain upstream Git history and attribution rather than taking credit for inherited work. If attribution is missing, please submit a [documentation pull request](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls) with the relevant sources.
 
 ## Contributing and reporting issues
 
 We welcome fixes, tests, documentation, accessibility improvements, and new ideas that build on existing work.
 
-- [Report a bug or propose an enhancement](https://github.com/DevTunaSoft/BetterVoiceStudio/issues)
+- [Submit a reproducible fix or enhancement as a pull request](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls)
 - [Review development changes](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls)
 - [Contribution review standards](.github/pull_request_template.md)
-- [Development roadmap](docs/roadmap/MODERNIZATION_PROGRAM.md)
+- [Development roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/MODERNIZATION_PROGRAM.md)
 
-For vulnerabilities, use this repository's [security reporting page](https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories) where available; avoid publicly disclosing exploitable details.
+**Issues and Discussions are currently disabled.** Follow the [security policy](.github/SECURITY.md) to report vulnerabilities privately rather than disclosing exploitable details.
 
 ---
 
