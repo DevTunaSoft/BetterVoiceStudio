@@ -22,15 +22,7 @@ import ReportBugButton from '../components/ReportBugButton';
 // One home for every outward channel. The repo/Discord/security URLs match the
 // values the rest of the app uses (bug reporter, footer, SECURITY.md) so a link
 // change here can never leave one surface pointing somewhere stale (#contact).
-const REPO_URL = 'https://github.com/debpalash/VoiceStudio';
-const ISSUES_URL = `${REPO_URL}/issues`;
-const DISCORD_URL = 'https://discord.gg/bzQavDfVV9';
-// GitHub Security Advisories = the private "report a vulnerability" flow that
-// SECURITY.md points at (never a public issue for security bugs).
-const SECURITY_URL = `${REPO_URL}/security/advisories/new`;
-const EMAIL = 'hi@voicestudio.sh';
-const WEBSITE_URL = 'https://palash.dev';
-const X_URL = 'https://x.com/idebpalash';
+import { REPO_URL, ISSUES_URL, SECURITY_URL } from '../utils/contactLinks';
 
 // Compact action cards for every outward channel. `kind` picks CTA behaviour:
 //   bug      → reuse ReportBugButton (prefilled GitHub issue + scrubbed diag)
@@ -57,38 +49,6 @@ const SECTIONS = [
     titleDefault: 'Request a feature or ask',
     ctaKey: 'contact.feature_cta',
     ctaDefault: 'Open GitHub Issues',
-  },
-  {
-    id: 'community',
-    icon: MessageCircle,
-    hue: '#5865F2',
-    kind: 'external',
-    url: DISCORD_URL,
-    titleKey: 'contact.community_title',
-    titleDefault: 'Get help & community',
-    ctaKey: 'contact.community_cta',
-    ctaDefault: 'Join the Discord',
-  },
-  {
-    id: 'follow',
-    icon: Megaphone,
-    hue: '#1d9bf0',
-    kind: 'external',
-    url: X_URL,
-    titleKey: 'contact.follow_title',
-    titleDefault: 'Follow along on X',
-    ctaKey: 'contact.follow_cta',
-    ctaDefault: 'Follow on X',
-  },
-  {
-    id: 'support',
-    icon: Heart,
-    hue: 'var(--color-brand)',
-    kind: 'internal',
-    titleKey: 'contact.support_title',
-    titleDefault: 'Support the project',
-    ctaKey: 'contact.support_cta',
-    ctaDefault: 'See ways to support',
   },
   {
     id: 'security',
@@ -194,23 +154,8 @@ export function ContactSections({ onSupport }) {
       </section>
 
       <div className="flex flex-wrap items-center justify-center gap-2">
-        <ExternalCta
-          href={`mailto:${EMAIL}`}
-          label={t('contact.email', { defaultValue: 'Email' })}
-          ariaLabel={t('contact.email_desc', {
-            defaultValue: 'Email — licensing, partnerships, or anything private',
-          })}
-          leading={<Mail size={13} />}
-          trailing={null}
-        />
-        <ExternalCta
-          href={WEBSITE_URL}
-          label={t('contact.website', { defaultValue: 'Website' })}
-          ariaLabel={t('contact.website_desc', {
-            defaultValue: 'Website — more about the project and the maker',
-          })}
-          leading={<Globe size={13} />}
-        />
+        <ExternalCta href={REPO_URL} label="BetterVoiceStudio source" leading={<Globe size={13} />} />
+        <ExternalCta href={REPO_URL + '/blob/main/docs/FORK_AND_ATTRIBUTION.md'} label="Credits and attribution" />
       </div>
     </>
   );
