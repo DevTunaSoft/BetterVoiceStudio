@@ -7,7 +7,11 @@ try {
   await page.goto((process.env.VOICESTUDIO_UI_URL || 'http://localhost:3912') + '/#/settings/appearance');
   await page.getByRole('link', { name: 'Support', exact: true }).click();
   await page.getByRole('heading', { name: 'BetterVoiceStudio', exact: true }).waitFor();
-  await page.getByRole('heading', { name: 'Report a bug', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Report a bug', exact: true }).waitFor({ timeout: 10000 }).catch(async (error) => {
+    const headings = await page.getByRole('heading').allTextContents();
+    const links = await page.getByRole('link').allTextContents();
+    throw new Error(`Fork contact section missing: headings=${JSON.stringify(headings)} links=${JSON.stringify(links)}; ${error.message}`);
+  });
   assert.equal(
     await page.getByRole('link', { name: 'Open GitHub Issues', exact: true }).getAttribute('href'),
     'https://github.com/DevTunaSoft/BetterVoiceStudio/issues',
