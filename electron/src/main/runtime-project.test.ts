@@ -594,9 +594,10 @@ describe('packaged runtime setup', () => {
     vi.spyOn(process, 'arch', 'get').mockReturnValue('arm64');
     const { bundle, project } = await fixture();
     vi.stubEnv('OMNIVOICE_TORCH_VARIANT', 'rocm');
-    expect(rocmTorchOptIn('win32')).toBe(true);
-    expect(rocmTorchOptIn('darwin')).toBe(false);
-    expect(rocmTorchOptIn('linux')).toBe(true);
+    expect(rocmTorchOptIn('win32', 'x64')).toBe(true);
+    expect(rocmTorchOptIn('win32', 'arm64')).toBe(false);
+    expect(rocmTorchOptIn('darwin', 'arm64')).toBe(false);
+    expect(rocmTorchOptIn('linux', 'arm64')).toBe(true);
     const run = vi.fn(
       async (_command: string, _args: string[], _cwd: string, _env?: NodeJS.ProcessEnv) => {
         await interpreter(project);
