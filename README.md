@@ -74,6 +74,10 @@ Before adding features, we search the entire repository for existing code, APIs,
 
 Every substantive change should include a reproducible test, regression verification, multiple distinct fault/fuzz scenarios where appropriate, and a record of remaining risks. We do not claim an application is error-free or production-ready without supporting evidence.
 
+## Historical upstream translations
+
+The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain available for historical reference and attribution. **They describe the original upstream application, not the current BetterVoiceStudio fork**, and may contain upstream installation, sponsorship, commercial or community links. Do not interpret them as translated BetterVoiceStudio documentation. Their original English reference is pinned in `tests/fixtures/legacy_upstream_readme.md` for regression checking until fork-specific translations are authored and verified.
+
 ## Open source, credits and licensing
 
 **BetterVoiceStudio stands on the work of others.** The primary upstream is [VoiceStudio by Palash Debnath and contributors](https://github.com/debpalash/VoiceStudio). The inherited repository also includes the [OmniVoice](https://github.com/k2-fsa/OmniVoice) ecosystem and components adapted from other open-source projects. See [fork attribution and third-party credits](docs/FORK_AND_ATTRIBUTION.md), [LICENSE-NOTICE.md](LICENSE-NOTICE.md), [model credits](docs/model-credits.md), and the original copyright and license notices in the source tree.
