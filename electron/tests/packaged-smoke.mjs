@@ -89,6 +89,21 @@ const app = await electron.launch({
   timeout: 30000,
 });
 try {
+  // CI checks the shell environment before launch. Re-check inside the actual
+  // packaged Electron main process: this catches lost CPU preferences at the
+  // child-process boundary, especially on native Windows ARM64.
+  const expectedTorchVariant = process.env.VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT?.trim().toLowerCase();
+  if (expectedTorchVariant) {
+    const actual = await app.evaluate(() => ({
+      platform: process.platform,
+      arch: process.arch,
+      torchVariant: process.env.OMNIVOICE_TORCH_VARIANT?.trim().toLowerCase() ?? '',
+    }));
+    assert.equal(actual.platform, process.platform, 'Packaged Electron OS mismatch');
+    assert.equal(actual.arch, targetArch, 'Packaged Electron architecture mismatch');
+    assert.equal(actual.torchVariant, expectedTorchVariant, 'Packaged Electron lost CPU runtime choice');
+    console.log('PASS: packaged Electron preserved ' + expectedTorchVariant + ' torch on ' + actual.arch);
+  }
   const native = await app.evaluate(async () => {
     const { spawn } = process.getBuiltinModule('child_process');
     const { join } = process.getBuiltinModule('path');

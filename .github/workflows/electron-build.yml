@@ -161,6 +161,7 @@ jobs:
         # Windows ARM64 could fail during the setup gate before install starts.
         env:
           OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
+          VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
           if [ "$RUNNER_OS" = Windows ]; then
             node -e "const assert=require('node:assert/strict'); assert.equal(process.env.OMNIVOICE_TORCH_VARIANT,'cpu'); console.log('PASS: Windows first-run setup uses CPU torch')"
@@ -182,6 +183,7 @@ jobs:
           # CPU torch recipe on x64 and on ARM64's emulated x64 runtime.
           # This applies only to packaged acceptance, not shipped defaults.
           OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
+          VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
           # Regression guard: hosted Windows runners must not select ROCm,
           # including the ARM64 runner with an emulated x64 Python runtime.
