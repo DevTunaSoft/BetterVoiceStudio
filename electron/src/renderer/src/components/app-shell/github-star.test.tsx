@@ -31,7 +31,7 @@ it('keeps the preview badge offline when requested', async () => {
   const fetchCount = vi.fn();
   vi.stubGlobal('fetch', fetchCount);
   const client = mount();
-  expect(screen.getByText('43,638')).toBeVisible();
+  expect(screen.getByText('0')).toBeVisible();
   expect(fetchCount).not.toHaveBeenCalled();
   client.clear();
 });
@@ -45,14 +45,14 @@ it('shows an exact live count and refreshes it every 20 minutes', async () => {
   vi.useFakeTimers();
   const client = mount();
 
-  expect(screen.getByText('43,638')).toBeVisible();
+  expect(screen.getByText('0')).toBeVisible();
   await act(async () => {
     await vi.advanceTimersByTimeAsync(1);
   });
   expect(screen.getByText('43,768')).toBeVisible();
   expect(fetchCount).toHaveBeenCalledOnce();
   expect(fetchCount.mock.calls[0][0]).toBe(
-    'https://api.github.com/repos/debpalash/VoiceStudio',
+    'https://api.github.com/repos/DevTunaSoft/BetterVoiceStudio',
   );
   expect(fetchCount.mock.calls[0][1]).toMatchObject({
     credentials: 'omit',
@@ -70,7 +70,7 @@ it('shows an exact live count and refreshes it every 20 minutes', async () => {
   await waitFor(() => expect(screen.getByText('43,769')).toBeVisible());
   expect(screen.getByRole('link', { name: 'support.star_github' })).toHaveAttribute(
     'href',
-    'https://github.com/debpalash/VoiceStudio',
+    'https://github.com/DevTunaSoft/BetterVoiceStudio',
   );
   client.clear();
 });
@@ -102,6 +102,6 @@ it('shows the bundled count if the first request is offline', async () => {
   await act(async () => {
     await vi.advanceTimersByTimeAsync(1);
   });
-  expect(screen.getByText('43,638')).toBeVisible();
+  expect(screen.getByText('0')).toBeVisible();
   client.clear();
 });
