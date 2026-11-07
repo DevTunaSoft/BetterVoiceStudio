@@ -4577,6 +4577,7 @@
     "stalled_hint": "O download não avança há cinco minutos. Aguarde, cancele e tente novamente ou peça ajuda. Baixe o registro da instalação para compartilhar.",
     "download_log": "Baixar registro da instalação",
     "discord": "Obter ajuda no Discord",
+    "community": "Community discussions",
     "check_connection": "Verificar conexão de download",
     "checking": "Verificando conexão…",
     "use_cpu": "Instalar a versão para CPU",
