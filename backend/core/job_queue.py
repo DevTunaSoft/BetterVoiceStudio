@@ -83,11 +83,33 @@ class JobQueue:
         ]
 
     async def stop(self) -> None:
-        for w in self._workers:
-            w.cancel()
-        if self._workers:
-            await asyncio.gather(*self._workers, return_exceptions=True)
-        self._workers = []
+        """Stop workers and settle queued jobs so waiters cannot hang forever.
+
+        Running jobs are cancelled through their worker tasks; queued jobs
+        have no worker to signal completion once the workers have stopped.
+        """
+        async with self._lock:
+            workers = self._workers
+            self._workers = []
+            for w in workers:
+                w.cancel()
+            if workers:
+                await asyncio.gather(*workers, return_exceptions=True)
+            now = time.time()
+            for job in self._jobs.values():
+                if job.state in (JobState.QUEUED, JobState.RUNNING):
+                    job.state = JobState.CANCELLED
+                    job.finished_at = now
+                    job.cancel_event.set()
+                    job.done_event.set()
+            # Stale IDs must not execute if the queue is restarted.
+            while True:
+                try:
+                    self._queue.get_nowait()
+                except asyncio.QueueEmpty:
+                    break
+                else:
+                    self._queue.task_done()
 
     async def submit(
         self,
