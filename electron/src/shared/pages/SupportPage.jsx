@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen, GitBranch, ShieldAlert } from 'lucide-react';
 import { Button } from '../ui';
 import { openExternal } from '../api/external';
 import { ContactSections } from './ContactPage';
-import { REPO_URL, SECURITY_URL } from '../utils/contactLinks';
+import { REPO_URL, SECURITY_URL, CREDITS_URL } from '../utils/contactLinks';
 
 /**
  * Preserve the inherited support/enterprise/contact route contract without
@@ -35,7 +35,7 @@ export default function SupportPage({ onBack, initialView = 'support' }) {
           <Button variant="subtle" leading={<GitBranch size={15} />} onClick={() => openExternal(REPO_URL)}>
             Fork source
           </Button>
-          <Button variant="subtle" leading={<BookOpen size={15} />} onClick={() => openExternal(REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md')}>
+          <Button variant="subtle" leading={<BookOpen size={15} />} onClick={() => openExternal(CREDITS_URL)}>
             Credits and licenses
           </Button>
           <Button variant="subtle" leading={<ShieldAlert size={15} />} onClick={() => openExternal(SECURITY_URL)}>
