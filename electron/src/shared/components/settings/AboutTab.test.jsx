@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import AboutTab from './AboutTab';
-import { REPO_URL } from '../../utils/bugReport';
+import { REPO_URL, CREDITS_URL } from '../../utils/contactLinks';
 import { openExternal } from '../../api/external';
 import { useAppStore } from '../../store';
 
@@ -31,11 +31,28 @@ describe('AboutTab — external links', () => {
 
   it('the GitHub button opens the canonical repo (derived from the shared REPO_URL constant)', () => {
     render(<AboutTab {...baseProps} />);
-    fireEvent.click(screen.getByRole('button', { name: 'VoiceStudio on GitHub' }));
+    fireEvent.click(screen.getByRole('button', { name: 'BetterVoiceStudio on GitHub' }));
     expect(openExternal).toHaveBeenCalledWith(REPO_URL);
     // Belt-and-braces: the constant itself must point at this project, not a
     // lookalike (the original bug linked github.com/k2-fsa/OmniVoice).
     expect(REPO_URL).toBe('https://github.com/DevTunaSoft/BetterVoiceStudio');
+  });
+
+  it('identifies the fork and credits upstream contributors without advertising commercial licenses', () => {
+    render(<AboutTab {...baseProps} />);
+    expect(screen.getByText('BetterVoiceStudio')).toBeInTheDocument();
+    expect(screen.getByText(/independent, local-first open-source modernization fork of VoiceStudio/i)).toBeInTheDocument();
+    expect(screen.getByText(/Original authors and contributors retain attribution/i)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /commercial license|pro subscription/i })).toBeNull();
+    expect(screen.queryByText(/^VoiceStudio$/)).toBeNull();
+  });
+
+  it('opens the fork credits and licenses page, not upstream commercial offerings', () => {
+    render(<AboutTab {...baseProps} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Credits and licenses' }));
+    expect(openExternal).toHaveBeenCalledWith(CREDITS_URL);
+    expect(CREDITS_URL).toContain('/docs/FORK_AND_ATTRIBUTION.md');
+    expect(CREDITS_URL).toContain(REPO_URL);
   });
 
   it('has no "Model card" link — the app is multi-engine with no single model card', () => {
