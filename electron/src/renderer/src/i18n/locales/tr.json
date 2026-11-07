@@ -4575,6 +4575,7 @@
     "stalled_hint": "İndirme beş dakikadır ilerlemiyor. Bekleyin, iptal edip yeniden deneyin veya yardım isteyin. Paylaşmak için kurulum günlüğünü indirin.",
     "download_log": "Kurulum günlüğünü indir",
     "discord": "Discord üzerinden yardım al",
+    "community": "Community discussions",
     "check_connection": "İndirme bağlantısını kontrol et",
     "checking": "Bağlantı kontrol ediliyor…",
     "use_cpu": "Bunun yerine CPU sürümünü kur",
