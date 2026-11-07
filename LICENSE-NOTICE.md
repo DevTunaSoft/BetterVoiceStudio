@@ -1,4 +1,7 @@
-# VoiceStudio — License Notice
+# BetterVoiceStudio — License and Upstream Attribution Notice
+
+> This is an independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). Copyright notices and third-party license terms inherited from upstream are retained. This fork does not offer or represent upstream paid licenses, Pro/Cloud services, or sponsorships. See [fork attribution](docs/FORK_AND_ATTRIBUTION.md).
+
 
 ## Abbreviation
 
@@ -21,20 +24,10 @@ a network, you must also offer those users the complete corresponding source
 code of your modified version under these same AGPL-3.0 terms. See the full
 text in [`LICENSE`](LICENSE).
 
-Commercial use under the AGPL-3.0 is free. What is paid is a **commercial
-license** for organizations that want to embed VoiceStudio in a closed-source or
-proprietary product or service without the AGPL-3.0 copyleft obligations, and
-the VoiceStudio Pro features. See the plans at <https://voicestudio.sh/pro>; for
-other inquiries contact `hi@voicestudio.sh`.
-
-Contributors license their contributions to Yupcha Softwares Private Limited,
-the company that maintains VoiceStudio, under the
-[Contributor License Agreement](.github/CLA-1.0.md). While a contribution is
-in the public repository, it stays available there under the AGPL-3.0 or
-another OSI-approved licence (CLA section 4).
+The original upstream project has separate commercial licensing and contributor arrangements; those arrangements are **not offerings or contribution requirements of this fork**. This notice does not grant additional rights beyond applicable licenses. Inherited copyright and license obligations remain in effect.
 
 (This Notice is a plain-language summary; the binding terms are the full GNU
-AGPL-3.0 text in [`LICENSE`](LICENSE).)
+AGPL-3.0 text in [`LICENSE`](LICENSE) and any separately applicable licenses.)
 
 ### Scope
 
