@@ -6,10 +6,10 @@ import { runRendererTask } from '@/lib/global-error-recovery';
 import { REPO_URL } from '@shared/utils/contactLinks';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
-const STARS_URL = 'https://api.github.com/repos/debpalash/VoiceStudio';
+const STARS_URL = 'https://api.github.com/repos/DevTunaSoft/BetterVoiceStudio';
 const REFRESH_MS = 20 * 60 * 1000;
 // The last bundled count remains visible when GitHub cannot be reached.
-const BUNDLED_STARS = 43_638;
+const BUNDLED_STARS = 0; // Do not attribute upstream stars to this fork.
 const formatCount = new Intl.NumberFormat('en');
 
 async function fetchStarCount(signal: AbortSignal): Promise<number> {
