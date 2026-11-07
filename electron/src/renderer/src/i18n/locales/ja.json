@@ -4575,6 +4575,7 @@
     "stalled_hint": "5分間ダウンロードが進んでいません。待機するか、キャンセルして再試行するか、サポートを利用してください。共有するにはセットアップログをダウンロードしてください。",
     "download_log": "セットアップログをダウンロード",
     "discord": "Discordでサポートを受ける",
+    "community": "Community discussions",
     "check_connection": "ダウンロード接続を確認",
     "checking": "接続を確認中…",
     "use_cpu": "代わりに CPU 版をインストール",
