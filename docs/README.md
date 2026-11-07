@@ -2,6 +2,10 @@
 
 > **Independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio).** The guides below were inherited and are being reviewed for fork accuracy. References to original upstream services, paid plans, installers, sponsorships or community channels do **not** represent BetterVoiceStudio offerings. See [credits and fork provenance](FORK_AND_ATTRIBUTION.md).
 
+## Start here: BetterVoiceStudio user manual
+
+- [Plain-language user guide — installation, models, workflows, troubleshooting and verified feature status](user-guide/README.md)
+
 ## BetterVoiceStudio program
 
 - [Consolidated modernization and feature program](roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md)
