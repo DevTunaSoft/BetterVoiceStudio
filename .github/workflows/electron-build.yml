@@ -175,6 +175,11 @@ jobs:
           # This applies only to packaged acceptance, not shipped defaults.
           OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
+          # Regression guard: hosted Windows runners must not select ROCm,
+          # including the ARM64 runner with an emulated x64 Python runtime.
+          if [ "$RUNNER_OS" = Windows ]; then
+            node -e "const assert=require('node:assert/strict'); assert.equal(process.env.OMNIVOICE_TORCH_VARIANT, 'cpu'); assert.match(process.env.VOICESTUDIO_RUST_TARGET, /^(x86_64|aarch64)-pc-windows-msvc$/); console.log('PASS: Windows packaged acceptance forces CPU torch on '+process.env.VOICESTUDIO_RUST_TARGET)"
+          fi
           if [ "$RUNNER_OS" = Linux ]; then
             xvfb-run -a node tests/packaged-smoke.mjs --install
           else
