@@ -1,568 +1,98 @@
-<div align="center">
-
 # BetterVoiceStudio
 
-**An independent, community-oriented modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio).**
+**A community-minded, independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio), built to improve reliability, performance, accessibility, audio quality and production workflows.**
 
-*Building toward a more resilient, efficient, extensible and accessible local AI voice-production studio.*
+[Source](https://github.com/DevTunaSoft/BetterVoiceStudio) · [Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Documentation](docs/README.md) · [Roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Credits and licensing](docs/FORK_AND_ATTRIBUTION.md)
 
-[Development roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Fork history and attribution](docs/FORK_AND_ATTRIBUTION.md) · [Engineering status](docs/roadmap/BASELINE_AUDIT_PASS_1.md) · [CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions)
+> **Independent fork — no upstream affiliation.** BetterVoiceStudio is developed from the open-source [VoiceStudio](https://github.com/debpalash/VoiceStudio) codebase and its incorporated projects. We value sharing, retaining original copyright and license notices, and crediting upstream authors. The original VoiceStudio website, installers, subscriptions, cloud services, sponsorships, and community channels are **not BetterVoiceStudio offerings** and are intentionally not promoted here.
 
-</div>
+> **Development status.** This fork is under active modernization. The roadmap is a direction, **not a list of shipped features**. Much of the existing application still uses the original VoiceStudio name and identifiers for compatibility. Check [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) for any published BetterVoiceStudio artifacts; **do not install an upstream release expecting fork changes**.
 
-> [!IMPORTANT]
-> **Fork and release disclosure.** This repository is **BetterVoiceStudio**, maintained independently at [DevTunaSoft/BetterVoiceStudio](https://github.com/DevTunaSoft/BetterVoiceStudio). It derives from [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio), which in turn incorporates the OmniVoice ecosystem. The original creators retain credit for their work. This fork is **not affiliated with or endorsed by** the upstream maintainers. Upstream website, Discord, sponsors, paid services, installers, and release links elsewhere in inherited documentation belong to the **original VoiceStudio project**, not to BetterVoiceStudio. Do not assume upstream installers contain this fork's changes.
+## What BetterVoiceStudio is
 
-> [!WARNING]
-> **Development status.** The modernization roadmap describes **planned and under-evaluation capabilities**, not a list of completed features. The fork currently retains much of the upstream VoiceStudio code, product identifiers and documentation while changes are developed and validated. A successful CI run is not proof of end-to-end voice quality or target-hardware readiness. See [verified work and known limits](docs/FORK_AND_ATTRIBUTION.md#verified-progress-and-limitations).
+A local-first AI speech and voice-production application built upon the substantial existing VoiceStudio foundation. The inherited codebase includes voice cloning and design, transcription, dubbing, narration and audiobooks, model management, queued jobs, and automation. Actual capabilities depend on installed engines, hardware, platform, model licenses and configuration.
 
-## Why this fork exists
+The fork's mission is to strengthen and extend those workflows without replacing working implementations merely for the sake of rewriting them.
 
-VoiceStudio already provides substantial local voice creation and production capabilities. Rather than rewriting working systems, BetterVoiceStudio aims to **build on that foundation**: strengthen crash recovery, data integrity, security and job handling; measure and improve performance; expand quality verification and production automation; improve accessibility; and introduce richer workflows where the existing architecture does not already provide them.
+## Our direction
 
-**No duplicate features by design:** before implementing a proposed feature, we inspect existing code, APIs, data models, tests and user interfaces. We classify it as existing, partial, needs hardening, missing or unknown. We extend the existing source of truth whenever practical instead of creating competing implementations.
-
-## What exists, what's changed, and what's planned
-
-| Area | Current position |
+| Focus | What we're working toward |
 | --- | --- |
-| Voice cloning, design, transcription, dubbing, narration, batch processing | **Inherited VoiceStudio capabilities**; see the existing [feature catalog](docs/feature-catalog.md). Not claimed as newly invented by this fork. |
-| Model management, audio-quality services, project bundles, performance profiles | **Existing code identified**; completeness and gaps require deeper behavioral audit. |
-| Modernization architecture and capability program | **Documented in this fork**; implementation is phased. |
-| Electron IPC caller authorization | **Initial hardening committed** with regression contracts; broader security audit remains. |
-| Queue shutdown and restart handling | **Hardening committed** with additional regression tests; consult current branch CI for verification. |
-| Automated fuzzing, fault injection and cross-platform regression | **Existing upstream tests plus an expansion plan**; do not infer every proposed scenario is already covered. |
-| AI director, production supervisor, expanded audio QA, adaptive scheduling, advanced editor and model laboratory | **Proposals to inventory and evaluate**; not advertised as delivered features. |
+| **Reliable generation** | Crash-safe jobs, checkpointing, predictable cancellation, safe recovery and project integrity |
+| **Performance** | Measured startup and inference improvements, intelligent CPU/GPU memory management and model loading |
+| **Audio quality** | Quality inspection, pronunciation tools, speech-to-script verification and selective regeneration |
+| **Professional production** | Better audiobook, dubbing, editing, voice-directing and export workflows |
+| **Automation** | Integrated production pipelines, reusable recipes, actionable diagnostics and accessible controls |
+| **Trust and openness** | Consent-aware voice use, local-first processing, clear licensing, upstream credit and reproducible builds |
+| **Engineering quality** | Fuzzing, fault injection, cross-platform regression tests, real-audio verification and honest release gates |
 
-## Engineering principles
+**Planned does not mean implemented.** See the [consolidated capability program](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) for the complete backlog and verification standards.
 
-- Preserve existing working functionality, file formats, user projects and upstream attribution.
-- Reuse authoritative implementations rather than creating duplicate queues, model managers, project stores or audio pipelines.
-- Add reproducible regression tests for confirmed defects; broaden fuzzing with new failure modes on each round.
-- Verify fixes with targeted tests, full CI, fault injection and relevant real-world hardware/audio testing.
-- Distinguish **implemented**, **CI verified**, **hardware verified**, and **planned** work.
-- Protect user data, minimize unnecessary remote processing, and require authorization for voice cloning.
-- Keep changes reviewable on a development branch until verified and approved for merge.
+## Development progress
 
-**Start here:** [Consolidated Capability Program](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Modernization Program](docs/roadmap/MODERNIZATION_PROGRAM.md) · [Fork origin and attribution](docs/FORK_AND_ATTRIBUTION.md).
+- Established a modernization roadmap, baseline audit and non-duplication policy.
+- Added initial Electron IPC caller-authorization checks and regression contracts.
+- Committed a queue shutdown/restart correction and accompanying regression tests.
+- A prior baseline GitHub Actions run [passed its scheduled jobs](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42343938623). This run predates later commits; check the [current workflow results](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) for their verification.
+- Full production qualification, representative GPU inference, audio quality and every target OS/hardware combination remain **unverified** unless separately documented.
+
+## Existing functionality and technical guides
+
+These describe the **inherited application** and are maintained as the fork evolves. Some internal screenshots, commands and platform guides may still refer to VoiceStudio. A guide's existence is not proof that a BetterVoiceStudio-branded release has shipped.
+
+| Area | Documentation |
+| --- | --- |
+| Voice design and cloning | [Voice design](docs/voice-design.md) · [Audio quality](docs/audio-quality.md) |
+| Transcription and dictation | [Transcriptions](docs/electron-transcriptions.md) · [Dictation](docs/features/dictation.md) |
+| Video dubbing | [Dubbing](docs/electron-dubbing.md) · [Multi-speaker guide](docs/dubbing/multi-speaker-guide.md) |
+| Audiobooks and projects | [Long-form narration](docs/electron-longform.md) · [Projects](docs/electron-projects.md) |
+| Models and engines | [Engine guides](docs/engines/README.md) · [Model downloads](docs/downloading-models.md) |
+| Automation | [Local API](docs/speech-platform.md) · [MCP](docs/mcp.md) |
+| Developer reference | [Architecture](docs/STRUCTURE.md) · [Development documentation](docs/README.md) |
+
+## Build and test from source
+
+This repository currently retains upstream build identifiers and development tooling. These commands are **developer workflows**, not a claim that an independently packaged BetterVoiceStudio installer is available.
+
+**Prerequisites:** Follow the relevant [development and platform documentation](docs/README.md); the monorepo declares Bun 1.4.2 and Python 3.11+.
+
+```sh
+git clone https://github.com/DevTunaSoft/BetterVoiceStudio.git
+cd BetterVoiceStudio
+bun install
+bun run typecheck
+bun run lint
+bun run test
+bun run build
+```
+
+For Python tests, use the repository's existing `uv` environment and test instructions. See [CI](.github/workflows/ci.yml) for the full cross-platform verification matrix. Not all native, GPU or installer tests can run on every development machine.
+
+## No duplicate implementations
+
+Before adding features, we search the entire repository for existing code, APIs, data structures, tests and documentation. We then **reuse and improve the authoritative implementation** wherever possible. The repository already contains job queues, model management, audio-quality tools, voice profiles, project bundles and performance services; their completeness is being audited.
+
+Every substantive change should include a reproducible test, regression verification, multiple distinct fault/fuzz scenarios where appropriate, and a record of remaining risks. We do not claim an application is error-free or production-ready without supporting evidence.
+
+## Open source, credits and licensing
+
+**BetterVoiceStudio stands on the work of others.** The primary upstream is [VoiceStudio by Palash Debnath and contributors](https://github.com/debpalash/VoiceStudio). The inherited repository also includes the [OmniVoice](https://github.com/k2-fsa/OmniVoice) ecosystem and components adapted from other open-source projects. See [fork attribution and third-party credits](docs/FORK_AND_ATTRIBUTION.md), [LICENSE-NOTICE.md](LICENSE-NOTICE.md), [model credits](docs/model-credits.md), and the original copyright and license notices in the source tree.
+
+The application declares **AGPL-3.0-only** for its main codebase; certain incorporated components, model weights, tokenizers, datasets and media assets have **different licenses**. In particular, some model weights have non-commercial restrictions. The application license alone does not grant rights to use every model or voice commercially. Read the applicable terms before use or redistribution.
+
+We retain upstream Git history and attribution rather than taking credit for inherited work. If you find missing credit, please [open an issue](https://github.com/DevTunaSoft/BetterVoiceStudio/issues).
+
+## Contributing and reporting issues
+
+We welcome fixes, tests, documentation, accessibility improvements, and new ideas that build on existing work.
+
+- [Report a bug or propose an enhancement](https://github.com/DevTunaSoft/BetterVoiceStudio/issues)
+- [Review development changes](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls)
+- [Contribution review standards](.github/pull_request_template.md)
+- [Development roadmap](docs/roadmap/MODERNIZATION_PROGRAM.md)
+
+For vulnerabilities, use this repository's [security reporting page](https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories) where available; avoid publicly disclosing exploitable details.
 
 ---
 
-## Inherited VoiceStudio overview and documentation
-
-The sections below originate from the upstream VoiceStudio project and are retained as reference while the fork is modernized. **Screenshots, product names, installation commands, download links, paid offerings, community links, and platform support statements below may refer to upstream rather than a BetterVoiceStudio release.** Check the fork's [Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) and [Releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) for fork-specific artifacts; do not assume a release exists.
-
-<p align="center">
-  <a href="docs/media/electron/voicestudio.mp4">
-    <picture>
-      <source media="(prefers-reduced-motion: reduce) and (max-width: 768px)" srcset="docs/media/electron/voice-cloning.webp" />
-      <source media="(prefers-reduced-motion: reduce)" srcset="docs/media/electron/voice-cloning.png" />
-      <img src="docs/media/electron/voicestudio.gif" alt="A tour of the app: voice cloning, voice design, dubbing, and model management" width="100%" />
-    </picture>
-  </a><br />
-  <sub>Demo workspace · Default dark theme · <a href="docs/media/electron/voicestudio.mp4">Watch the HD tour</a></sub>
-</p>
-
-<p align="center">
-  <a href="https://github.com/debpalash/VoiceStudio/releases/latest"><img src="https://img.shields.io/badge/Download-993f61?style=for-the-badge&amp;logo=github&amp;logoColor=ffffff" alt="Download" height="24" /></a>
-  <a href="#get-started"><img src="https://img.shields.io/badge/Get%20started-27272a?style=for-the-badge" alt="Get started" height="24" /></a>
-  <a href="https://voicestudio.sh/pro?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=hero-badge"><img src="https://img.shields.io/badge/VoiceStudio%20Pro-27272a?style=for-the-badge" alt="VoiceStudio Pro" height="24" /></a>
-  <a href="https://app.voicestudio.sh/?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=hero-badge"><img src="https://img.shields.io/badge/VoiceStudio%20Cloud-27272a?style=for-the-badge" alt="VoiceStudio Cloud" height="24" /></a>
-</p>
-
-## What you can do
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="docs/media/electron/voice-cloning.png"><img src="docs/media/electron/voice-cloning.webp" alt="Voice cloning workspace with the bundled demo voice" width="100%" /></a><br />
-      <strong><a href="docs/audio-quality.md">Voice cloning</a></strong><br />
-      Turn a clean reference recording into speech in a familiar voice.
-    </td>
-    <td width="50%" valign="top">
-      <a href="docs/media/electron/dubbing.png"><img src="docs/media/electron/dubbing.webp" alt="Video dubbing workspace" width="100%" /></a><br />
-      <strong><a href="docs/electron-dubbing.md">Video dubbing</a></strong><br />
-      Translate and dub videos with speech timed to the original.
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="docs/media/electron/voice-design.png"><img src="docs/media/electron/voice-design.webp" alt="Describe a voice in the voice design workspace" width="100%" /></a><br />
-      <strong><a href="docs/electron-voice-design.md">Voice design</a></strong><br />
-      Describe a voice in words and generate it.
-    </td>
-    <td width="50%" valign="top">
-      <a href="docs/media/electron/models.png"><img src="docs/media/electron/models.webp" alt="Install and manage local speech models" width="100%" /></a><br />
-      <strong><a href="docs/downloading-models.md">Local models</a></strong><br />
-      Choose your engines and download only the models you need.
-    </td>
-  </tr>
-</table>
-
-<details>
-<summary><strong>More screenshots</strong></summary>
-
-<table>
-  <tr>
-    <td width="50%"><a href="docs/media/electron/overview.png"><img src="docs/media/electron/overview.webp" alt="Workspace overview" width="100%" /></a><br /><strong>Workspace overview</strong></td>
-    <td width="50%"><a href="docs/media/electron/model-packs.png"><img src="docs/media/electron/model-packs.webp" alt="Model packs" width="100%" /></a><br /><strong>Model packs</strong></td>
-  </tr>
-</table>
-
-</details>
-
-- **Dictate & transcribe** — A floating dictation widget and local transcription
-- **Narrate & batch** — Stories, audiobooks and queued jobs
-- **Connect & automate** — Local API, MCP, reusable recipes and watch folders
-
-Start with **VoiceStudio** (default, powered by k2-fsa/OmniVoice), or pick from dozens of other engines in the Model Manager. See the [features & engine catalog](docs/feature-catalog.md).
-
-<p align="center"><a href="https://discord.gg/bzQavDfVV9"><img src="docs/assets/discord-community.svg" alt="Come say hello! Join us on Discord" height="64" /></a></p>
-
-## Pro and Cloud
-
-Everything above is free, runs on your own hardware and needs no account. Pro and Cloud are optional.
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://voicestudio.sh/pro?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section"><img src="docs/assets/voicestudio-pro.svg" alt="" width="56" height="56" align="middle" /></a>&nbsp;&nbsp;<strong><a href="https://voicestudio.sh/pro?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section">VoiceStudio Pro</a></strong><br /><br />
-      For paid client work across more than one machine.
-      <ul>
-        <li>A Commercial License for your client work, emailed to you</li>
-        <li>One user on up to 3 devices at once</li>
-        <li>Send jobs to your other GPUs while your projects stay local</li>
-        <li>New features and fixes first</li>
-      </ul>
-      <sub>Closed-source build, account required, 7-day full refund. The AGPL-3.0 app stays free, including commercial use under its terms.</sub><br /><br />
-      <strong><a href="https://voicestudio.sh/pro?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section">See Pro plans →</a></strong>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://app.voicestudio.sh/?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section"><img src="docs/assets/voicestudio-cloud.svg" alt="" width="56" height="56" align="middle" /></a>&nbsp;&nbsp;<strong><a href="https://app.voicestudio.sh/?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section">VoiceStudio Cloud</a></strong><br /><br />
-      A hosted voice and dubbing API, coming soon. No GPU needed.
-      <ul>
-        <li>Speech, voice design and voice cloning with consent</li>
-        <li>Dubbing, transcription and audiobooks</li>
-        <li>Usage and credits by day or project</li>
-        <li>Long jobs that run on their own</li>
-      </ul>
-      <sub>Not available yet: join early access for free usage credits. The desktop app stays free and local.</sub><br /><br />
-      <strong><a href="https://app.voicestudio.sh/?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project&amp;utm_content=readme-section">Join Cloud early access →</a></strong>
-    </td>
-  </tr>
-</table>
-
-## Platforms
-
-Choose your system, then expand an installation method.
-
-<a id="install-macos"></a>
-
-<details>
-<summary><img src="docs/assets/platforms/apple.svg" alt="" width="20" height="20" /> <strong>macOS</strong> · Homebrew · DMG · installer</summary>
-
-<blockquote>
-
-**Stable · Apple Silicon**<br />macOS 13.3+ · Apple Silicon: local engines with Metal (MPS).
-
-<a href="https://github.com/debpalash/homebrew-tap"><img src="https://img.shields.io/badge/Homebrew-27272a?style=flat-square&amp;logo=homebrew&amp;logoColor=ffffff" alt="Homebrew" height="20" /></a>
-
-```sh
-brew tap debpalash/tap
-brew trust --cask debpalash/tap/voicestudio
-brew install --cask debpalash/tap/voicestudio
-```
-
-<details>
-<summary>DMG</summary>
-
-Download the DMG for your Mac, open it and drag VoiceStudio into Applications.
-
-[Download](https://github.com/debpalash/VoiceStudio/releases/latest) · [Guide](docs/install/macos.md)
-
-</details>
-
-<details>
-<summary>One-command installer</summary>
-
-```sh
-curl -fsSL https://voicestudio.sh/install | sh
-```
-
-</details>
-
-<details>
-<summary>Intel Mac · remote backend · Limited</summary>
-
-The app UI runs on Intel; connect it to a VoiceStudio backend on another computer.
-
-[Guide](docs/install/macos.md)
-
-</details>
-
-> [!NOTE]
-> On macOS, "VoiceStudio is damaged and can't be opened" means Gatekeeper blocked the app, not that the download is broken. See the [Gatekeeper fix](docs/install/macos.md#gatekeeper-quarantine).
-
-</blockquote>
-
-</details>
-
-<a id="install-windows"></a>
-
-<details>
-<summary><img src="docs/assets/platforms/windows.svg" alt="" width="20" height="20" /> <strong>Windows</strong> · PowerShell · EXE</summary>
-
-<blockquote>
-
-**Stable · x64**<br />Windows 10/11 x64 · NVIDIA CUDA · AMD ROCm (opt-in) · CPU.
-
-```powershell
-irm https://voicestudio.sh/install.ps1 | iex
-```
-
-[Download the Windows installer](https://github.com/debpalash/VoiceStudio/releases/latest) · [Guide](docs/install/windows.md) · [AMD ROCm](docs/install/windows-rocm.md)
-
-<details>
-<summary>Windows on ARM · experimental</summary>
-
-Native app UI; the x64 Python backend runs under emulation on the CPU.
-
-[Download](https://github.com/debpalash/VoiceStudio/releases/latest) · [Guide](docs/install/windows.md)
-
-</details>
-
-</blockquote>
-
-</details>
-
-<a id="install-linux"></a>
-
-<details open>
-<summary><img src="docs/assets/platforms/linux.svg" alt="" width="20" height="20" /> <strong>Linux</strong> · AUR · Snap · DEB · AppImage · Nix</summary>
-
-<blockquote>
-
-**Stable · x64**<br />Linux x64 · NVIDIA CUDA · CPU · Vulkan for supported GGUF engines.
-
-<details>
-<summary>One-command installer</summary>
-
-```sh
-curl -fsSL https://voicestudio.sh/install | sh
-```
-
-</details>
-
-<details>
-<summary>Arch / Manjaro / EndeavourOS · AUR</summary>
-
-<a href="https://aur.archlinux.org/packages/voicestudio-bin"><img src="https://img.shields.io/badge/AUR-1793d1?style=flat-square&amp;logo=archlinux&amp;logoColor=ffffff" alt="AUR" height="20" /></a>
-
-```sh
-yay -S voicestudio-bin
-```
-
-Also available through `paru -S voicestudio-bin`.
-
-[Development sources](https://aur.archlinux.org/packages/voicestudio-git) · `yay -S voicestudio-git`
-
-<details>
-<summary>Build from AUR and install with pacman</summary>
-
-```sh
-sudo pacman -S --needed base-devel git
-git clone https://aur.archlinux.org/voicestudio-bin.git
-cd voicestudio-bin
-makepkg -s
-sudo pacman -U ./voicestudio-bin-*.pkg.tar.zst
-```
-
-</details>
-
-</details>
-
-<details>
-<summary>Ubuntu / Debian / Linux Mint · DEB</summary>
-
-Download the `.deb` into the current folder, then install it:
-
-[Download](https://github.com/debpalash/VoiceStudio/releases/latest)
-
-```sh
-sudo apt install ./VoiceStudio-*-linux-x64.deb
-```
-
-</details>
-
-<details>
-<summary>Snap · Ubuntu, Fedora, openSUSE and more</summary>
-
-<a href="https://snapcraft.io/voicestudio"><img src="https://img.shields.io/badge/Snap%20Store-27272a?style=flat-square&amp;logo=snapcraft&amp;logoColor=ffffff" alt="Snap Store" height="20" /></a>
-
-With [snapd installed](https://snapcraft.io/docs/installing-snapd):
-
-```sh
-sudo snap install voicestudio
-```
-
-To enable microphone access:
-
-```sh
-sudo snap connect voicestudio:audio-record
-```
-
-</details>
-
-<details>
-<summary>Any Linux distribution · AppImage</summary>
-
-Download the AppImage into the current folder, then launch it:
-
-[Download](https://github.com/debpalash/VoiceStudio/releases/latest)
-
-```sh
-chmod +x VoiceStudio-*-linux-x64.AppImage
-./VoiceStudio-*-linux-x64.AppImage
-```
-
-</details>
-
-<details>
-<summary>Nix / NixOS · source environment</summary>
-
-Enter the repository’s FHS development environment, then run from source:
-
-```sh
-git clone https://github.com/debpalash/VoiceStudio.git
-cd VoiceStudio
-nix develop .#fhs
-bun run dev
-```
-
-[Guide](docs/install/nix.md)
-
-</details>
-
-[Guide](docs/install/linux.md)
-
-</blockquote>
-
-</details>
-
-<a id="install-docker"></a>
-
-<details>
-<summary><img src="docs/assets/platforms/docker.svg" alt="" width="20" height="20" /> <strong>Docker</strong> · GHCR · Docker Hub</summary>
-
-<blockquote>
-
-Stable images · CPU · NVIDIA CUDA · AMD ROCm.
-
-<a href="https://github.com/debpalash/VoiceStudio/pkgs/container/voicestudio"><img src="https://img.shields.io/badge/GHCR-27272a?style=flat-square&amp;logo=github&amp;logoColor=ffffff" alt="GHCR" height="20" /></a>
-
-**Run locally on the CPU (Bash)**
-
-```sh
-export OMNIVOICE_API_KEY="$(openssl rand -hex 32)"
-docker run -d --name omnivoice \
-  -p 127.0.0.1:3900:3900 \
-  -e OMNIVOICE_API_KEY \
-  -e OMNIVOICE_DATA_DIR=/app/omnivoice_data \
-  -v omnivoice-data:/app/omnivoice_data \
-  ghcr.io/debpalash/voicestudio:stable
-printf 'API key: %s\n' "$OMNIVOICE_API_KEY"
-```
-
-Open http://localhost:3900 and use the API key printed below.
-
-[NVIDIA, AMD ROCm and Compose instructions](docs/install/docker.md)
-
-[Docker Hub mirror](https://hub.docker.com/r/palashdeb/omnivoice-studio): `palashdeb/omnivoice-studio:stable`
-
-</blockquote>
-
-</details>
-
-<a id="install-android"></a>
-
-<details>
-<summary><img src="docs/assets/platforms/android.svg" alt="" width="20" height="20" /> <strong>Android</strong> · APK · Obtainium · F-Droid repository</summary>
-
-<blockquote>
-
-Android 10+ · Preview · On-device, offline after model download.
-
-[Download APK](https://github.com/debpalash/VoiceStudio/releases/latest) · [Guide](docs/mobile.md#install)
-
-<details>
-<summary>F-Droid · VoiceStudio repository</summary>
-
-Add this repository in an F-Droid-compatible client; verify the fingerprint in the guide.
-
-```text
-https://debpalash.github.io/VoiceStudio/fdroid/repo
-```
-
-[Guide](store/fdroid/README.md)
-
-</details>
-
-<details>
-<summary>Obtainium · GitHub releases</summary>
-
-Add this source in Obtainium, or import the provided configuration.
-
-```text
-https://github.com/debpalash/VoiceStudio
-```
-
-[Import configuration](https://debpalash.github.io/VoiceStudio/obtainium.json)
-
-</details>
-
-<details>
-<summary>Install over USB with adb</summary>
-
-```sh
-adb install -r VoiceStudio-*-android.apk
-```
-
-</details>
-
-</blockquote>
-
-</details>
-
-<a id="install-ios"></a>
-
-<details>
-<summary><img src="docs/assets/platforms/apple.svg" alt="" width="20" height="20" /> <strong>iPhone / iPad</strong> · IPA · sideloading</summary>
-
-<blockquote>
-
-iOS / iPadOS 17+ · Preview · On-device, offline after model download.
-
-Download the IPA and follow the signing and sideloading instructions.
-
-[Download](https://github.com/debpalash/VoiceStudio/releases/latest) · [Guide](docs/mobile.md#install)
-
-</blockquote>
-
-</details>
-
-Desktop and phone installers are on the [latest release](https://github.com/debpalash/VoiceStudio/releases/latest); Docker images come from GHCR. No GPU? The app is fully usable on the CPU, just slower. Native GGUF engines can also use Vulkan on AMD, Intel and NVIDIA GPUs; OmniVoice GGUF picks its GPU and model size automatically on Windows and Linux ([OmniVoice](docs/engines/omnivoice-gguf.md#vulkan-acceleration), [CosyVoice](docs/engines/cosyvoice-gguf.md)). Speed by engine and hardware: [performance](docs/performance.md).
-
-
-## Get started
-
-Install using the options above. Then open **Voice cloning**, pick a voice or add a clean reference recording, type your text and generate. The app asks before it downloads any model.
-
-<details>
-<summary><strong>More install options</strong>: a specific version, current main, uninstall, from source, with a coding agent</summary>
-
-```sh
-curl -fsSL https://voicestudio.sh/install | sh -s -- --version X.Y.Z   # a specific release
-curl -fsSL https://voicestudio.sh/install | sh -s -- --main            # build current main
-curl -fsSL https://voicestudio.sh/install | sh -s -- --uninstall       # remove the app, keep your data
-```
-
-If `voicestudio.sh` is unreachable, run the script straight from the repository:
-`curl -fsSL https://raw.githubusercontent.com/debpalash/VoiceStudio/main/scripts/install.sh | sh`.
-Prerequisites and behavior: [installer guide](docs/install/script.md).
-
-**From source**
-
-```bash
-git clone https://github.com/debpalash/VoiceStudio.git
-cd VoiceStudio
-bun run dev
-```
-
-`bun run dev` installs the JavaScript dependencies and, when using a supported
-local backend, the Python dependencies before launching Electron. Run
-`bun run setup:api` directly when you only need to rebuild the Python environment.
-
-See [Electron setup](electron/README.md).
-
-**With a coding agent** (Claude Code, Codex, Cursor, …), paste:
-
-```text
-Install the VoiceStudio app on this device and verify it works, following
-https://github.com/debpalash/VoiceStudio/blob/main/docs/install/agent.md
-```
-
-Upgrading from 0.5.3 or older (the Tauri app)? [Install the new app separately](docs/electron-migration.md).
-
-</details>
-
-## Documentation
-
-[All guides](docs/README.md)
-
-| Need | Start here |
-|---|---|
-| Setup help | [Troubleshooting](docs/install/troubleshooting.md) · [Model downloads](docs/downloading-models.md) |
-| Guides | [Multi-speaker dubbing](docs/dubbing/multi-speaker-guide.md) · [Expressive speech](docs/expressive-speech.md) · [Exporting dubs](docs/dubbing/export.md) |
-| Models & quality | [Engine guides](docs/engines/README.md) · [whisper.cpp ASR](docs/engines/whisper-cpp.md) · [Benchmarks](docs/benchmarks.md) |
-| Integrations | [Local API](docs/speech-platform.md) · [MCP](docs/mcp.md) · [Examples](examples/README.md) |
-| Phone apps | [iOS and Android](docs/mobile.md) |
-| Development | [Contributing](.github/CONTRIBUTING.md) ([sign the CLA](.github/CONTRIBUTING.md#contribution-licensing) before your first PR) · [Changelog](CHANGELOG.md) |
-
-Agent skills: `npx skills add debpalash/VoiceStudio` (**voicestudio** for audio work, **voicestudio-maintainer** for the repo).
-
-## Sponsors
-
-The VoiceStudio app is free and needs no paid cloud. Sponsors keep it shipping: they fund maintainer time, test hardware, code-signing and release infrastructure.
-
-<p>
-    <a href="https://github.com/debpalash/OpenGTM?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/opengtm-dark.svg" /><img src="docs/sponsors/opengtm.svg" alt="OpenGTM" height="48" align="middle" /></picture></a>
-    <a href="https://github.com/debpalash/Opal?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/opal-dark.svg" /><img src="docs/sponsors/opal.svg" alt="Opal" height="48" align="middle" /></picture></a>
-    <a href="https://github.com/velixio/supermetry?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/supermetry-dark.svg" /><img src="docs/sponsors/supermetry.svg" alt="Supermetry" height="48" align="middle" /></picture></a>
-</p>
-
-For sponsorship inquiries, contact [sponsor@voicestudio.sh](mailto:sponsor@voicestudio.sh).
-
-<a href="https://github.com/sponsors/debpalash"><img src="https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white" alt="Sponsor on GitHub Sponsors" /></a>
-[Ko-fi](https://ko-fi.com/debpalash) · [PayPal](https://paypal.me/palashCoder) · [Tiers and benefits](SPONSORS.md) · [Get your logo listed](https://github.com/debpalash/VoiceStudio/issues/new?template=sponsor.yml)
-
-## Other projects
-
-More open-source tools from the people building VoiceStudio.
-
-- **[OpenGTM](https://opengtm.palash.dev/?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=related-projects)** — Find and enrich companies and people in a self-hosted go-to-market workspace. [Source](https://github.com/debpalash/OpenGTM).
-- **[Opal](https://opal.palash.dev/?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=related-projects)** — Watch, stream and browse your media in one native, open-source player. [Source](https://github.com/debpalash/Opal).
-- **[Supermetry](https://supermetry.com/?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=related-projects)** — Understand your websites and products with self-hosted, cookie-free analytics. [Source](https://github.com/velixio/supermetry).
-
-More projects: [debpalash](https://github.com/debpalash?tab=repositories) · [velixio](https://github.com/velixio?tab=repositories)
-
-## Team
-
-### Core team
-
-<table>
-<tr>
-<td align="center" width="200"><a href="https://github.com/debpalash"><img src="https://github.com/debpalash.png?size=160" width="80" height="80" alt="Palash Debnath"></a><br><b>Palash Debnath</b><br><sub>Creator and Core Team</sub><br><sub><a href="https://palash.dev">palash.dev</a> · <a href="https://github.com/debpalash">GitHub</a> · <a href="https://x.com/idebpalash">X</a></sub></td>
-<td align="center" width="200"><a href="https://github.com/velixio"><img src="https://github.com/velixio.png?size=160" width="80" height="80" alt="Shimul Debnath"></a><br><b>Shimul Debnath</b><br><sub>Core Team</sub><br><sub><a href="https://shimul.me">shimul.me</a> · <a href="https://github.com/velixio">GitHub</a> · <a href="https://x.com/shimuldn">X</a></sub></td>
-</tr>
-</table>
-
-### Contributors
-
-<a href="https://github.com/kevin9327"><img src="https://github.com/kevin9327.png?size=96" width="44" height="44" alt="@kevin9327" title="@kevin9327"></a> <a href="https://github.com/jaketame"><img src="https://github.com/jaketame.png?size=96" width="44" height="44" alt="@jaketame" title="@jaketame"></a> <a href="https://github.com/psiberfunk"><img src="https://github.com/psiberfunk.png?size=96" width="44" height="44" alt="@psiberfunk" title="@psiberfunk"></a> <a href="https://github.com/rudycelekli"><img src="https://github.com/rudycelekli.png?size=96" width="44" height="44" alt="@rudycelekli" title="@rudycelekli"></a> <a href="https://github.com/paoloantinori"><img src="https://github.com/paoloantinori.png?size=96" width="44" height="44" alt="@paoloantinori" title="@paoloantinori"></a> <a href="https://github.com/Chang-Jin-Lee"><img src="https://github.com/Chang-Jin-Lee.png?size=96" width="44" height="44" alt="@Chang-Jin-Lee" title="@Chang-Jin-Lee"></a> <a href="https://github.com/swadhinbiswas"><img src="https://github.com/swadhinbiswas.png?size=96" width="44" height="44" alt="@swadhinbiswas" title="@swadhinbiswas"></a> <a href="https://github.com/BichengWang"><img src="https://github.com/BichengWang.png?size=96" width="44" height="44" alt="@BichengWang" title="@BichengWang"></a> <a href="https://github.com/nirmalchatur"><img src="https://github.com/nirmalchatur.png?size=96" width="44" height="44" alt="@nirmalchatur" title="@nirmalchatur"></a> <a href="https://github.com/Shivendra-Coherent"><img src="https://github.com/Shivendra-Coherent.png?size=96" width="44" height="44" alt="@Shivendra-Coherent" title="@Shivendra-Coherent"></a> <a href="https://github.com/marreiradigital"><img src="https://github.com/marreiradigital.png?size=96" width="44" height="44" alt="@marreiradigital" title="@marreiradigital"></a> <a href="https://github.com/nvtoan0201-swe"><img src="https://github.com/nvtoan0201-swe.png?size=96" width="44" height="44" alt="@nvtoan0201-swe" title="@nvtoan0201-swe"></a>
-
-Thank you to everyone who sends code, reports, translations and ideas. [All contributors](https://github.com/debpalash/VoiceStudio/graphs/contributors) · [Contribute](.github/CONTRIBUTING.md)
-
-## License & responsible use
-
-[AGPL-3.0](LICENSE) covers the app, including commercial use under its terms. Model weights, voices and generated output have their own licences, which the Model Manager shows for each model ([inventory](docs/licensing/model-inventory.md)). Clone a voice only with its owner's permission. Details: [LICENSE-NOTICE.md](LICENSE-NOTICE.md).
-
-## Community tutorials
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=I-u-A-oisIU&amp;utm_source=github&amp;utm_medium=readme&amp;utm_campaign=community_tutorials"><img src="https://i.ytimg.com/vi/I-u-A-oisIU/hqdefault.jpg" alt="VoiceStudio tutorial by Nafay 3D on YouTube" width="30%" /></a>
-  <a href="https://www.youtube.com/watch?v=hsLRbXLBP4U&amp;utm_source=github&amp;utm_medium=readme&amp;utm_campaign=community_tutorials"><img src="https://i.ytimg.com/vi/hsLRbXLBP4U/hqdefault.jpg" alt="VoiceStudio tutorial by Samuel Gregory on YouTube" width="30%" /></a>
-  <a href="https://www.youtube.com/watch?v=2KemGhEI0Ck&amp;utm_source=github&amp;utm_medium=readme&amp;utm_campaign=community_tutorials"><img src="https://i.ytimg.com/vi/2KemGhEI0Ck/hqdefault.jpg" alt="VoiceStudio tutorial by kilObit on YouTube" width="30%" /></a><br />
-  <sub>Nafay 3D · Samuel Gregory · kilObit</sub>
-</p>
-
-<p align="center"><a href="https://discord.gg/bzQavDfVV9"><img src="docs/assets/discord-community.svg" alt="Come say hello! Join us on Discord" height="64" /></a></p>
+*Thanks to the original VoiceStudio maintainers, OmniVoice authors, upstream contributors, and the broader open-source community. BetterVoiceStudio exists because open-source projects can be studied, shared, improved and credited.*
