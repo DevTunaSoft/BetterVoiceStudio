@@ -170,6 +170,10 @@ jobs:
         timeout-minutes: 25
         env:
           VOICESTUDIO_RUNTIME_TIMEOUT_MS: '1200000'
+          # Hosted Windows runners have no supported AMD GPU. Force the
+          # CPU torch recipe on x64 and on ARM64's emulated x64 runtime.
+          # This applies only to packaged acceptance, not shipped defaults.
+          OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
           if [ "$RUNNER_OS" = Linux ]; then
             xvfb-run -a node tests/packaged-smoke.mjs --install
