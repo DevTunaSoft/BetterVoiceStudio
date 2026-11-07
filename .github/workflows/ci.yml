@@ -19,12 +19,14 @@ on:
 permissions:
   contents: read
 
-# A new push to a PR cancels that PR's older run (a mass rebase of ~65 branches
-# once queued 360 runs, most of them for commits already replaced). Pushes to main
-# and manual runs are keyed by commit, so every main commit still gets its own CI.
+# Pushes to the modernization branch and PR synchronize events can be two
+# notifications for the SAME commit. Coalesce them by repository + source
+# branch so the newest run replaces duplicates and superseded commits.
+# Fork branches with identical names remain isolated by owner/repository.
+# Never cancel main-branch CI: every main commit needs independent evidence.
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ci-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.ref_name == 'engineering/modernization-foundation' }}
 
 env:
   # Run all JavaScript actions on Node 24 (GH deprecates Node 20 in Sep 2026).
