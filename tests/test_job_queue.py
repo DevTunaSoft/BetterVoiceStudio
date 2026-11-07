@@ -326,3 +326,43 @@ async def test_worker_cannot_await_its_own_queue_shutdown():
     current = await q.submit("self-stop-attempt", worker)
     assert (await q.wait(current.id, timeout=2)).result == 1
     await q.stop()
+
+
+@pytest.mark.asyncio
+async def test_cancelled_stop_caller_does_not_abandon_inflight_shutdown():
+    """Aborting an API request must not allow new workers while old ones clean up."""
+    q = JobQueue(name="stop-caller-cancel-regression")
+    await q.start()
+    started = asyncio.Event()
+    cleanup_started = asyncio.Event()
+    release_cleanup = asyncio.Event()
+
+    async def worker(job):
+        try:
+            started.set()
+            await asyncio.Event().wait()
+        finally:
+            cleanup_started.set()
+            await release_cleanup.wait()
+
+    running = await q.submit("running", worker)
+    await asyncio.wait_for(started.wait(), 2)
+    stopper = asyncio.create_task(q.stop())
+    try:
+        await asyncio.wait_for(cleanup_started.wait(), 2)
+        stopper.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await stopper
+        # The underlying shutdown still owns the worker join, even though its
+        # first caller has gone away.
+        with pytest.raises(RuntimeError, match="cannot start while stopping"):
+            await q.start()
+        assert running.state == JobState.RUNNING
+        release_cleanup.set()
+        await asyncio.wait_for(q.stop(), 3)
+        assert (await q.wait(running.id, timeout=0.2)).state == JobState.CANCELLED
+        await q.start()
+        assert q._workers
+    finally:
+        release_cleanup.set()
+        await q.stop()
