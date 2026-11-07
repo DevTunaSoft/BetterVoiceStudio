@@ -7,23 +7,19 @@ try {
   await page.goto((process.env.VOICESTUDIO_UI_URL || 'http://localhost:3912') + '/#/settings/appearance');
   await page.getByRole('link', { name: 'Support', exact: true }).click();
   await page.getByRole('heading', { name: 'BetterVoiceStudio', exact: true }).waitFor();
-  await page.getByRole('heading', { name: 'Report a bug', exact: true }).waitFor({ timeout: 10000 }).catch(async (error) => {
-    const headings = await page.getByRole('heading').allTextContents();
-    const links = await page.getByRole('link').allTextContents();
-    throw new Error(`Fork contact section missing: headings=${JSON.stringify(headings)} links=${JSON.stringify(links)}; ${error.message}`);
-  });
-  assert.equal(
-    await page.getByRole('link', { name: 'Open GitHub Issues', exact: true }).getAttribute('href'),
-    'https://github.com/DevTunaSoft/BetterVoiceStudio/issues',
-  );
-  assert.equal(
-    await page.getByRole('link', { name: 'Report privately', exact: true }).getAttribute('href'),
-    'https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories/new',
-  );
-  assert.equal(await page.getByRole('button', { name: 'Fork source' }).count(), 1);
-  assert.equal(await page.getByRole('button', { name: 'Credits and licenses' }).count(), 1);
-  assert.equal(await page.getByRole('button', { name: /donate|paypal|ko-fi|become a sponsor/i }).count(), 0);
-  console.log('Fork support navigation, bug reporting, private security and attribution passed; no external page opened.');
+  await page.getByRole('heading', { name: 'Help and contribute', exact: true }).waitFor();
+  const destinations = [
+    ['Report an issue or suggest a feature', 'https://github.com/DevTunaSoft/BetterVoiceStudio/issues'],
+    ['BetterVoiceStudio source', 'https://github.com/DevTunaSoft/BetterVoiceStudio'],
+    ['Report a security vulnerability privately', 'https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories/new'],
+    ['Open-source credits and licenses', 'https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md'],
+  ];
+  for (const [name, href] of destinations) {
+    assert.equal(await page.getByRole('link', { name, exact: true }).getAttribute('href'), href);
+  }
+  assert.equal(await page.getByRole('link', { name: /donate|paypal|ko-fi|sponsor|pro subscription/i }).count(), 0);
+  assert.equal(await page.getByRole('button', { name: /donate|paypal|ko-fi|sponsor|pro subscription/i }).count(), 0);
+  console.log('Fork renderer support navigation, private security, attribution and no upstream monetization: PASS.');
 } finally {
   await browser.close();
 }
