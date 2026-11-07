@@ -240,3 +240,89 @@ async def test_restart_does_not_run_cancelled_backlog():
     assert executions == [fresh.id]
     assert (await q.wait(pending.id, timeout=0.2)).state == JobState.CANCELLED
     await q.stop()
+
+
+@pytest.mark.asyncio
+async def test_stop_allows_worker_cleanup_to_submit_without_deadlocking():
+    """Cancellation finalizers may need the queue lock to record follow-up work."""
+    q = JobQueue(name="cleanup-lock-regression")
+    await q.start()
+    started = asyncio.Event()
+    followups = []
+
+    async def never_started(job):
+        raise AssertionError("cleanup follow-up must be settled, not run")
+
+    async def worker(job):
+        try:
+            started.set()
+            await asyncio.Event().wait()
+        finally:
+            followups.append(await q.submit("cleanup-follow-up", never_started))
+
+    running = await q.submit("running", worker)
+    await asyncio.wait_for(started.wait(), 2)
+    await asyncio.wait_for(q.stop(), 3)
+    assert (await q.wait(running.id, timeout=0.2)).state == JobState.CANCELLED
+    assert len(followups) == 1
+    assert (await q.wait(followups[0].id, timeout=0.2)).state == JobState.CANCELLED
+
+    # The next generation may start without executing the old cancelled work.
+    await q.start()
+
+    async def healthy(job):
+        return "healthy"
+
+    fresh = await q.submit("fresh", healthy)
+    assert (await q.wait(fresh.id, timeout=2)).result == "healthy"
+    await q.stop()
+
+
+@pytest.mark.asyncio
+async def test_concurrent_stoppers_join_and_restart_cannot_race_shutdown():
+    q = JobQueue(name="concurrent-stop-regression")
+    await q.start()
+    started = asyncio.Event()
+    cleaning = asyncio.Event()
+    release_cleanup = asyncio.Event()
+
+    async def worker(job):
+        try:
+            started.set()
+            await asyncio.Event().wait()
+        finally:
+            cleaning.set()
+            await release_cleanup.wait()
+
+    running = await q.submit("running", worker)
+    await asyncio.wait_for(started.wait(), 2)
+    first = asyncio.create_task(q.stop())
+    try:
+        await asyncio.wait_for(cleaning.wait(), 2)
+        second = asyncio.create_task(q.stop())
+        with pytest.raises(RuntimeError, match="cannot start while stopping"):
+            await q.start()
+        assert not second.done()
+        release_cleanup.set()
+        await asyncio.wait_for(asyncio.gather(first, second), 3)
+        assert (await q.wait(running.id, timeout=0.2)).state == JobState.CANCELLED
+        await q.start()
+        assert q._workers
+    finally:
+        release_cleanup.set()
+        await q.stop()
+
+
+@pytest.mark.asyncio
+async def test_worker_cannot_await_its_own_queue_shutdown():
+    q = JobQueue(name="self-stop-regression")
+    await q.start()
+
+    async def worker(job):
+        with pytest.raises(RuntimeError, match="worker cannot stop its own queue"):
+            await q.stop()
+        return 1
+
+    current = await q.submit("self-stop-attempt", worker)
+    assert (await q.wait(current.id, timeout=2)).result == 1
+    await q.stop()

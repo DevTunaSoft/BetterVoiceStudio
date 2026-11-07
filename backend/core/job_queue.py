@@ -73,43 +73,74 @@ class JobQueue:
         self._order: List[str] = []
         self._workers: List[asyncio.Task] = []
         self._lock = asyncio.Lock()
+        # Shutdown cannot hold _lock while a worker is running its finally
+        # handlers: those handlers may legitimately submit follow-up work.
+        self._stopping_done: Optional[asyncio.Event] = None
+        self._stopping_workers: List[asyncio.Task] = []
 
     async def start(self) -> None:
-        if self._workers:
-            return
-        self._workers = [
-            asyncio.create_task(self._run_worker(i), name=f"{self.name}-worker-{i}")
-            for i in range(self._concurrency)
-        ]
+        # The worker list must not be replaced while shutdown is joining the
+        # previous workers. Fail rather than silently lose the caller's start.
+        async with self._lock:
+            if self._stopping_done is not None:
+                raise RuntimeError(f"{self.name}: cannot start while stopping")
+            if self._workers:
+                return
+            self._workers = [
+                asyncio.create_task(self._run_worker(i), name=f"{self.name}-worker-{i}")
+                for i in range(self._concurrency)
+            ]
 
     async def stop(self) -> None:
-        """Stop workers and settle queued jobs so waiters cannot hang forever.
+        """Stop workers and settle all queued/running jobs without deadlocking.
 
-        Running jobs are cancelled through their worker tasks; queued jobs
-        have no worker to signal completion once the workers have stopped.
+        Worker cancellation handlers may call submit(), which needs _lock. Join
+        workers outside that lock; block concurrent start() and let concurrent
+        stop() callers await the same shutdown completion event.
         """
         async with self._lock:
-            workers = self._workers
-            self._workers = []
-            for w in workers:
-                w.cancel()
+            if asyncio.current_task() in (*self._workers, *self._stopping_workers):
+                raise RuntimeError(f"{self.name}: a worker cannot stop its own queue")
+            completion = self._stopping_done
+            if completion is not None:
+                workers = None
+            else:
+                completion = asyncio.Event()
+                self._stopping_done = completion
+                workers = self._workers
+                self._workers = []
+                self._stopping_workers = workers
+                for worker in workers:
+                    worker.cancel()
+
+        if workers is None:
+            # Concurrent callers wait for the owner to finish settling jobs.
+            await completion.wait()
+            return
+
+        try:
             if workers:
                 await asyncio.gather(*workers, return_exceptions=True)
-            now = time.time()
-            for job in self._jobs.values():
-                if job.state in (JobState.QUEUED, JobState.RUNNING):
-                    job.state = JobState.CANCELLED
-                    job.finished_at = now
-                    job.cancel_event.set()
-                    job.done_event.set()
-            # Stale IDs must not execute if the queue is restarted.
-            while True:
-                try:
-                    self._queue.get_nowait()
-                except asyncio.QueueEmpty:
-                    break
-                else:
-                    self._queue.task_done()
+        finally:
+            async with self._lock:
+                now = time.time()
+                for job in self._jobs.values():
+                    if job.state in (JobState.QUEUED, JobState.RUNNING):
+                        job.state = JobState.CANCELLED
+                        job.finished_at = now
+                        job.cancel_event.set()
+                        job.done_event.set()
+                # Stale IDs must not execute if the queue is restarted.
+                while True:
+                    try:
+                        self._queue.get_nowait()
+                    except asyncio.QueueEmpty:
+                        break
+                    else:
+                        self._queue.task_done()
+                self._stopping_workers = []
+                self._stopping_done = None
+                completion.set()
 
     async def submit(
         self,
