@@ -85,3 +85,7 @@ Changes are isolated on `engineering/modernization-foundation`; keep `main` unch
 - Objective: establish independent recovery document and honest CI defect register under Directive v4.1.
 - Verification: source and CI metadata inspected through GitHub; no handoff validator or local build executed.
 - Next: inspect CI failures and implement machine-checkable handoff gate.
+
+## Check-in checkpoint BVS-HANDOFF-0002
+
+GitHub Actions handoff run [42349254076](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42349254076) passed the structure validator but failed Python unittest discovery because importing unrelated `tests/probe` required unavailable NumPy. The workflow now executes `python3 tests/test_handoff_validator.py` directly (commit `c648e4bb`). CI [42349254341](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42349254341) showed the replacement `Github` import also is not exported by this installed lucide-react; replaced with `StarIcon`, already used by `github-star.tsx` (commit `775635b5`). Both corrections remain **unverified by a completed passing post-fix run**. Next: inspect current-HEAD CI, resolve any further errors, and strengthen validator evidence consistency. Roll back with targeted git revert if a correction regresses behavior; never force-push.
