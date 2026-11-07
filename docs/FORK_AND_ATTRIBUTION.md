@@ -8,6 +8,25 @@ This is **not** an official upstream release, endorsement, commercial offering, 
 
 The repository's root package currently declares `AGPL-3.0-only`. Review [LICENSE](../LICENSE) and individual component/model/data licenses before redistribution or commercial deployment; model weights and datasets may have separate terms.
 
+## Explicit third-party and upstream credits
+
+These are identified in the inherited [license notice](../LICENSE-NOTICE.md) and repository files; attribution does not imply endorsement of this fork.
+
+| Source or component | Credit and license evidence |
+| --- | --- |
+| **VoiceStudio** | Original project by **Palash Debnath and VoiceStudio contributors**. [Upstream repository](https://github.com/debpalash/VoiceStudio); original copyright and AGPL notices retained. |
+| **OmniVoice** | Underlying speech-model implementation credited to **Han Zhu and upstream authors**. The inherited [license notice](../LICENSE-NOTICE.md) identifies the bundled `omnivoice/` Python package as Apache-2.0; inspect package notices for details. |
+| **T3 Code** | Electron components adapted from T3 Code retain their MIT notice at [`electron/T3CODE-LICENSE.txt`](../electron/T3CODE-LICENSE.txt). |
+| **Model authors and providers** | Each model and weight artifact may have separate rights. Consult [model credits](model-credits.md), [model license inventory](../backend/config/model_licenses.json) and original model cards. |
+| **FFmpeg and media libraries** | Some distributed wheels bundle separately licensed multimedia libraries; inspect the dependency and wheel notices documented in [LICENSE-NOTICE.md](../LICENSE-NOTICE.md). |
+| **Other dependencies and artwork** | Original notices, license files, lockfiles and source history remain authoritative. Sponsorship artwork, where still included as historical assets, is **not** a current BetterVoiceStudio sponsor endorsement. |
+
+**Open-source attribution is not advertising.** Keep links to original source and legally required notices; remove or clearly isolate links that ask users to buy, donate, subscribe, or install something offered by another project. Do not erase copyright history or rename a third-party contribution as our own.
+
+## Fork-only public-facing policy
+
+The main README, issue templates, and fork documentation must link to **DevTunaSoft/BetterVoiceStudio** for issues, releases, development CI and contributions. Original VoiceStudio links are retained for **credit and source traceability**, not as this fork's product channels. Existing upstream-specific promotional screens, translated READMEs, sponsor rosters, installation instructions, automated tests and app metadata require separate compatibility and attribution review before alteration. Do not delete third-party assets or notices solely because the fork does not advertise them.
+
 ## Why the fork was started
 
 The aim is to evolve the existing local AI voice studio into a more reliable, secure, measurable, accessible, and integrated voice-production environment, **without losing existing functionality or duplicating working systems**.
