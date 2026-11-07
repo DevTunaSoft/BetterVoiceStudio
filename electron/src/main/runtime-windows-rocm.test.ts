@@ -15,9 +15,10 @@ it('selects only the explicit Windows x64 recipe', () => {
   expect(resolveTorchVariant({ OMNIVOICE_TORCH_VARIANT: ' ROCm ' }, 'win32', 'x64').variant).toBe(
     'rocm',
   );
-  expect(() => resolveTorchVariant({ OMNIVOICE_TORCH_VARIANT: 'rocm' }, 'win32', 'arm64')).toThrow(
-    /Windows.*x64/,
-  );
+  expect(resolveTorchVariant({ OMNIVOICE_TORCH_VARIANT: 'rocm' }, 'win32', 'arm64')).toEqual({
+    variant: 'cpu',
+    explicit: true,
+  });
   expect(resolveTorchVariant({}, 'win32', 'x64', () => false).variant).toBe('cpu');
 });
 it.each(['fresh', 'healthy', 'broken'] as const)(
