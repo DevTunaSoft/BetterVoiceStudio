@@ -56,3 +56,8 @@ def test_packaged_windows_smokes_verify_cpu_inside_electron():
     assert smoke.count("VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT") >= 1
     assert workflow.count("VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT:") == 2
     assert workflow.count("OMNIVOICE_TORCH_VARIANT:") == 2
+    # A screenshot from the actual packaged Windows x64 app is saved alongside
+    # its installer, never substituted with an unverified illustration.
+    assert "VOICESTUDIO_SCREENSHOT:" in workflow
+    assert "electron/release/BetterVoiceStudio-model-manager-win-x64.png" in workflow
+    assert "matrix.arch == 'x64'" in workflow

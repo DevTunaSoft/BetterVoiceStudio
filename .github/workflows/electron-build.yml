@@ -179,6 +179,11 @@ jobs:
         timeout-minutes: 25
         env:
           VOICESTUDIO_RUNTIME_TIMEOUT_MS: '1200000'
+          # Capture a true packaged Electron screenshot on Windows x64.
+          # The file is generated only after packaging, and uploaded as QA
+          # evidence; it is not embedded in the installer or shown as a claim
+          # that user-device audio/microphone acceptance has passed.
+          VOICESTUDIO_SCREENSHOT: ${{ matrix.platform == 'win32' && matrix.arch == 'x64' && 'release/BetterVoiceStudio-model-manager-win-x64.png' || '' }}
           # Hosted Windows runners have no supported AMD GPU. Force the
           # CPU torch recipe on x64 and on ARM64's emulated x64 runtime.
           # This applies only to packaged acceptance, not shipped defaults.
@@ -205,3 +210,4 @@ jobs:
             electron/release/VoiceStudio-*
             electron/release/electron-*.yml
             electron/release/store-artifact-manifest-*.json
+            electron/release/BetterVoiceStudio-model-manager-win-x64.png
