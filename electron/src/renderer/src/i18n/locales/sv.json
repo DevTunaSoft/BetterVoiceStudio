@@ -4575,6 +4575,7 @@
     "stalled_hint": "Nedladdningen har inte gått framåt på fem minuter. Vänta, avbryt och försök igen eller be om hjälp. Ladda ned installationsloggen för att dela den.",
     "download_log": "Ladda ned installationslogg",
     "discord": "Få hjälp på Discord",
+    "community": "Community discussions",
     "check_connection": "Kontrollera nedladdningsanslutning",
     "checking": "Kontrollerar anslutning…",
     "use_cpu": "Installera CPU-versionen i stället",
