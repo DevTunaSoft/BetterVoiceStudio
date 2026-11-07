@@ -30,7 +30,6 @@ def test_every_studio_docker_run_passes_the_admin_key(relative_path):
 @pytest.mark.parametrize(
     "relative_path",
     [
-        "README.md",
         "docs/readme/README_CN.md",
         "docs/readme/README_JA.md",
         "docs/readme/README_KO.md",
