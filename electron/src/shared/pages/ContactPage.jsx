@@ -155,7 +155,7 @@ export function ContactSections({ onSupport }) {
 
       <div className="flex flex-wrap items-center justify-center gap-2">
         <ExternalCta href={REPO_URL} label="BetterVoiceStudio source" leading={<Globe size={13} />} />
-        <ExternalCta href={REPO_URL + '/blob/main/docs/FORK_AND_ATTRIBUTION.md'} label="Credits and attribution" />
+        <ExternalCta href={REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md'} label="Credits and attribution" />
       </div>
     </>
   );
