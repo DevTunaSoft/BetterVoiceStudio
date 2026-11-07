@@ -4575,6 +4575,7 @@
     "stalled_hint": "下載已五分鐘沒有進展。您可以繼續等待、取消後重試或尋求協助。下載並分享安裝記錄以便排查。",
     "download_log": "下載安裝記錄",
     "discord": "在 Discord 上取得協助",
+    "community": "Community discussions",
     "check_connection": "檢查下載連線",
     "checking": "正在檢查連線…",
     "use_cpu": "改為安裝 CPU 版本",
