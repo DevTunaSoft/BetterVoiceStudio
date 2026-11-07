@@ -2,7 +2,7 @@
 
 **A community-minded, independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio), built to improve reliability, performance, accessibility, audio quality and production workflows.**
 
-[Source](https://github.com/DevTunaSoft/BetterVoiceStudio) · [Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Documentation](docs/README.md) · [Roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Credits and licensing](docs/FORK_AND_ATTRIBUTION.md)
+[Source](https://github.com/DevTunaSoft/BetterVoiceStudio) · [Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Documentation](docs/README.md) · [Feature catalog](docs/feature-catalog.md) · [Roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Credits and licensing](docs/FORK_AND_ATTRIBUTION.md)
 
 > **Independent fork — no upstream affiliation.** BetterVoiceStudio is developed from the open-source [VoiceStudio](https://github.com/debpalash/VoiceStudio) codebase and its incorporated projects. We value sharing, retaining original copyright and license notices, and crediting upstream authors. The original VoiceStudio website, installers, subscriptions, cloud services, sponsorships, and community channels are **not BetterVoiceStudio offerings** and are intentionally not promoted here.
 
