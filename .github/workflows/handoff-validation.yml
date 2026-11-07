@@ -13,4 +13,4 @@ jobs:
       - name: Validate engineering handoff
         run: python3 scripts/validate_handoff.py
       - name: Test validator rejects incomplete handoffs
-        run: python3 -m unittest discover -s tests -p 'test_handoff_validator.py'
+        run: python3 tests/test_handoff_validator.py
