@@ -35,7 +35,8 @@ describe('fork-owned contact sections', () => {
     expect(link).toHaveAttribute('rel', 'noreferrer');
     expect(link).toHaveAttribute('target', '_blank');
     fireEvent.click(link);
-    expect(openExternal).toHaveBeenCalledExactlyOnceWith(SECURITY_URL);
+    expect(openExternal).toHaveBeenCalledTimes(1);
+    expect(openExternal).toHaveBeenCalledWith(SECURITY_URL);
   });
 
   it('retains accessible original-project credits without a donation CTA', () => {
