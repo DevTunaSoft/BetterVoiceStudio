@@ -16,9 +16,11 @@ export function windowsRocmSelected(
   platform = process.platform,
   arch: string = process.arch,
 ): boolean {
-  if (platform !== 'win32' || variant !== 'rocm') return false;
-  if (arch !== 'x64') throw new Error('Windows ROCm requires Windows x64 Python 3.12 (cp312).');
-  return true;
+  // Windows ARM64 runs emulated x64 Python 3.11 with CPU PyTorch. Rejecting
+  // ROCm by throwing here breaks even first-run setup/status probes when a
+  // stale ROCm choice was saved on another Windows device. Fail closed by
+  // declining the unsupported overlay; resolveTorchVariant selects CPU.
+  return platform === 'win32' && variant === 'rocm' && arch === 'x64';
 }
 
 /**
