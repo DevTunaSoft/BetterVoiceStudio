@@ -101,6 +101,19 @@ describe('rememberTorchVariant (#3804)', () => {
     expect(await readFile(path, 'utf8')).toBe(`${line}=cpu\n`);
   });
 
+  it('does not persist an unsupported ROCm choice on Windows ARM64', () => {
+    const arch = Object.getOwnPropertyDescriptor(process, 'arch')!;
+    Object.defineProperty(process, 'arch', { value: 'arm64', configurable: true });
+    try {
+      rememberTorchVariant({ [line]: 'rocm' }, 'win32', file);
+      const env: NodeJS.ProcessEnv = {};
+      applySavedTorchVariant(env, file);
+      expect(env[line]).toBeUndefined();
+    } finally {
+      Object.defineProperty(process, 'arch', arch);
+    }
+  });
+
   it('saves nothing on macOS, where ROCm does not apply', async () => {
     rememberTorchVariant({ [line]: 'rocm' }, 'darwin', file);
     const env: NodeJS.ProcessEnv = {};
