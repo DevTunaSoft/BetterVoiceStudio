@@ -292,7 +292,7 @@ describe('Windows on ARM runtime install', () => {
     expect(sync[sync.indexOf('--python') + 1]).toBe(WIN_ARM64_PYTHON_REQUEST);
     expect(sync).toContain('--no-install-package');
     expect(calls.some((args) => args.includes('backend.core.windows_rocm.install'))).toBe(false);
-    expect(calls.some((args) => args[0] === 'pip' && args.includes(CPU_TORCH_PINS[0]))).toBe(
+    expect(calls.some((args) => args[0] === 'pip' && args.includes(CPU_TORCH_PINS[0]!))).toBe(
       true,
     );
     expect(resolveTorchVariant()).toEqual({ variant: 'cpu', explicit: true });
