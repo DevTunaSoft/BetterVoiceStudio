@@ -25,7 +25,7 @@ export function SupportSettings() {
           <ExternalLink href={ISSUES_URL}><LightbulbIcon aria-hidden="true" /><span>Report an issue or suggest a feature</span></ExternalLink>
           <ExternalLink href={REPO_URL}><GithubIcon aria-hidden="true" /><span>BetterVoiceStudio source</span></ExternalLink>
           <ExternalLink href={SECURITY_URL}><ShieldCheckIcon aria-hidden="true" /><span>Report a security vulnerability privately</span></ExternalLink>
-          <ExternalLink href={REPO_URL + '/blob/main/docs/FORK_AND_ATTRIBUTION.md'}><BookOpenIcon aria-hidden="true" /><span>Open-source credits and licenses</span></ExternalLink>
+          <ExternalLink href={REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md'}><BookOpenIcon aria-hidden="true" /><span>Open-source credits and licenses</span></ExternalLink>
         </div>
       </section>
     </div>
