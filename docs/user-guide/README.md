@@ -4,6 +4,10 @@
 
 BetterVoiceStudio is an independent modernization fork of VoiceStudio. It is intended for local-first voice and audio workflows. See [credits and licenses](../FORK_AND_ATTRIBUTION.md) before distributing generated material or third-party models.
 
+## Documentation quality and verification
+
+This guide follows the [comprehensive documentation standard](DOCUMENTATION_STANDARD.md): every feature requires reproducible steps, failure recovery, privacy/accessibility guidance, platform applicability and linked test evidence. Until verified, instructions are labeled as preliminary.
+
 ## Start here
 
 1. **Install:** Obtain an installer only from a verified BetterVoiceStudio release. Do not assume upstream VoiceStudio installers are fork releases. Current modernization builds are **not release-ready**.
