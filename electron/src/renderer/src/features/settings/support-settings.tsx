@@ -2,7 +2,7 @@ import { LightbulbIcon, ShieldCheckIcon, BookOpenIcon, StarIcon } from 'lucide-r
 import { brandIcon } from '@/lib/brand';
 import { ReportBug } from '@/components/report-bug';
 import { ExternalLink } from '@/components/external-link';
-import { ISSUES_URL, REPO_URL, SECURITY_URL } from '@shared/utils/contactLinks';
+import { ISSUES_URL, REPO_URL, SECURITY_URL, CREDITS_URL } from '@shared/utils/contactLinks';
 import './support-settings.css';
 
 /** Fork-owned support and upstream credit; no inherited payment or Pro offerings. */
@@ -25,7 +25,7 @@ export function SupportSettings() {
           <ExternalLink href={ISSUES_URL}><LightbulbIcon aria-hidden="true" /><span>Report an issue or suggest a feature</span></ExternalLink>
           <ExternalLink href={REPO_URL}><StarIcon aria-hidden="true" /><span>BetterVoiceStudio source</span></ExternalLink>
           <ExternalLink href={SECURITY_URL}><ShieldCheckIcon aria-hidden="true" /><span>Report a security vulnerability privately</span></ExternalLink>
-          <ExternalLink href={REPO_URL + '/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md'}><BookOpenIcon aria-hidden="true" /><span>Open-source credits and licenses</span></ExternalLink>
+          <ExternalLink href={CREDITS_URL}><BookOpenIcon aria-hidden="true" /><span>Open-source credits and licenses</span></ExternalLink>
         </div>
       </section>
     </div>
