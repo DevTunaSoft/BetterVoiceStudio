@@ -355,13 +355,19 @@ export function registerIpc(
     return openPermissionSettings(kind);
   });
 
-  ipcMain.handle(CHANNELS.backendGetStatus, (): BackendStatus => supervisor.status);
+  ipcMain.handle(CHANNELS.backendGetStatus, (event): BackendStatus => {
+    assertTrustedTopLevelFrame(event);
+    return supervisor.status;
+  });
   ipcMain.handle(CHANNELS.backendAcknowledgeCrash, (event) => {
     const owner = getMainWindow();
     assertTrustedMainFrame(event, owner);
     return supervisor.acknowledgeLastCrash();
   });
-  ipcMain.handle(CHANNELS.backendGetConnection, () => supervisor.connection);
+  ipcMain.handle(CHANNELS.backendGetConnection, (event) => {
+    assertTrustedTopLevelFrame(event);
+    return supervisor.connection;
+  });
   ipcMain.handle(CHANNELS.backendHostSnapshot, (event) => {
     const owner = getMainWindow();
     assertTrustedMainFrame(event, owner);
