@@ -189,3 +189,54 @@ async def test_list_jobs_live_only_by_default(queue):
     assert j1.id in [j.id for j in all_jobs]
     block.set()
     await queue.wait(j2.id, timeout=1.0)
+
+
+@pytest.mark.asyncio
+async def test_stop_settles_running_and_queued_waiters():
+    q = JobQueue(name="shutdown-regression")
+    await q.start()
+    entered = asyncio.Event()
+    ran_queued = False
+
+    async def blocking(job):
+        entered.set()
+        await asyncio.Event().wait()
+
+    async def queued(job):
+        nonlocal ran_queued
+        ran_queued = True
+
+    running = await q.submit("running", blocking)
+    pending = await q.submit("pending", queued)
+    await asyncio.wait_for(entered.wait(), 2)
+    await asyncio.wait_for(q.stop(), 2)
+    assert (await q.wait(running.id, timeout=0.2)).state == JobState.CANCELLED
+    assert (await q.wait(pending.id, timeout=0.2)).state == JobState.CANCELLED
+    assert not ran_queued
+    assert not q.list_jobs()
+
+
+@pytest.mark.asyncio
+async def test_restart_does_not_run_cancelled_backlog():
+    q = JobQueue(name="restart-regression")
+    await q.start()
+    entered = asyncio.Event()
+    executions = []
+
+    async def blocking(job):
+        entered.set()
+        await asyncio.Event().wait()
+
+    async def queued(job):
+        executions.append(job.id)
+
+    await q.submit("running", blocking)
+    pending = await q.submit("pending", queued)
+    await asyncio.wait_for(entered.wait(), 2)
+    await q.stop()
+    await q.start()
+    fresh = await q.submit("fresh", queued)
+    await q.wait(fresh.id, timeout=2)
+    assert executions == [fresh.id]
+    assert (await q.wait(pending.id, timeout=0.2)).state == JobState.CANCELLED
+    await q.stop()
