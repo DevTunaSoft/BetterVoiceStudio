@@ -15,7 +15,7 @@ BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://g
 </p>
 
 > [!IMPORTANT]
-> **Actively in development; no official BetterVoiceStudio release is published yet.** Windows x64 packaging has passed automated acceptance once, but real-hardware production acceptance remains outstanding. Windows ARM64 remains experimental. See [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) and [live GitHub Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions). An upstream VoiceStudio download **will not contain the changes made in this fork**.
+> **Actively in development; no official BetterVoiceStudio release is published yet.** Windows x64 and experimental Windows ARM64 packaging have passed automated acceptance, but real-hardware production acceptance remains outstanding. See [fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) and [live GitHub Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions). An upstream VoiceStudio download **will not contain the changes made in this fork**.
 
 > [!NOTE]
 > **Independent fork, not affiliated with the original authors.** Some inherited application screens and executables still say `VoiceStudio` for compatibility. The original project's commercial subscriptions, cloud offerings, website, sponsor programs, installers, and community channels are not BetterVoiceStudio offerings.
@@ -25,6 +25,46 @@ BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://g
 A local-first AI speech and voice-production application built upon the substantial existing VoiceStudio foundation. The inherited codebase includes voice cloning and design, transcription, dubbing, narration and audiobooks, model management, queued jobs, and automation. Actual capabilities depend on installed engines, hardware, platform, model licenses and configuration.
 
 The fork's mission is to strengthen and extend those workflows without replacing working implementations merely for the sake of rewriting them.
+
+## Inside the studio
+
+<p align="center">
+  <sub>Actual screenshots retained with this codebase, illustrating the inherited Electron desktop interface. BetterVoiceStudio's modernization work is ongoing, so visual details in current development builds may differ.</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docs/media/electron/voice-cloning.png"><img src="docs/media/electron/voice-cloning.webp" width="100%" alt="Desktop voice-cloning workspace showing reference speech and script controls" /></a><br />
+      <strong>Voice cloning</strong><br />
+      Prepare authorized reference audio, configure speech generation and review takes.
+    </td>
+    <td width="50%" valign="top">
+      <a href="docs/media/electron/voice-design.png"><img src="docs/media/electron/voice-design.webp" width="100%" alt="Desktop voice-design workspace with text-guided voice creation" /></a><br />
+      <strong>Voice design</strong><br />
+      Explore text-guided voice creation with supported local models.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="docs/media/electron/dubbing.png"><img src="docs/media/electron/dubbing.webp" width="100%" alt="Video dubbing workspace for configuring translated voice output" /></a><br />
+      <strong>Video dubbing</strong><br />
+      Prepare, review and export language and voice replacement workflows.
+    </td>
+    <td width="50%" valign="top">
+      <a href="docs/media/electron/models.png"><img src="docs/media/electron/models.webp" width="100%" alt="Local model manager showing speech engine and model choices" /></a><br />
+      <strong>Local models</strong><br />
+      Discover and manage engines and model downloads according to your hardware.
+    </td>
+  </tr>
+</table>
+
+<details>
+<summary><strong>More interface screenshots</strong></summary>
+
+[![Model packs interface preview](docs/media/electron/model-packs.webp)](docs/media/electron/model-packs.png)
+
+</details>
 
 ## Our direction
 
@@ -45,9 +85,10 @@ The fork's mission is to strengthen and extend those workflows without replacing
 We are strengthening the inherited desktop application through code review, regression coverage, security hardening, fault injection, packaging tests and documentation.
 
 - The [modernization branch](https://github.com/DevTunaSoft/BetterVoiceStudio/tree/engineering/modernization-foundation) contains the current engineering work: runtime stability improvements, queue-recovery fixes, Electron IPC checks, test contracts and ongoing quality improvements.
-- On November 7, 2026, [packaging run #42414196153](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42414196153) passed Windows x64, Linux x64 and both macOS packaging jobs. The **experimental Windows ARM64 job failed** during first-run runtime setup.
-- Additional CPU/ROCm runtime-selection fixes for Windows ARM64 are committed and [under further verification](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/electron-build.yml).
-- The [full development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml) exercises automated application and cross-platform checks. Actual Windows hardware, microphone/speaker capture, GPU compatibility, long-running generation and complete installer acceptance are **not yet certified**.
+- On November 7, 2026, [packaging run #42420264814](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42420264814) passed all five packaging jobs: **Windows x64, Windows ARM64, Linux x64, macOS Apple Silicon and macOS Intel**. The three supported voice-runtime dependency builds also passed. The Windows jobs exercised packaged startup and isolated local-runtime installation.
+- [Full development CI #42420294120](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42420294120) passed on commit `ee379096`: Electron, Python, desktop UI, UI crawlers, renderer tests, installer contracts and platform smoke checks.
+- **Windows ARM64 remains experimental** despite that passing CI run; it uses emulated x64 Python 3.11 and CPU inference, and has not yet been validated on representative physical ARM64 devices.
+- **Outstanding release gates:** reproducible installation and uninstall on real hardware, audio input/output, real-model generation, GPU compatibility, long-running sessions, recovery and signing/distribution validation. The fork currently has no published stable release.
 
 A passing automated build is **not** a claim of a stable release or universal hardware compatibility.
 
@@ -70,12 +111,12 @@ These describe the **inherited application** and are maintained as the fork evol
 There is **no signed, stable BetterVoiceStudio installer yet**. Technically experienced testers can inspect and try CI-generated artifacts:
 
 1. Open the [Electron packaging workflow](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/electron-build.yml).
-2. Choose a completed run and confirm the **Windows x64 package job** itself passed; the overall workflow status may not reflect an experimental ARM64 failure.
-3. Under **Artifacts**, download `electron-rehearsal-win32-x64`, if available. Sign-in may be required. Extract the ZIP and locate the installer or packaged application.
+2. Choose a completed run and confirm the **package job for your exact operating-system architecture** passed. Inspect individual jobs even when the overall workflow is green; experimental jobs may not affect the overall result.
+3. Under **Artifacts**, download `electron-rehearsal-win32-x64` for Windows x64 or `electron-rehearsal-win32-arm64` for Windows ARM64, if available. Sign-in may be required. Extract the ZIP and locate the installer or packaged application.
 4. Run only artifacts from this repository that you trust. Development builds may be unsigned. Do not turn off operating-system protections solely to run a build.
 5. On first launch, follow the local-runtime setup prompts, then obtain any speech models you want to use. Initial installation needs internet access, sufficient disk space and the correct permissions.
 
-A [verified Windows x64 packaging artifact](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42414196153) was created on November 7, 2026; CI artifacts expire, so use a newer successful run if unavailable. Windows ARM64 is experimental and uses an emulated x64 Python backend with CPU inference.
+[Windows x64 and ARM64 packaging artifacts](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42420264814) were generated on November 7, 2026. CI artifacts expire, so use a newer successful run if unavailable. Windows ARM64 remains experimental and uses an emulated x64 Python backend with CPU inference.
 
 When a stable version is published, use the [BetterVoiceStudio releases page](https://github.com/DevTunaSoft/BetterVoiceStudio/releases), not upstream downloads. The inherited [Windows installation guide](docs/install/windows.md) may not yet cover fork-specific packaging.
 
