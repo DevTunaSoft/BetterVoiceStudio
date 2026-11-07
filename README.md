@@ -1,46 +1,56 @@
 <div align="center">
-  <h1><sub><img src="docs/logo.png" alt="" width="36" height="36" /></sub> VoiceStudio</h1>
-  <p>
-    <a href="https://trendshift.io/repositories/28176?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-28176" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/28176" alt="Trendshift badge showing where VoiceStudio ranks among trending repositories" width="220" height="48" /></a>
-  </p>
-  <p>
-    <strong>🎉 <a href="https://github.com/debpalash/VoiceStudio/stargazers">100,000 GitHub stars — thank you!</a></strong>
-  </p>
-  <h2>AI voice studio. On your device.</h2>
-  <h3>Clone, design, dub, dictate, transcribe and narrate in 646 languages.</h3>
-  <p>Runs on your laptop, desktop, servers, phone, tablets and more</p>
-  <p>
-    <a href="https://voicestudio.sh/?utm_source=github&utm_medium=readme&utm_campaign=project">Website</a> ·
-    <a href="https://github.com/debpalash/VoiceStudio/releases/latest">Download</a> ·
-    <a href="#get-started">Get started</a> ·
-    <a href="#documentation">Docs</a> ·
-    <a href="https://voicestudio.sh/pro?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project">VoiceStudio Pro</a> ·
-    <a href="https://app.voicestudio.sh/?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=project">VoiceStudio Cloud</a>
-  </p>
-  <!-- README_LANGUAGES_START -->
-  <a id="readme-languages"></a>
-  <p><sub>
-    <strong lang="en">🇬🇧 English</strong> · <a href="docs/readme/README_CN.md" lang="zh-CN">🇨🇳 简体中文</a> · <a href="docs/readme/README_JA.md" lang="ja">🇯🇵 日本語</a> · <a href="docs/readme/README_KO.md" lang="ko">🇰🇷 한국어</a> · <a href="docs/readme/README_RU.md" lang="ru">🇷🇺 Русский</a> · <a href="docs/readme/README_AR.md" lang="ar">🇸🇦 العربية</a> · <a href="docs/readme/README_DE.md" lang="de">🇩🇪 Deutsch</a> · <a href="docs/readme/README_ES.md" lang="es">🇪🇸 Español</a> · <a href="docs/readme/README_FR.md" lang="fr">🇫🇷 Français</a> · <a href="docs/readme/README_HI.md" lang="hi">🇮🇳 हिन्दी</a><br />
-    <a href="docs/readme/README_ID.md" lang="id">🇮🇩 Bahasa Indonesia</a> · <a href="docs/readme/README_IT.md" lang="it">🇮🇹 Italiano</a> · <a href="docs/readme/README_NL.md" lang="nl">🇳🇱 Nederlands</a> · <a href="docs/readme/README_PL.md" lang="pl">🇵🇱 Polski</a> · <a href="docs/readme/README_PT.md" lang="pt">🇵🇹 Português</a> · <a href="docs/readme/README_TH.md" lang="th">🇹🇭 ไทย</a> · <a href="docs/readme/README_TR.md" lang="tr">🇹🇷 Türkçe</a> · <a href="docs/readme/README_TW.md" lang="zh-TW">🇹🇼 繁體中文</a> · <a href="docs/readme/README_UK.md" lang="uk">🇺🇦 Українська</a> · <a href="docs/readme/README_VI.md" lang="vi">🇻🇳 Tiếng Việt</a>
-  </sub></p>
-  <!-- README_LANGUAGES_END -->
 
+# BetterVoiceStudio
 
-  <p>
-    <a href="https://github.com/debpalash/VoiceStudio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/debpalash/VoiceStudio/ci.yml?branch=main&amp;style=flat-square&amp;label=build&amp;labelColor=27272a" alt="CI" /></a>
-    <a href="https://github.com/debpalash/VoiceStudio/releases/latest"><img src="https://img.shields.io/github/v/release/debpalash/VoiceStudio?style=flat-square&amp;labelColor=27272a&amp;color=52525b" alt="Latest release" /></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-52525b?style=flat-square&amp;labelColor=27272a" alt="AGPL-3.0" /></a>
-    <a href="https://supermetry.com"><img src="https://app.supermetry.com/px/zfjiv7psp4ed.svg?c=VoiceStudio" alt="views" /></a>
-    <a href="https://discord.gg/bzQavDfVV9"><img src="https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=flat-square&amp;logo=discord&amp;logoColor=white" alt="Join Discord" /></a>
-  </p>
-  <p>
-    <sub>Strategic sponsors</sub>      <a href="https://github.com/debpalash/OpenGTM?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/opengtm-dark.svg" /><img src="docs/sponsors/opengtm.svg" alt="OpenGTM" height="32" align="middle" /></picture></a>
-    <a href="https://github.com/debpalash/Opal?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/opal-dark.svg" /><img src="docs/sponsors/opal.svg" alt="Opal" height="32" align="middle" /></picture></a>
-    <a href="https://github.com/velixio/supermetry?utm_source=voicestudio&utm_medium=sponsor&utm_campaign=strategic-sponsor&utm_content=readme-logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/supermetry-dark.svg" /><img src="docs/sponsors/supermetry.svg" alt="Supermetry" height="32" align="middle" /></picture></a>
-      ·   <sub>Special sponsor</sub> 
-    <a href="https://app.spicrawl.com/signup?utm_source=voicestudio&amp;utm_medium=github_readme&amp;utm_campaign=special_sponsor&amp;utm_content=logo"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/sponsors/spicrawl-dark.svg" /><img src="docs/sponsors/spicrawl.svg" alt="Spicrawl" height="32" align="middle" /></picture></a>
-  </p>
+**An independent, community-oriented modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio).**
+
+*Building toward a more resilient, efficient, extensible and accessible local AI voice-production studio.*
+
+[Development roadmap](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Fork history and attribution](docs/FORK_AND_ATTRIBUTION.md) · [Engineering status](docs/roadmap/BASELINE_AUDIT_PASS_1.md) · [CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions)
+
 </div>
+
+> [!IMPORTANT]
+> **Fork and release disclosure.** This repository is **BetterVoiceStudio**, maintained independently at [DevTunaSoft/BetterVoiceStudio](https://github.com/DevTunaSoft/BetterVoiceStudio). It derives from [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio), which in turn incorporates the OmniVoice ecosystem. The original creators retain credit for their work. This fork is **not affiliated with or endorsed by** the upstream maintainers. Upstream website, Discord, sponsors, paid services, installers, and release links elsewhere in inherited documentation belong to the **original VoiceStudio project**, not to BetterVoiceStudio. Do not assume upstream installers contain this fork's changes.
+
+> [!WARNING]
+> **Development status.** The modernization roadmap describes **planned and under-evaluation capabilities**, not a list of completed features. The fork currently retains much of the upstream VoiceStudio code, product identifiers and documentation while changes are developed and validated. A successful CI run is not proof of end-to-end voice quality or target-hardware readiness. See [verified work and known limits](docs/FORK_AND_ATTRIBUTION.md#verified-progress-and-limitations).
+
+## Why this fork exists
+
+VoiceStudio already provides substantial local voice creation and production capabilities. Rather than rewriting working systems, BetterVoiceStudio aims to **build on that foundation**: strengthen crash recovery, data integrity, security and job handling; measure and improve performance; expand quality verification and production automation; improve accessibility; and introduce richer workflows where the existing architecture does not already provide them.
+
+**No duplicate features by design:** before implementing a proposed feature, we inspect existing code, APIs, data models, tests and user interfaces. We classify it as existing, partial, needs hardening, missing or unknown. We extend the existing source of truth whenever practical instead of creating competing implementations.
+
+## What exists, what's changed, and what's planned
+
+| Area | Current position |
+| --- | --- |
+| Voice cloning, design, transcription, dubbing, narration, batch processing | **Inherited VoiceStudio capabilities**; see the existing [feature catalog](docs/feature-catalog.md). Not claimed as newly invented by this fork. |
+| Model management, audio-quality services, project bundles, performance profiles | **Existing code identified**; completeness and gaps require deeper behavioral audit. |
+| Modernization architecture and capability program | **Documented in this fork**; implementation is phased. |
+| Electron IPC caller authorization | **Initial hardening committed** with regression contracts; broader security audit remains. |
+| Queue shutdown and restart handling | **Hardening committed** with additional regression tests; consult current branch CI for verification. |
+| Automated fuzzing, fault injection and cross-platform regression | **Existing upstream tests plus an expansion plan**; do not infer every proposed scenario is already covered. |
+| AI director, production supervisor, expanded audio QA, adaptive scheduling, advanced editor and model laboratory | **Proposals to inventory and evaluate**; not advertised as delivered features. |
+
+## Engineering principles
+
+- Preserve existing working functionality, file formats, user projects and upstream attribution.
+- Reuse authoritative implementations rather than creating duplicate queues, model managers, project stores or audio pipelines.
+- Add reproducible regression tests for confirmed defects; broaden fuzzing with new failure modes on each round.
+- Verify fixes with targeted tests, full CI, fault injection and relevant real-world hardware/audio testing.
+- Distinguish **implemented**, **CI verified**, **hardware verified**, and **planned** work.
+- Protect user data, minimize unnecessary remote processing, and require authorization for voice cloning.
+- Keep changes reviewable on a development branch until verified and approved for merge.
+
+**Start here:** [Consolidated Capability Program](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Modernization Program](docs/roadmap/MODERNIZATION_PROGRAM.md) · [Fork origin and attribution](docs/FORK_AND_ATTRIBUTION.md).
+
+---
+
+## Inherited VoiceStudio overview and documentation
+
+The sections below originate from the upstream VoiceStudio project and are retained as reference while the fork is modernized. **Screenshots, product names, installation commands, download links, paid offerings, community links, and platform support statements below may refer to upstream rather than a BetterVoiceStudio release.** Check the fork's [Actions](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) and [Releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) for fork-specific artifacts; do not assume a release exists.
 
 <p align="center">
   <a href="docs/media/electron/voicestudio.mp4">
