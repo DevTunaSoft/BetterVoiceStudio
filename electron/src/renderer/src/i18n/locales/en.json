@@ -4575,6 +4575,7 @@
     "stalled_hint": "No download progress for five minutes. Keep waiting, cancel and retry, or ask for help. Download the setup log to share.",
     "download_log": "Download setup log",
     "discord": "Get help on Discord",
+    "community": "Community discussions",
     "check_connection": "Check download connection",
     "checking": "Checking connection…",
     "use_cpu": "Install the CPU version instead",
