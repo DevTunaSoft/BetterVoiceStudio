@@ -1,4 +1,5 @@
 export const REPO_URL: string,
+  CREDITS_URL: string,
   ISSUES_URL: string,
   DISCORD_URL: string,
   SECURITY_URL: string,
