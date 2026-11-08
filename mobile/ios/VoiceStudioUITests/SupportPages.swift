@@ -1,7 +1,7 @@
 import XCTest
 
 final class SupportPages: XCTestCase {
-    @MainActor func testSupportPagesWorkWithoutPairingOrDownloads() {
+    @MainActor func testIndependentSupportPagesHaveNoUpstreamPayments() {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-smoke", "-AppleLanguages", "(en)",
                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
@@ -10,25 +10,20 @@ final class SupportPages: XCTestCase {
             let entry = app.buttons["settings." + route]
             app.reveal(entry); XCTAssertTrue(entry.isHittable); entry.tap()
             if route == "donate" {
-                for id in ["github", "kofi", "paypal"] {
-                    let link = app.descendants(matching: .any).matching(identifier: "support.donate." + id).firstMatch
-                    app.reveal(link); XCTAssertTrue(link.isHittable)
-                    XCTAssertGreaterThanOrEqual(link.frame.height, 44)
-                }
+                let link = app.descendants(matching: .any).matching(identifier: "support.project.github").firstMatch
+                app.reveal(link); XCTAssertTrue(link.isHittable)
+                XCTAssertGreaterThanOrEqual(link.frame.height, 44)
+                XCTAssertFalse(app.buttons["PayPal"].exists)
+                XCTAssertFalse(app.buttons["Ko-fi"].exists)
             } else if route == "pro" {
-                let scope = app.staticTexts["Pro adds production tools to VoiceStudio on your computer. The phone app’s creative tools remain free."]
-                XCTAssertTrue(scope.exists)
+                XCTAssertTrue(app.staticTexts["No paid VoiceBlueprint Pro checkout or subscription is offered."].exists)
                 XCTAssertFalse(app.buttons["Buy Pro"].exists)
-                XCTAssertFalse(app.textFields["Licence key"].exists)
             } else {
-                for id in ["opengtm", "opal", "supermetry", "spicrawl"] {
-                    let link = app.descendants(matching: .any).matching(identifier: "support.project." + id).firstMatch
-                    app.reveal(link); XCTAssertTrue(link.isHittable)
-                }
+                XCTAssertTrue(app.staticTexts["Developed independently by DevTunaSoft contributors."].exists)
+                XCTAssertFalse(app.buttons["OpenGTM"].exists)
             }
             let image = XCTAttachment(screenshot: app.screenshot())
-            image.name = "Support-" + route; image.lifetime = .keepAlways; add(image)
-            XCTAssertFalse(app.buttons["models.accept"].exists)
+            image.name = "VoiceBlueprint-" + route; image.lifetime = .keepAlways; add(image)
             app.navigationBars.buttons.element(boundBy: 0).tap()
         }
     }
