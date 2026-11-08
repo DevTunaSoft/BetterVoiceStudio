@@ -1,49 +1,39 @@
-# VoiceStudio documentation
+# BetterVoiceStudio documentation
 
-## Use the app
+> **Independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio).** The guides below were inherited and are being reviewed for fork accuracy. References to original upstream services, paid plans, installers, sponsorships or community channels do **not** represent BetterVoiceStudio offerings. See [credits and fork provenance](FORK_AND_ATTRIBUTION.md).
+
+## Start here: BetterVoiceStudio user manual
+
+- [Plain-language user guide — installation, models, workflows, troubleshooting and verified feature status](user-guide/README.md)
+
+## BetterVoiceStudio program
+
+- [Consolidated modernization and feature program](roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md)
+- [Modernization execution plan](roadmap/MODERNIZATION_PROGRAM.md)
+- [Baseline audit](roadmap/BASELINE_AUDIT_PASS_1.md)
+- [Fork origin, attribution and verified status](FORK_AND_ATTRIBUTION.md)
+- [Fork CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions)
+
+## Existing application guides (inherited and being verified)
 
 | Need | Guide |
 | --- | --- |
-| Install and troubleshoot | [Platform downloads](../README.md#platforms) · [Troubleshooting](install/troubleshooting.md) · [Upgrade from Tauri](electron-migration.md) |
-| Phone apps | [iOS and Android](mobile.md) |
+| Project and architecture | [Structure](STRUCTURE.md) · [Projects](electron-projects.md) |
+| Voice creation | [Voice design](voice-design.md) · [Audio quality](audio-quality.md) |
 | Models and hardware | [Engine guides](engines/README.md) · [Model downloads](downloading-models.md) |
-| Speech and cloning | [Voice design](voice-design.md) · [Expressive speech](expressive-speech.md) · [Audio quality](audio-quality.md) |
-| Dubbing | [Multi-speaker guide](dubbing/multi-speaker-guide.md) · [Translation](dubbing/translation-engines.md) · [Exports](dubbing/export.md) |
-| Stories and audiobooks | [Longform guide](electron-longform.md) · [Projects](electron-projects.md) |
-| Voices and sharing | [Gallery](electron-gallery.md) · [Persona format](persona-format.md) · [Network sharing](sharing.md) |
+| Dubbing and subtitles | [Multi-speaker](dubbing/multi-speaker-guide.md) · [Exports](dubbing/export.md) |
+| Audiobooks | [Longform](electron-longform.md) |
 | Dictation and transcription | [Dictation](features/dictation.md) · [Transcriptions](electron-transcriptions.md) |
-| Automation | [Local API](speech-platform.md) · [MCP](mcp.md) · [Workflows and calls](calls.md) |
+| Automation | [Local API](speech-platform.md) · [MCP](mcp.md) |
+| Platform reference | [Troubleshooting](install/troubleshooting.md) · [Mobile](mobile.md) |
+| Licensing | [Notice](../LICENSE-NOTICE.md) · [Model credits](model-credits.md) · [Model inventory](licensing/model-inventory.md) |
 
-## Develop and maintain
+## Documentation policy
 
-| Need | Reference |
-| --- | --- |
-| Contribute | [Contributing](../.github/CONTRIBUTING.md) · [Electron development](../electron/README.md) |
-| Repository layout | [Project structure](STRUCTURE.md) |
-| Shipping capabilities | [Feature catalog](feature-catalog.md) · [Electron parity](../electron/PARITY.md) |
-| Planned work | [Live roadmap](ROADMAP.md) |
-| Release and distribution | [Release checklist](RELEASING.md) · [Store publishing](STORE-PUBLISHING.md) |
-| Model licensing | [Inventory](licensing/model-inventory.md) · [Review workflow](licensing/model-review-workflow.md) |
-| Designs and decisions | [Design references](specs/README.md) · [Architecture decisions](adr/) |
-
-## Documentation maintenance
-
-Keep current behavior in the topic guide and update it in the same PR as the
-implementation. Link to that guide rather than keeping a second status report.
-The live issue tracker owns pending work; dated plans describe their original
-snapshot, not current feature availability or repository policy.
-
-Retain migration guidance, format/security contracts, licensing evidence and
-useful investigation results. Remove superseded implementation checklists after
-checking incoming references; git history keeps the original text. For example:
-
-```sh
-git log --all -- docs/maintenance-pages-modularization.md
-git show <commit>:docs/maintenance-pages-modularization.md
-```
-
-Validate relative links with:
-
-```sh
-uv run pytest -q tests/test_docs_links.py
-```
+- Credit the original authors for inherited work and retain third-party copyright/license notices.
+- Link to **BetterVoiceStudio** for fork-specific source, issues, CI and releases.
+- Do not advertise upstream paid products, sponsorships, installers or community channels as this fork's offerings.
+- Never silently redirect upstream installation commands to unverified fork artifacts.
+- Classify functionality as inherited, implemented, verified or planned.
+- Check for duplicate implementations before creating new services.
+- Update relevant guides alongside verified code changes.

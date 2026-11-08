@@ -3,6 +3,22 @@ name: Electron packaging rehearsal
 # Explicitly artifact-only: no tag, schedule, release, or publishing permission.
 on:
   workflow_dispatch:
+  # Build artifacts automatically on development-branch changes that can affect
+  # the packaged desktop application. No publishing or release permissions.
+  push:
+    branches:
+      - engineering/modernization-foundation
+    paths:
+      - '.github/workflows/electron-build.yml'
+      - '.github/workflows/build-omnivoice-tts.yml'
+      - 'electron/**'
+      - 'backend/**'
+      - 'native/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'bun.lock'
+      - 'uv.lock'
+      - 'pyproject.toml'
 
 permissions:
   contents: read
@@ -140,7 +156,16 @@ jobs:
           node ../scripts/create_store_artifact_manifest.mjs --platform=${{ matrix.platform }} --arch=${{ matrix.arch }}
       - name: Packaged startup smoke test
         working-directory: electron
+        # The setup screen initializes backend status before the installation
+        # step. Force the supported CPU torch path here as well; otherwise
+        # Windows ARM64 could fail during the setup gate before install starts.
+        env:
+          OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
+          VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
+          if [ "$RUNNER_OS" = Windows ]; then
+            node -e "const assert=require('node:assert/strict'); assert.equal(process.env.OMNIVOICE_TORCH_VARIANT,'cpu'); console.log('PASS: Windows first-run setup uses CPU torch')"
+          fi
           if [ "$RUNNER_OS" = Linux ]; then
             for image in release/VoiceStudio-*-linux-x64.AppImage; do
               VOICESTUDIO_PACKAGED_EXE="electron/$image" xvfb-run -a node tests/packaged-smoke.mjs --setup
@@ -154,7 +179,22 @@ jobs:
         timeout-minutes: 25
         env:
           VOICESTUDIO_RUNTIME_TIMEOUT_MS: '1200000'
+          # Capture a true packaged Electron screenshot on Windows x64.
+          # The file is generated only after packaging, and uploaded as QA
+          # evidence; it is not embedded in the installer or shown as a claim
+          # that user-device audio/microphone acceptance has passed.
+          VOICESTUDIO_SCREENSHOT: ${{ matrix.platform == 'win32' && matrix.arch == 'x64' && 'release/BetterVoiceStudio-model-manager-win-x64.png' || '' }}
+          # Hosted Windows runners have no supported AMD GPU. Force the
+          # CPU torch recipe on x64 and on ARM64's emulated x64 runtime.
+          # This applies only to packaged acceptance, not shipped defaults.
+          OMNIVOICE_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
+          VOICESTUDIO_TEST_EXPECT_TORCH_VARIANT: ${{ runner.os == 'Windows' && 'cpu' || '' }}
         run: |
+          # Regression guard: hosted Windows runners must not select ROCm,
+          # including the ARM64 runner with an emulated x64 Python runtime.
+          if [ "$RUNNER_OS" = Windows ]; then
+            node -e "const assert=require('node:assert/strict'); assert.equal(process.env.OMNIVOICE_TORCH_VARIANT, 'cpu'); assert.match(process.env.VOICESTUDIO_RUST_TARGET, /^(x86_64|aarch64)-pc-windows-msvc$/); console.log('PASS: Windows packaged acceptance forces CPU torch on '+process.env.VOICESTUDIO_RUST_TARGET)"
+          fi
           if [ "$RUNNER_OS" = Linux ]; then
             xvfb-run -a node tests/packaged-smoke.mjs --install
           else
@@ -170,3 +210,4 @@ jobs:
             electron/release/VoiceStudio-*
             electron/release/electron-*.yml
             electron/release/store-artifact-manifest-*.json
+            electron/release/BetterVoiceStudio-model-manager-win-x64.png

@@ -13,7 +13,7 @@ bundled, so the apps show current pictures with no runtime network call:
   (Android copies that folder into its APK assets at build time)
 * iOS: ``Contributors.xcassets/contributor-<login>.imageset`` + ``HomeContributors.swift``
 * Android: ``HomeContributors.kt``
-* README Team contributor rows (English and every translation in ``docs/readme/``)
+* Historical upstream README Team contributor rows in ``docs/readme/`` only.\n  The independent BetterVoiceStudio root README has no upstream avatar-row contract.
 
 ``homeCoreMaintainers`` is owner-assigned and preserved. Output is deterministic:
 files (and the snapshot date) change only when the contributor data or avatars do.
@@ -45,7 +45,7 @@ AVATARS = HOME / "contributors"
 XCASSETS = ROOT / "mobile/ios/VoiceStudio/Resources/Contributors.xcassets"
 SWIFT = ROOT / "mobile/ios/VoiceStudio/Features/HomeContributors.swift"
 KOTLIN = ROOT / "mobile/android/features/src/main/kotlin/com/voicestudio/mobile/features/HomeContributors.kt"
-READMES = (ROOT / "README.md", *sorted((ROOT / "docs/readme").glob("README_*.md")))
+READMES = tuple(sorted((ROOT / "docs/readme").glob("README_*.md")))
 
 # Automation accounts that GitHub reports as ``type: User``.
 AUTOMATION_LOGINS = frozenset({

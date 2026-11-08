@@ -7,12 +7,12 @@ import {
   Activity,
   Copy,
   ExternalLink,
-  Building2,
+  BookOpen,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { openExternal } from '../../api/external';
 import { resolveAboutVersion } from '../../utils/appVersion';
-import { REPO_URL } from '../../utils/bugReport';
+import { REPO_URL, CREDITS_URL } from '../../utils/contactLinks';
 import { Button, Badge } from '../../ui';
 import { SettingsSection } from './primitives';
 import { CATEGORY_BY_ID } from './settingsCategories';
@@ -87,10 +87,14 @@ export default function AboutTab({
         value={
           <span className="inline-flex items-center gap-[var(--space-2)]" translate="no">
             <VoiceStudioMark className="size-5 text-[var(--chrome-accent)]" />
-            VoiceStudio
+            BetterVoiceStudio
           </span>
         }
       />
+      <p className="settings-muted text-sm text-[var(--chrome-fg-dim)]">
+        An independent, local-first open-source modernization fork of VoiceStudio.
+        Original authors and contributors retain attribution and their applicable licenses.
+      </p>
       <Row label={t('about.version')} value={resolveAboutVersion(appVersion, info)} mono />
       <Row
         label={t('about.tauri_runtime')}
@@ -150,17 +154,15 @@ export default function AboutTab({
           leading={<ExternalLink size={12} />}
           onClick={() => openExternal(REPO_URL)}
         >
-          {t('about.github')}
+          BetterVoiceStudio on GitHub
         </Button>
         <Button
           variant="subtle"
           size="md"
-          leading={<Building2 size={12} />}
-          onClick={() => {
-            useAppStore.getState().setMode?.('enterprise');
-          }}
+          leading={<BookOpen size={12} />}
+          onClick={() => openExternal(CREDITS_URL)}
         >
-          {t('about.commercial_license')}
+          Credits and licenses
         </Button>
       </div>
       {selfCheck && (

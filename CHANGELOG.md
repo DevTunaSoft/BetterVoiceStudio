@@ -1,4 +1,4 @@
-# Changelog
+> **BetterVoiceStudio fork note:** The historical release entries below document the original [VoiceStudio](https://github.com/debpalash/VoiceStudio) project, not BetterVoiceStudio releases. For fork-specific development see [fork attribution](docs/FORK_AND_ATTRIBUTION.md), the [capability program](docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md), and [fork commits](https://github.com/DevTunaSoft/BetterVoiceStudio/commits/engineering/modernization-foundation). Upstream download links below do **not** contain fork modifications.\n\n# Changelog
 
 All notable changes to VoiceStudio.
 

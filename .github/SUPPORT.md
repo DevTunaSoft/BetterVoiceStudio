@@ -1,44 +1,13 @@
-# Support
+# BetterVoiceStudio support
 
-## Where to get help
+BetterVoiceStudio is an independent fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). For this fork, use [GitHub Issues](https://github.com/DevTunaSoft/BetterVoiceStudio/issues) for bugs, setup problems and feature requests. See [development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) for test status.
 
-| Channel | Best for |
-|---|---|
-| [Discord](https://discord.gg/bzQavDfVV9) — `#help` | Setup problems, quick questions, sharing results |
-| [GitHub Issues](https://github.com/debpalash/VoiceStudio/issues) | Bugs and feature requests — use the templates; attach the diagnostic bundle (Settings → About → "Save diagnostic bundle") |
-| [GitHub Discussions](https://github.com/debpalash/VoiceStudio/discussions) | Design questions, ideas, show & tell |
-| Security issues | **Never a public issue** — see [SECURITY.md](SECURITY.md) for private reporting |
+For security vulnerabilities, **do not open a public issue**. Follow [the fork's security policy](SECURITY.md) and use private GitHub vulnerability reporting where enabled.
 
-## Uninstalling / removing all data
+## Existing application and model caveats
 
-VoiceStudio is fully local — there's nothing to deactivate, just folders to
-delete. `scripts/uninstall.sh` (macOS/Linux) or `scripts\uninstall.ps1`
-(Windows) lists every VoiceStudio folder with its size (dry-run first) and
-removes them on `--yes`. The complete per-platform path list is in
-[docs/install/uninstall.md](../docs/install/uninstall.md).
+Some guides, diagnostics, app identifiers and uninstall paths still say VoiceStudio because the fork inherits its application and data formats. Do not rename or delete user data directories until compatibility and migration behavior are verified. Follow the existing [uninstall guide](../docs/install/uninstall.md) cautiously.
 
-## Model sources we support
+Model files and third-party dependencies have independent license and provenance requirements. Read [LICENSE-NOTICE.md](../LICENSE-NOTICE.md) and [model credits](../docs/model-credits.md). Avoid executing untrusted code from downloaded model archives.
 
-VoiceStudio is built on the idea that everything it runs is **open and available
-to everyone**: free, public models with verifiable sources and licenses
-(Hugging Face repos, official project releases), so the whole community can
-use, test, and debug the same thing.
-
-**We do not support privately sold, paywalled, or gated model files.** A model
-delivered privately can't be verified, reproduced, or shared — it doesn't fit
-the project's goals, and issues involving such models will be politely closed.
-As a general safety rule, never run executables bundled inside any model
-archive.
-
-## Before filing a bug
-
-1. Update to the latest release (or `main` if you follow previews) — fixes ship continuously.
-2. Run the in-app self-check: **Settings → About → Run self-check**.
-3. Search existing issues; add a 👍 + your details to an existing one rather than opening a duplicate.
-
-## Response expectations
-
-This is an open-source project maintained with the help of an automated triage
-bot: issues are typically triaged within hours and every report gets a human-
-approved response. Reproducible reports with a diagnostic bundle get fixed
-fastest.
+We do not promise specific response times, commercial support, or upstream paid services.

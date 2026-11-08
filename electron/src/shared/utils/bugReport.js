@@ -22,12 +22,13 @@ import { crashAge, describeCrashExit, getLastBackendCrash } from './backendCrash
 import { contactAge, lastBackendContact } from './backendContact';
 import { deploymentMode } from './deploymentMode';
 import { askConfirm } from './dialog';
+import { ISSUES_AVAILABLE } from './contactLinks';
 import { isOutdated, parseVersionTriple } from './staleBuild';
 import { isTauri } from './updater';
 
 /** Canonical project repository — every GitHub link in the app derives from
  * this single constant so a fork/rename can never leave stale links behind. */
-export const REPO_URL = 'https://github.com/debpalash/VoiceStudio';
+export const REPO_URL = 'https://github.com/DevTunaSoft/BetterVoiceStudio';
 
 export const ISSUES_URL = `${REPO_URL}/issues/new`;
 
@@ -427,6 +428,21 @@ export async function buildBugReportUrl({ title = '[Bug] ', error } = {}) {
  * call sites keep their own failure UX (toast, console warning).
  */
 export async function openBugReport({ title, error } = {}) {
+  if (!ISSUES_AVAILABLE) {
+    // Never navigate users to a dead Issues form or silently transmit logs.
+    // The dialog is explicit: no data has been submitted. Diagnostic capture
+    // remains available separately via Settings → About.
+    const openGuide = await askConfirm(
+      'GitHub Issues is currently disabled for BetterVoiceStudio. No report has been sent. '
+      + 'Use Settings → About to preserve diagnostics for a verified support channel.',
+      'Bug reporting unavailable',
+      { okLabel: 'View troubleshooting', cancelLabel: 'Close' },
+    );
+    if (openGuide) {
+      await openExternal(`${REPO_URL}/blob/engineering/modernization-foundation/docs/user-guide/troubleshooting.md`);
+    }
+    return;
+  }
   const fresh = await checkBuildFreshness();
   if (fresh?.outdated) {
     const latest = fresh.latest ? `v${fresh.latest}` : '';

@@ -106,14 +106,20 @@ export const ROCM_TORCH_PROBE_FAILURE =
 /**
  * Linux uses PyTorch's ROCm index; Windows x64 uses the shared AMD recipe.
  */
-export function rocmTorchApplies(platform: NodeJS.Platform = process.platform): boolean {
-  return platform !== 'darwin';
+export function rocmTorchApplies(
+  platform: NodeJS.Platform = process.platform,
+  arch: string = process.arch,
+): boolean {
+  return platform !== 'darwin' && (platform !== 'win32' || arch === 'x64');
 }
 /** The user explicitly asked for ROCm torch AND this OS can have it. */
-export function rocmTorchOptIn(platform: NodeJS.Platform = process.platform): boolean {
+export function rocmTorchOptIn(
+  platform: NodeJS.Platform = process.platform,
+  arch: string = process.arch,
+): boolean {
   return (
     process.env.OMNIVOICE_TORCH_VARIANT?.trim().toLowerCase() === 'rocm' &&
-    rocmTorchApplies(platform)
+    rocmTorchApplies(platform, arch)
   );
 }
 /**
@@ -313,8 +319,13 @@ export function resolveTorchVariant(
   hasNvidia: () => boolean = () => nvidiaDriverPresent(platform),
 ): TorchChoice {
   const raw = env.OMNIVOICE_TORCH_VARIANT?.trim().toLowerCase() ?? '';
-  windowsRocmSelected(raw, platform, arch);
-  if (raw === 'rocm' && rocmTorchApplies(platform)) return { variant: 'rocm', explicit: true };
+  // Windows ARM64 relies on x64 Python 3.11 emulation. Even an explicit or
+  // persisted ROCm request must not select AMD's x64/cp312-only runtime;
+  // preserve the user's explicit choice semantics while safely using CPU.
+  if (raw === 'rocm' && platform === 'win32' && arch === 'arm64')
+    return { variant: 'cpu', explicit: true };
+  if (raw === 'rocm' && rocmTorchApplies(platform, arch))
+    return { variant: 'rocm', explicit: true };
   if (raw === 'cuda' || raw === 'default') return { variant: 'default', explicit: true };
   if (raw === 'cpu') {
     return { variant: cpuTorchApplies(platform, arch) ? 'cpu' : 'default', explicit: true };

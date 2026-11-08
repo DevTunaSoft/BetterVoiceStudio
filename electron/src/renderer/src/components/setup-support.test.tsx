@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, expect, it, vi } from 'vitest';
 import i18n from '@/i18n';
+import { DISCORD_URL } from '@shared/utils/contactLinks';
 import type { BackendStatus } from '../../../preload/index.d';
 import { SetupSupport } from './setup-support';
 
@@ -58,9 +59,9 @@ it('escalates at five minutes without progress and clears help when bytes resume
   expect(screen.queryByText('Setup GitHub report')).not.toBeInTheDocument();
   rerender(<SetupSupport status={status(300)} />);
   expect(screen.getByText('Setup GitHub report')).toBeVisible();
-  expect(screen.getByRole('link', { name: i18n.t('setupHelp.discord') })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: i18n.t('setupHelp.community', { defaultValue: 'Community discussions' }) })).toHaveAttribute(
     'href',
-    'https://discord.gg/bzQavDfVV9',
+    DISCORD_URL,
   );
   const moving = status(0);
   moving.setupProgress!.stalled = false;

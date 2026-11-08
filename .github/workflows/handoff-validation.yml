@@ -1,0 +1,19 @@
+name: Handoff validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+      - name: Validate engineering handoff
+        run: python3 scripts/validate_handoff.py
+      - name: Test validator rejects incomplete handoffs
+        run: python3 tests/test_handoff_validator.py
+
+      - name: Validate living user manual
+        run: python3 scripts/validate_user_guide.py

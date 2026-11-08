@@ -60,19 +60,19 @@ def test_sign_phrase_matches_the_agreement_and_contributing():
         assert cla.SIGN_PHRASE in path.read_text(encoding="utf-8"), path
 
 
-def test_new_contributors_are_told_to_sign_before_their_first_pull_request():
-    """GitHub cannot block opening a pull request, so the docs must say that the
-    merge is gated and where to sign first: the maintainer-labelled signing issue
-    that ``sign_on_issue`` records for anyone."""
-    signing_issue = "https://github.com/debpalash/VoiceStudio/issues/2586"
-    contributing = (_REPO / ".github" / "CONTRIBUTING.md").read_text(encoding="utf-8")
+def test_fork_template_does_not_require_upstream_cla_signing():
+    """Fork pull requests must not direct contributors to sign the upstream CLA.
+
+    The inherited CLA workflow is a separate governance and release blocker;
+    this test only verifies that the fork-facing template is truthful.
+    """
     template = (_REPO / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
     readme = (_REPO / "README.md").read_text(encoding="utf-8")
-    assert "Before your first pull request" in contributing
-    assert contributing.count(signing_issue) >= 2
-    assert signing_issue in template
-    assert "sign the Contributor License Agreement once" in " ".join(template.split())
-    assert "contribution-licensing" in readme
+    assert "BetterVoiceStudio pull request" in template
+    assert "original VoiceStudio release cadence, contributor CLA" in template
+    assert "https://github.com/debpalash/VoiceStudio/issues/2586" not in template
+    assert "https://github.com/debpalash/VoiceStudio/issues/2586" not in readme
+    assert "contribution-licensing" not in readme
     assert cla.SIGNING_LABEL == "cla"
 
 

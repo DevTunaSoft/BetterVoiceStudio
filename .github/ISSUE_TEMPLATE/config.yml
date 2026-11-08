@@ -1,11 +1,8 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
-  - name: 💬 Discord — questions & quick help
-    url: https://discord.gg/bzQavDfVV9
-    about: Usage questions, setup help, and chat. Faster than an issue for "how do I…".
-  - name: 🗣️ GitHub Discussions
-    url: https://github.com/debpalash/VoiceStudio/discussions
-    about: Ideas, show-and-tell, and open-ended Q&A that isn't a bug or a specific feature ask.
-  - name: 🔒 Security vulnerability
-    url: https://github.com/debpalash/VoiceStudio/security/policy
-    about: Please report security issues privately — do NOT open a public issue.
+  - name: BetterVoiceStudio discussions
+    url: https://github.com/DevTunaSoft/BetterVoiceStudio/discussions
+    about: Questions and ideas for this fork (if Discussions is enabled).
+  - name: Private security reporting
+    url: https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories
+    about: Please report vulnerabilities privately when reporting is enabled.

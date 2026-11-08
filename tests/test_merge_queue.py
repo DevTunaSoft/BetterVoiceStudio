@@ -38,7 +38,14 @@ def test_ci_gives_a_merge_group_its_own_unsuperseded_run():
     concurrency = _workflow("ci.yml")["concurrency"]
     # A merge group has no PR number: it keys on its own commit and is never cancelled.
     assert concurrency["group"].endswith("github.sha }}")
-    assert concurrency["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
+    assert "github.event.pull_request.number" in concurrency["group"]
+    # Only development pushes can share a branch name. A merge-group ref must
+    # fall back to github.sha; it must not be coalesced with a later queue commit.
+    assert "(github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation' && github.ref_name)" in concurrency["group"]
+    assert concurrency["cancel-in-progress"] == (
+        "${{ github.event_name == 'pull_request' || "
+        "(github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation') }}"
+    )
 
 
 def test_the_queue_workflow_runs_only_on_the_merge_group():

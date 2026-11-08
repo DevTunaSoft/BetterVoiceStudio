@@ -45,7 +45,12 @@ def test_discord_link_updated(relpath):
         pytest.skip(f"{relpath} not found")
     content = filepath.read_text(encoding="utf-8")
     assert OLD_DISCORD not in content, f"{relpath} still contains expired link {OLD_DISCORD}"
-    assert NEW_DISCORD in content, f"{relpath} missing new link {NEW_DISCORD}"
+    if relpath == "README.md":
+        assert "BetterVoiceStudio" in content
+        assert "not BetterVoiceStudio offerings" in content
+        assert NEW_DISCORD not in content, "fork README must not promote upstream Discord"
+    else:
+        assert NEW_DISCORD in content, f"{relpath} missing new link {NEW_DISCORD}"
 
 
 def test_no_old_discord_link_anywhere():

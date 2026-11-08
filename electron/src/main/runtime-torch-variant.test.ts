@@ -281,6 +281,22 @@ describe('CPU-only runtime install', () => {
 });
 
 describe('Windows on ARM runtime install', () => {
+  it('does not attempt the AMD ROCm overlay even with a persisted ROCm preference', async () => {
+    host('win32', 'arm64');
+    vi.stubEnv('OMNIVOICE_TORCH_VARIANT', 'rocm');
+    const { bundle, project } = await fixture();
+    const run = fakeRun(project);
+    await installRuntime(bundle, project, 'uv', run, new AbortController().signal);
+    const calls = run.mock.calls.map(([, args]) => args);
+    const sync = calls.find((args) => args[0] === 'sync') ?? [];
+    expect(sync[sync.indexOf('--python') + 1]).toBe(WIN_ARM64_PYTHON_REQUEST);
+    expect(sync).toContain('--no-install-package');
+    expect(calls.some((args) => args.includes('backend.core.windows_rocm.install'))).toBe(false);
+    expect(calls.some((args) => args[0] === 'pip' && args.includes(CPU_TORCH_PINS[0]!))).toBe(
+      true,
+    );
+    expect(resolveTorchVariant()).toEqual({ variant: 'cpu', explicit: true });
+  });
   it('asks uv for the x64 interpreter and the CPU torch build', async () => {
     host('win32', 'arm64');
     const { bundle, project } = await fixture();

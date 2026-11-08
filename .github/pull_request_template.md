@@ -1,56 +1,38 @@
-<!--
-First pull request? Unless exempt under the CLA checker’s policy, sign the
-Contributor License Agreement once, before or after
-opening it: https://github.com/debpalash/VoiceStudio/issues/2586
-Your signature covers your future contributions. Every other non-exempt human commit
-author and co-author must also sign before merge. If this pull request contains
-`Supersedes #N`, that also includes the non-exempt human opener, commit authors
-and co-authors of pull request #N.
--->
+# BetterVoiceStudio pull request
+
+This is an independent open-source fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). Preserve upstream copyright, license notices, and appropriate contributor credit. [Fork history and attribution](../docs/FORK_AND_ATTRIBUTION.md).
 
 ## Summary
 
-<!-- Brief description of what this PR does. -->
+Describe the problem, proposed solution, and user-visible behavior.
 
-## Changes
+## Existing implementation and reuse
 
-<!-- List the key changes made in this PR. -->
+- Existing modules, APIs, schemas, tests and documentation inspected:
+- Capability status (existing / partial / needs hardening / missing / unknown):
+- Authoritative implementation reused or reason for new implementation:
+- Compatibility and migration implications:
 
--
+## Verification
 
-## Type
+- Failing test or reproducible defect:
+- Targeted tests and exact results:
+- Full CI and exact results:
+- Fuzzing, malformed input, concurrency and fault-injection scenarios:
+- Platform, GPU, audio and installer validation performed:
+- Remaining risks and unverified scenarios:
 
-<!-- Check the one that applies. -->
+## Review checklist
 
-- [ ] 🐛 Bug fix
-- [ ] ✨ New feature
-- [ ] ♻️ Refactor
-- [ ] 📝 Documentation
-- [ ] 🧪 Tests
-- [ ] 🔧 CI / Build
-- [ ] 🚀 Release prep
+- [ ] No duplicate implementation of an existing capability without a documented reason.
+- [ ] Existing behavior, projects, interfaces and attribution preserved.
+- [ ] Root cause documented and regression coverage added for fixes.
+- [ ] Security, privacy and licensing impact assessed.
+- [ ] No upstream services, sponsorships, installers or subscriptions presented as fork offerings.
+- [ ] Documentation and changelog updated where relevant.
+- [ ] No secrets, personal files or private logs committed.
+- [ ] Results accurately distinguish verified from planned or untested.
 
-## Testing
+## Fork release policy
 
-<!-- How did you test these changes? -->
-
--
-
-## Checklist
-
-- [ ] I've tested this locally
-- [ ] Every non-exempt human commit author has signed the [CLA](https://github.com/debpalash/VoiceStudio/blob/main/.github/CLA-1.0.md) (the **CLA** check tells you how)
-- [ ] I've updated relevant documentation (if applicable)
-- [ ] User-visible change: I added a one-line `changelog.d/<PR#>.<type>.md` fragment (not `CHANGELOG.md`)
-- [ ] No local machine paths, logs, or personal env details in this PR
-- [ ] Maintained version files are in sync (if an owner-requested bump): root `package.json`, `pyproject.toml`, `backend/core/version.py`, and lockfiles
-- [ ] If this PR changes runtime behavior, the regression fixture at `tests/fixtures/omnivoice_data/` still loads green on the `smoke-matrix` CI job (macOS + Windows + Linux)
-
-## Release cadence
-
-VoiceStudio ships **continuous-to-main** — no release candidates, no soak windows.
-Every merged PR is immediately part of rolling source (`main`) and Docker
-`:latest`. Electron artifact rehearsals validate desktop packages without publishing.
-Version bumps require owner approval; validated releases are tagged from `main`
-and published explicitly under [the release checklist](../docs/RELEASING.md).
-Users who want stability install an Electron release or pin Docker `:stable`.
+Changes are reviewed on development branches before merging. Publishing a BetterVoiceStudio release requires the fork's own release artifacts, license/notice checks, and relevant validation. The original VoiceStudio release cadence, contributor CLA and commercial offerings do not automatically govern this fork. Any applicable automated checks must be reviewed and configured explicitly by fork maintainers.

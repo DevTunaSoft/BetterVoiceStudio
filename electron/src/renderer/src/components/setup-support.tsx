@@ -66,7 +66,7 @@ export function SetupSupport({ status }: { status: BackendStatus }) {
         {help && (
           <>
             <ReportBug error={status.message || t('setupHelp.title')} setup />
-            <ExternalLink href={DISCORD_URL}>{t('setupHelp.discord')}</ExternalLink>
+            <ExternalLink href={DISCORD_URL}>{t('setupHelp.community', { defaultValue: 'Community discussions' })}</ExternalLink>
           </>
         )}
       </div>

@@ -6,10 +6,10 @@ import { runRendererTask } from '@/lib/global-error-recovery';
 import { REPO_URL } from '@shared/utils/contactLinks';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
-const STARS_URL = 'https://api.github.com/repos/debpalash/VoiceStudio';
+const STARS_URL = 'https://api.github.com/repos/DevTunaSoft/BetterVoiceStudio';
 const REFRESH_MS = 20 * 60 * 1000;
 // The last bundled count remains visible when GitHub cannot be reached.
-const BUNDLED_STARS = 43_638;
+const BUNDLED_STARS = 0; // Do not attribute upstream stars to this fork.
 const formatCount = new Intl.NumberFormat('en');
 
 async function fetchStarCount(signal: AbortSignal): Promise<number> {
@@ -29,14 +29,13 @@ async function fetchStarCount(signal: AbortSignal): Promise<number> {
 export function GithubStar() {
   const { t } = useTranslation();
   const stars = useQuery({
-    // Local combined-PR previews can suppress unsolicited external requests.
-    enabled: import.meta.env.VITE_PREVIEW_OFFLINE !== '1',
+    // Desktop must never initiate third-party requests on app launch.
+    // Only an explicit click on the refresh control triggers network I/O.
+    enabled: false,
     queryKey: ['github-star-count'],
     queryFn: ({ signal }) => fetchStarCount(signal),
     staleTime: REFRESH_MS,
     gcTime: REFRESH_MS,
-    refetchInterval: REFRESH_MS,
-    refetchIntervalInBackground: false,
     retry: false,
   });
   return (
@@ -64,6 +63,15 @@ export function GithubStar() {
         </span>
         <span className="github-star-count">{formatCount.format(stars.data ?? BUNDLED_STARS)}</span>
       </TooltipTrigger>
+      <button
+        type="button"
+        className="app-no-drag text-xs text-muted-foreground hover:text-foreground"
+        aria-label="Refresh GitHub star count"
+        disabled={stars.isFetching}
+        onClick={() => { void stars.refetch(); }}
+      >
+        {stars.isFetching ? '…' : '↻'}
+      </button>
       <TooltipContent surface="theme" side="bottom">
         {t('support.star_github')}
       </TooltipContent>

@@ -1,10 +1,3 @@
-// SupportPage → Sponsors section. Covers the two states that matter:
-//   1. EMPTY roster (the shipped default) → the outlined "be the first" slot
-//      renders, and "Become a sponsor" opens the prefilled sponsor issue.
-//   2. Populated roster → each sponsor renders as a lazy, aria-labelled logo
-//      link that opens its site via the app's external-open (never window.open).
-// SPONSORS is mocked behind a getter so one file can exercise both states;
-// SPONSOR_TIERS / SPONSOR_CONTACT stay real so we assert the real contact URL.
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -12,84 +5,32 @@ import { render, screen, fireEvent } from '@testing-library/react';
 const { openExternal } = vi.hoisted(() => ({ openExternal: vi.fn() }));
 vi.mock('../api/external', () => ({ openExternal }));
 
-// Keep the goal-bar fetch offline; leave the rest of the module real.
-vi.mock('../api/donation', async (importOriginal) => {
-  const actual = await importOriginal();
-  return { ...actual, loadDonationProgress: vi.fn().mockResolvedValue(actual.BUNDLED_PROGRESS) };
-});
-
-// Controllable roster: the getter lets each test swap SPONSORS in/out.
-let mockSponsors = [];
-vi.mock('../config/sponsors', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    get SPONSORS() {
-      return mockSponsors;
-    },
-  };
-});
-
 import SupportPage from '../pages/SupportPage';
-import { SPONSOR_CONTACT } from '../config/sponsors';
+import { REPO_URL, SECURITY_URL } from '../utils/contactLinks';
 
-const renderSupport = () => render(<SupportPage initialView="support" onBack={vi.fn()} />);
+beforeEach(() => openExternal.mockClear());
 
-beforeEach(() => {
-  mockSponsors = [];
-  openExternal.mockClear();
-});
-
-describe('SupportPage — Sponsors', () => {
-  it('renders the outlined "be the first" placeholder when the roster is empty', async () => {
-    renderSupport();
-    expect(await screen.findByTestId('sponsors-empty')).toBeInTheDocument();
-    expect(screen.getByText(/Be the first to sponsor VoiceStudio/i)).toBeInTheDocument();
-    expect(screen.getByText(/Your logo here/i)).toBeInTheDocument();
-  });
-
-  it('"Become a sponsor" opens the prefilled sponsor issue URL', async () => {
-    renderSupport();
-    await screen.findByTestId('sponsors-empty');
-    fireEvent.click(screen.getByRole('button', { name: /become a sponsor/i }));
-    expect(openExternal).toHaveBeenCalledWith(SPONSOR_CONTACT.githubIssue);
-    // The contact target really is the labelled, prefilled sponsor issue.
-    expect(SPONSOR_CONTACT.githubIssue).toContain('/issues/new');
-    expect(SPONSOR_CONTACT.githubIssue).toContain('template=sponsor.yml');
-  });
-
-  it('renders each sponsor as an external logo link when the roster is populated', async () => {
-    mockSponsors = [
-      {
-        name: 'Acme Corp',
-        logoUrl: 'https://acme.example/logo.svg',
-        url: 'https://acme.example',
-        tier: 'strategic',
-      },
-      {
-        name: 'Globex',
-        logoUrl: 'https://globex.example/logo.png',
-        url: 'https://globex.example',
-        tier: 'company',
-      },
-    ];
-    renderSupport();
-
-    // No placeholder once sponsors exist.
+describe('fork support page sponsor and monetization isolation', () => {
+  it('does not promote the original project sponsor roster or donation requests', () => {
+    render(<SupportPage initialView="support" onBack={() => {}} />);
     expect(screen.queryByTestId('sponsors-empty')).toBeNull();
+    expect(screen.queryByText(/Be the first to sponsor VoiceStudio|Your logo here|Donate to VoiceStudio Project/i)).toBeNull();
+    expect(screen.queryByRole('button', { name: /become a sponsor|donate|paypal|ko-fi/i })).toBeNull();
+  });
 
-    const acme = await screen.findByLabelText('Visit Acme Corp, a VoiceStudio sponsor');
-    const globex = screen.getByLabelText('Visit Globex, a VoiceStudio sponsor');
+  it('still exposes real source, credits and security support actions', () => {
+    render(<SupportPage initialView="support" onBack={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Fork source' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Credits and licenses' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Security reporting' })).toBeInTheDocument();
+  });
 
-    // Real hrefs (accessibility / right-click) + rel="noreferrer" + lazy logos.
-    expect(acme).toHaveAttribute('href', 'https://acme.example');
-    expect(acme).toHaveAttribute('rel', 'noreferrer');
-    const img = screen.getByAltText('Acme Corp');
-    expect(img).toHaveAttribute('src', 'https://acme.example/logo.svg');
-    expect(img).toHaveAttribute('loading', 'lazy');
-
-    // Click routes through the app's external-open, not the webview.
-    fireEvent.click(globex);
-    expect(openExternal).toHaveBeenCalledWith('https://globex.example');
+  it('routes source and security actions through the shared external opener', () => {
+    render(<SupportPage initialView="support" onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Fork source' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Security reporting' }));
+    expect(openExternal).toHaveBeenCalledTimes(2);
+    expect(openExternal).toHaveBeenNthCalledWith(1, REPO_URL);
+    expect(openExternal).toHaveBeenNthCalledWith(2, SECURITY_URL);
   });
 });

@@ -1,66 +1,47 @@
-// Support, commercial licensing and contact share one compact tabbed page.
-// App.jsx renders SupportPage in the SAME tree position for all three routes,
-// so a changed `initialView` must update the active tab after mount too.
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-vi.mock('../api/external', () => ({ openExternal: vi.fn() }));
-// Partial mock: only the network call is stubbed. GoalBar imports the real
-// progressPct / isGoalMet, and a hand-written module object would silently
-// drop whichever helper it gains next.
-vi.mock('../api/donation', async (importOriginal) => ({
-  ...(await importOriginal()),
-  loadDonationProgress: () => Promise.resolve({ raised: 0, goal: 100, sponsorCount: 0 }),
-}));
+const { openExternal } = vi.hoisted(() => ({ openExternal: vi.fn() }));
+vi.mock('../api/external', () => ({ openExternal }));
 
 import SupportPage from '../pages/SupportPage';
+import { REPO_URL, SECURITY_URL } from '../utils/contactLinks';
 
-beforeEach(() => {
-  vi.clearAllMocks();
-});
+beforeEach(() => openExternal.mockClear());
 
-// Radix Tabs activate on pointer down; drive them like a real pointer.
-const clickTab = (name) => {
-  const tab = screen.getByRole('tab', { name });
-  fireEvent.pointerDown(tab, { button: 0, ctrlKey: false, pointerType: 'mouse' });
-  fireEvent.mouseDown(tab, { button: 0 });
-  fireEvent.click(tab);
-};
-
-describe('the compact support page', () => {
-  it('shows one destination at a time behind three tabs', () => {
+describe('fork support page and legacy route compatibility', () => {
+  it('renders accessible support channels instead of upstream monetization tabs', () => {
     render(<SupportPage onBack={() => {}} />);
-    expect(screen.getAllByRole('tab')).toHaveLength(3);
-    expect(screen.getByRole('tab', { name: 'Support' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('heading', { name: 'Donate to VoiceStudio Project' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Report a bug' })).toBeNull();
+    expect(screen.getByRole('heading', { name: 'BetterVoiceStudio' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Report a bug' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Report a security issue' })).toBeInTheDocument();
+    expect(screen.queryByRole('tab', { name: /Support|Commercial License/i })).toBeNull();
+    expect(screen.queryByText(/Donate to VoiceStudio Project/i)).toBeNull();
   });
 
-  it('updates the active tab when the reused route changes', () => {
+  it('retains the contact route without losing the support channels', () => {
     const { rerender } = render(<SupportPage onBack={() => {}} initialView="support" />);
     rerender(<SupportPage onBack={() => {}} initialView="contact" />);
-    expect(screen.getByRole('tab', { name: 'Contact' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('heading', { name: 'Report a bug' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Donate to VoiceStudio Project' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Security reporting' })).toBeInTheDocument();
   });
 
-  it('opens the licence tab for the enterprise route', () => {
+  it('explains license limitations instead of advertising an unsupported commercial license', () => {
     render(<SupportPage onBack={() => {}} initialView="license" />);
-    expect(screen.getByRole('tab', { name: 'Commercial License' })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    );
-    expect(
-      screen.getByRole('heading', { name: 'License VoiceStudio for your organization' }),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/does not offer the original project's commercial licenses or Pro subscriptions/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Credits and licenses' })).toBeInTheDocument();
+    expect(screen.queryByText(/License VoiceStudio for your organization/i)).toBeNull();
   });
 
-  it('switches destinations from the tab rail', () => {
-    render(<SupportPage onBack={() => {}} />);
-    clickTab('Contact');
-    expect(screen.getByRole('heading', { name: 'Report a bug' })).toBeInTheDocument();
-    clickTab('Support');
-    expect(screen.getByRole('heading', { name: 'Donate to VoiceStudio Project' })).toBeInTheDocument();
+  it('preserves navigation and opens only fork-owned support destinations', () => {
+    const onBack = vi.fn();
+    render(<SupportPage onBack={onBack} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Back' }));
+    expect(onBack).toHaveBeenCalledOnce();
+    fireEvent.click(screen.getByRole('button', { name: 'Fork source' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Security reporting' }));
+    expect(openExternal).toHaveBeenNthCalledWith(1, REPO_URL);
+    expect(openExternal).toHaveBeenNthCalledWith(2, SECURITY_URL);
   });
 });

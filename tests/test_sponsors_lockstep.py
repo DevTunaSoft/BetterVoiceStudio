@@ -1,4 +1,4 @@
-"""The sponsor roster lives in SPONSORS.md, the READMEs and the in-app config; they must agree."""
+"""Keep inherited upstream sponsor snapshots internally consistent without advertising them in the fork README."""
 from __future__ import annotations
 
 import json
@@ -10,7 +10,7 @@ import pytest
 
 _ROOT = Path(__file__).resolve().parents[1]
 _CONFIG = _ROOT / "electron" / "src" / "shared" / "config" / "sponsors.js"
-_READMES = [_ROOT / "README.md", *sorted((_ROOT / "docs" / "readme").glob("README_*.md"))]
+_READMES = sorted((_ROOT / "docs" / "readme").glob("README_*.md"))
 
 _README_REPOSITORIES = {
     "OpenGTM": "/debpalash/OpenGTM",
@@ -121,3 +121,11 @@ def test_readme_logo_row_matches_the_app_and_resolves(path):
             }
         for asset in link["assets"]:
             assert (path.parent / asset).resolve().is_file(), f"{path.name}: {asset} does not exist"
+
+
+def test_fork_readme_does_not_advertise_upstream_sponsors():
+    """The independent fork must not silently inherit upstream sponsor promotions."""
+    root = (_ROOT / "README.md").read_text(encoding="utf-8")
+    assert _logo_links(root) == []
+    assert "BetterVoiceStudio" in root
+    assert "VoiceStudio" in root  # upstream attribution remains visible

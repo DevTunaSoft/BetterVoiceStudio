@@ -73,21 +73,73 @@ class JobQueue:
         self._order: List[str] = []
         self._workers: List[asyncio.Task] = []
         self._lock = asyncio.Lock()
+        # A separate shutdown task survives cancellation of any one caller;
+        # workers can use _lock in cancellation finalizers without deadlocking.
+        self._shutdown_task: Optional[asyncio.Task[None]] = None
+        self._stopping_workers: List[asyncio.Task] = []
 
     async def start(self) -> None:
-        if self._workers:
-            return
-        self._workers = [
-            asyncio.create_task(self._run_worker(i), name=f"{self.name}-worker-{i}")
-            for i in range(self._concurrency)
-        ]
+        # Fail explicitly when shutdown is still joining the previous workers.
+        # Silently starting a new generation could run stale work concurrently.
+        async with self._lock:
+            if self._shutdown_task is not None:
+                raise RuntimeError(f"{self.name}: cannot start while stopping")
+            if self._workers:
+                return
+            self._workers = [
+                asyncio.create_task(self._run_worker(i), name=f"{self.name}-worker-{i}")
+                for i in range(self._concurrency)
+            ]
 
     async def stop(self) -> None:
-        for w in self._workers:
-            w.cancel()
-        if self._workers:
-            await asyncio.gather(*self._workers, return_exceptions=True)
-        self._workers = []
+        """Join cancellation finalizers without holding the queue lock.
+
+        The shutdown task owns both the worker join and job settlement. Shield
+        it from cancellation of the caller (e.g. a timed-out request), otherwise
+        shutdown could claim to be complete while old workers still run.
+        """
+        async with self._lock:
+            if asyncio.current_task() in (*self._workers, *self._stopping_workers):
+                raise RuntimeError(f"{self.name}: a worker cannot stop its own queue")
+            if self._shutdown_task is None:
+                self._shutdown_task = asyncio.create_task(
+                    self._stop_workers(), name=f"{self.name}-shutdown"
+                )
+            shutdown = self._shutdown_task
+        await asyncio.shield(shutdown)
+
+    async def _stop_workers(self) -> None:
+        async with self._lock:
+            workers = self._workers
+            self._workers = []
+            self._stopping_workers = workers
+            for worker in workers:
+                worker.cancel()
+
+        try:
+            if workers:
+                # A worker's finally block may itself call submit(); _lock must
+                # be free during this join for cleanup to finish.
+                await asyncio.gather(*workers, return_exceptions=True)
+        finally:
+            async with self._lock:
+                now = time.time()
+                for job in self._jobs.values():
+                    if job.state in (JobState.QUEUED, JobState.RUNNING):
+                        job.state = JobState.CANCELLED
+                        job.finished_at = now
+                        job.cancel_event.set()
+                        job.done_event.set()
+                # Cancelled queued IDs must not execute after a future restart.
+                while True:
+                    try:
+                        self._queue.get_nowait()
+                    except asyncio.QueueEmpty:
+                        break
+                    else:
+                        self._queue.task_done()
+                self._stopping_workers = []
+                self._shutdown_task = None
 
     async def submit(
         self,
