@@ -26,8 +26,8 @@ uv run scripts/render_brand_icons.py
 It renders `docs/logo.svg` to the README PNGs and every PNG, ICO and ICNS under
 `electron/build/icons/` (the ICNS only on macOS, which has `iconutil`), fitting
 the macOS artwork to Apple's icon grid. Then run the Electron packaging contract.
-Keep `fill="none"` on the waveform path in every SVG copy of the mark; without it
-the curve fills black.
+Keep `fill="none"` on both signal paths in every SVG copy of the mark; otherwise
+their curves may fill unexpectedly.
 
 Android generates its vectors from the same SVG with
 `mobile/android/scripts/generate_brand_resources.py`. SVG paint `none` becomes
@@ -45,14 +45,14 @@ canonical SVG elsewhere so the silhouette stays recognizable at 16–512 px.
 
 | Role | Color |
 |---|---|
-| Voice rose | `#F47FA3` |
-| Soft highlight | `#FFD0DB` |
-| Creative amber | `#F7AE73` |
-| Spark | `#FFE5B5` |
-| Plum tile | `#211B2B` → `#120F18` |
+| Signal cyan | `#44BDF5` |
+| Signal light | `#A6EEFF` |
+| Accent violet | `#697CFF` |
+| Highlight | `#E8FBFF` |
+| Blueprint tile | `#142B50` → `#071322` |
 
-The mark may render in one color inside app chrome. Keep the waveform and spark
-together; do not put text inside the icon or add another enclosing ring.
+The mark may render in one color inside app chrome. Keep the blueprint B and
+waveform together; do not put text inside the icon.
 
 ## Name and copy
 

@@ -1,5 +1,7 @@
 # VoiceBlueprint Pro
 
+<p align="center"><img src="docs/logo.png" width="136" alt="VoiceBlueprint Pro blueprint-waveform icon" /></p>
+
 **Design. Clone. Create.**
 
 **A local-first AI voice production suite focused on reliability, performance, accessibility, audio quality and professional workflows.**
