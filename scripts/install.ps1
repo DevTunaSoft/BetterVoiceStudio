@@ -1,16 +1,16 @@
-# VoiceStudio Electron: latest, a release version, or build main.
+# VoiceBlueprint Pro Electron: latest, a release version, or build main.
 param([string]$Version = $env:VOICESTUDIO_VERSION, [switch]$Main, [switch]$Source, [switch]$Uninstall, [switch]$Help, [switch]$Silent)
 $ErrorActionPreference = 'Stop'
 $vsVersion = $Version
 if ($Help) {
     Write-Output @'
-VoiceStudio Electron installer (Windows x64 and ARM64)
-  irm https://voicestudio.sh/install.ps1 | iex
-  $env:VOICESTUDIO_VERSION='X.Y.Z'; irm https://voicestudio.sh/install.ps1 | iex
-  $env:VOICESTUDIO_INSTALL_MODE='main'; irm https://voicestudio.sh/install.ps1 | iex
+VoiceBlueprint Pro Electron installer (Windows x64 and ARM64)
+  irm https://raw.githubusercontent.com/DevTunaSoft/VoiceBlueprint-Pro/main/scripts/install.ps1 | iex
+  $env:VOICESTUDIO_VERSION='X.Y.Z'; irm https://raw.githubusercontent.com/DevTunaSoft/VoiceBlueprint-Pro/main/scripts/install.ps1 | iex
+  $env:VOICESTUDIO_INSTALL_MODE='main'; irm https://raw.githubusercontent.com/DevTunaSoft/VoiceBlueprint-Pro/main/scripts/install.ps1 | iex
 File usage: .\install.ps1 [-Version X.Y.Z] [-Main | -Source] [-Silent]
 Uninstall: .\install.ps1 -Uninstall (preserves user data)
-  $env:VOICESTUDIO_INSTALL_MODE='uninstall'; irm https://voicestudio.sh/install.ps1 | iex
+  $env:VOICESTUDIO_INSTALL_MODE='uninstall'; irm https://raw.githubusercontent.com/DevTunaSoft/VoiceBlueprint-Pro/main/scripts/install.ps1 | iex
 Main requires Git, Node.js 22+, Bun, Rust/Cargo, and MSVC build tools.
 Only Electron releases are supported. Quit the app first; user data is preserved.
 '@
@@ -27,13 +27,13 @@ if ($Uninstall) { $mode = 'uninstall' }
 if ($mode -eq 'uninstall') {
     if ($Main -or $Source -or $vsVersion) { throw 'Uninstall cannot be combined with installation options; clear VOICESTUDIO_VERSION first.' }
     $keys = @('HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*', 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*', 'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*')
-    $entries = @(Get-ItemProperty $keys -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -match '^VoiceStudio(?: \d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?)?$' })
+    $entries = @(Get-ItemProperty $keys -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -match '^VoiceBlueprint Pro(?: \d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?)?$' })
     foreach ($entry in $entries) {
         $command = [string]$entry.UninstallString
         if ($command -notmatch '^"([^"]+\.exe)"(?:\s+(/currentuser|/allusers))?\s*$') { continue }
         $exe = $Matches[1]
         $scope = $Matches[2]
-        if ((Split-Path $exe -Leaf) -ne 'Uninstall VoiceStudio.exe' -or -not (Test-Path -LiteralPath $exe -PathType Leaf)) { continue }
+        if ((Split-Path $exe -Leaf) -ne 'Uninstall VoiceBlueprint Pro.exe' -or -not (Test-Path -LiteralPath $exe -PathType Leaf)) { continue }
         $launch = @{ FilePath = $exe; Wait = $true; PassThru = $true }
         $arguments = @()
         if ($scope) { $arguments += $scope }
@@ -57,7 +57,7 @@ function Run-Checked([string]$Command, [string[]]$Arguments) {
 }
 if ($vsVersion) { $vsVersion = $vsVersion -replace '^v', ''; Assert-Version $vsVersion }
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-$work = Join-Path ([IO.Path]::GetTempPath()) ('voicestudio-install-' + [Guid]::NewGuid())
+$work = Join-Path ([IO.Path]::GetTempPath()) ('voiceblueprint-pro-install-' + [Guid]::NewGuid())
 New-Item -ItemType Directory -Path $work | Out-Null
 try {
     if ($mode -eq 'main') {
@@ -66,7 +66,7 @@ try {
         }
         Run-Checked node @('-e', 'if (Number(process.versions.node.split(".")[0]) < 22) process.exit(1)')
         $checkout = Join-Path $work 'source'
-        Run-Checked git @('clone', '--depth', '1', '--branch', 'main', '--single-branch', 'https://github.com/debpalash/VoiceStudio.git', $checkout)
+        Run-Checked git @('clone', '--depth', '1', '--branch', 'main', '--single-branch', 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro.git', $checkout)
         Push-Location $checkout
         try {
             Run-Checked git @('rev-parse', 'HEAD')
@@ -86,27 +86,27 @@ try {
     } else {
         if (-not $vsVersion) {
             try {
-                $release = Invoke-RestMethod 'https://api.github.com/repos/debpalash/VoiceStudio/releases/latest'
+                $release = Invoke-RestMethod 'https://api.github.com/repos/DevTunaSoft/VoiceBlueprint-Pro/releases/latest'
                 $vsVersion = $release.tag_name -replace '^v', ''
             } catch {
-                $response = Invoke-WebRequest -UseBasicParsing 'https://github.com/debpalash/VoiceStudio/releases/latest'
+                $response = Invoke-WebRequest -UseBasicParsing 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/latest'
                 # HttpWebResponse on Windows PowerShell 5.1, HttpResponseMessage on 7.
                 $uri = if ($response.BaseResponse.ResponseUri) { $response.BaseResponse.ResponseUri } else { $response.BaseResponse.RequestMessage.RequestUri }
-                if ([string]$uri -notmatch '^https://github\.com/debpalash/VoiceStudio/releases/tag/v([^/?#]+)$') { throw 'Could not resolve the latest release tag.' }
+                if ([string]$uri -notmatch '^https://github\.com/DevTunaSoft/VoiceBlueprint-Pro/releases/tag/v([^/?#]+)$') { throw 'Could not resolve the latest release tag.' }
                 $vsVersion = $Matches[1]
             }
             Assert-Version $vsVersion
         }
         $packageDir = $work
     }
-    # Releases up to v0.5.7-beta.3 named their installers VoiceStudio-Electron-*;
+    # Releases up to v0.5.7-beta.3 named their installers VoiceBlueprint-Pro-*;
     # keep pinned installs of those versions working.
-    $prefix = if ($vsVersion -match '^(0\.[0-4]\.|0\.5\.[0-6](-|$)|0\.5\.7-beta\.[1-3]$)') { 'VoiceStudio-Electron' } else { 'VoiceStudio' }
+    $prefix = 'VoiceBlueprint-Pro'
     $asset = "$prefix-$vsVersion-win-x64.exe"
     if ($onArm -and $mode -eq 'main') { $asset = "$prefix-$vsVersion-win-arm64.exe" }
     $package = Join-Path $packageDir $asset
     if ($mode -eq 'binary') {
-        $base = "https://github.com/debpalash/VoiceStudio/releases/download/v$vsVersion"
+        $base = "https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/download/v$vsVersion"
         $downloaded = $false
         if ($onArm) {
             # Prefer the native ARM64 shell; releases that predate it (or whose
@@ -141,7 +141,7 @@ try {
     if ($Silent) { $launch.ArgumentList = @('/S') }
     $process = Start-Process @launch
     if ($process.ExitCode -notin @(0, 3010)) { throw "Setup failed or was cancelled (exit $($process.ExitCode))." }
-    Write-Output 'Electron installed. Open VoiceStudio to configure the backend and choose models.'
+    Write-Output 'Electron installed. Open VoiceBlueprint Pro to configure the backend and choose models.'
 } finally {
     Remove-Item -LiteralPath $work -Recurse -Force -ErrorAction SilentlyContinue
 }
