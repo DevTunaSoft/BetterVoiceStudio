@@ -2719,6 +2719,8 @@
     "sent_logs": "Letzte Engine-Logzeilen, ohne Ihren Home-Ordner-Pfad und Tokens",
     "sent_install_failure": "Details zum Installationsfehler: Name des fehlgeschlagenen Programms, Sicherheitsstatus, Namen blockierter Dateien und Virenschutzprodukte",
     "save_diagnostics": "Vollständige Diagnose zum Anhängen speichern",
+    "issues_disabled": "GitHub Issues ist für BetterVoiceStudio deaktiviert. Es wurde kein Bericht gesendet. Bewahren Sie Diagnoseinformationen vertraulich auf, bis ein bestätigter Supportkanal verfügbar ist.",
+    "save_diagnostics_failed_local": "Die Einrichtungsdiagnose konnte nicht gespeichert werden. Prüfen Sie den freien Speicherplatz und versuchen Sie einen anderen Ordner. Es wurde kein Bericht gesendet.",
     "save_diagnostics_failed": "Die Diagnose konnte nicht gespeichert werden. Wählen Sie einen anderen Ordner oder senden Sie den Bericht ohne sie.",
     "sent_pages": "Namen zuletzt besuchter Seiten",
     "not_sent": "Nie gesendet: Ihr Audio, Text oder Stimmen. Dateinamen können in Logs oder Ihrer Beschreibung vorkommen – prüfen Sie daher die GitHub-Vorschau vor dem Absenden.",
