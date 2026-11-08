@@ -1,0 +1,55 @@
+name: Full repository disaster recovery backup
+
+on:
+  workflow_dispatch:
+  # Trigger initial snapshot safely on the dedicated backup branch.
+  push:
+    branches:
+      - engineering/repository-backup-snapshot
+    paths:
+      - .github/workflows/repository-backup.yml
+      - scripts/repository_backup.sh
+      - docs/REPOSITORY_BACKUP.md
+  # Weekly archive when this workflow is later merged into main.
+  schedule:
+    - cron: "42 4 * * 0"
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+
+jobs:
+  snapshot:
+    name: Complete Git history, metadata and source backup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Check out backup tooling
+        uses: actions/checkout@v4
+      - name: Verify backup prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          git --version
+          git lfs install
+          gh --version
+          python3 --version
+          rsync --version | head -1
+      - name: Generate independent verified backup
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO_SLUG: ${{ github.repository }}
+          BACKUP_OUTPUT_DIR: ${{ runner.temp }}/repository-backups
+          BACKUP_REQUIRE_METADATA: "1"
+        run: bash scripts/repository_backup.sh
+      - name: Upload complete backup and SHA-256
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-repository-backup-${{ github.run_id }}
+          path: ${{ runner.temp }}/repository-backups/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
