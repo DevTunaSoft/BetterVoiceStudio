@@ -221,3 +221,8 @@ The current renderer's separate `ReportBug` component bypassed the shared legacy
 ## QA checkpoint BVS-QA-0025 — Translate disabled-Issues UI and cover disk-full reporting
 
 Latest full CI [42441779672](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42441779672) surfaced a renderer translation-contract failure: `reportBug.issues_disabled` was missing from `en.json`. Added the required English key plus a local-only failed-diagnostics-save message that does not misleadingly encourage submission to disabled Issues. Strengthened reporter tests: the enabled-issue fixture now preserves all real contact-link exports when overriding the flag, and the disabled branch tests disk-full save errors without opening external URLs. Full CI and packaged Electron verification remain pending on the new commit.
+
+
+## QA checkpoint BVS-QA-0026 — All locale catalogs cover disabled issue intake
+
+CI Electron locale coverage in [run 42442054239](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42442054239) failed with **42 missing entries**: the new English `reportBug.issues_disabled` and `reportBug.save_diagnostics_failed_local` keys were absent from all 21 non-English locale catalogs. Restored these keys in ar, de, es, fr, gl, hi, id, it, ja, ko, nl, pl, pt, ru, sv, th, tr, uk, vi, zh-CN, and zh-TW. Kept full JSON parseability on every edited catalog. Added `tests/test_fork_reporting_locales.py` to enforce both keys in all 22 language catalogs. These translations are initial AI-drafted copy and require native-speaker review for release quality; do not claim every translation is linguistically verified. New CI and packaging runs must verify the localization and the disabled-Issues UI. No changes to production hardware acceptance status.
