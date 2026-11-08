@@ -79,14 +79,14 @@ def flatten(path):
 (root/'pr-list').write_text('\n'.join(str(row['number']) for row in flatten(prs)))
 (root/'issue-list').write_text('\n'.join(str(row['number']) for row in flatten(issues) if 'pull_request' not in row))
 PY
-  while IFS= read -r number; do
+  while IFS= read -r number || [[ -n "$number" ]]; do
     [[ "$number" =~ ^[0-9]+$ ]] || continue
     gh api "repos/$REPO/pulls/$number" > "$ROOT/backup/metadata/pr-details/$number.json"
     gh api --paginate --slurp "repos/$REPO/pulls/$number/reviews?per_page=100" > "$ROOT/backup/metadata/pr-details/$number-reviews.json"
     gh api --paginate --slurp "repos/$REPO/pulls/$number/comments?per_page=100" > "$ROOT/backup/metadata/pr-details/$number-review-comments.json"
     gh api --paginate --slurp "repos/$REPO/issues/$number/comments?per_page=100" > "$ROOT/backup/metadata/pr-details/$number-discussion.json"
   done < "$ROOT/pr-list"
-  while IFS= read -r number; do
+  while IFS= read -r number || [[ -n "$number" ]]; do
     [[ "$number" =~ ^[0-9]+$ ]] || continue
     gh api --paginate --slurp "repos/$REPO/issues/$number/comments?per_page=100" > "$ROOT/backup/metadata/issue-comments/$number.json"
   done < "$ROOT/issue-list"
@@ -102,6 +102,17 @@ PY
     mkdir -p "$ROOT/backup/releases/$safe_tag"
     gh release download "$tag" --repo "$REPO" --dir "$ROOT/backup/releases/$safe_tag"
   done < "$ROOT/release-tags"
+  python3 - "$ROOT/backup/metadata" <<'PY'
+import json,pathlib,sys
+root=pathlib.Path(sys.argv[1])
+prs=[row for page in json.loads((root/'pulls.json').read_text()) for row in page]
+issues=[row for page in json.loads((root/'issues.json').read_text()) for row in page if 'pull_request' not in row]
+missing_pr=[str(x['number']) for x in prs if not (root/'pr-details'/f"{x['number']}.json").is_file() or not (root/'pr-details'/f"{x['number']}-reviews.json").is_file() or not (root/'pr-details'/f"{x['number']}-discussion.json").is_file() or not (root/'pr-details'/f"{x['number']}-review-comments.json").is_file()]
+missing_issue=[str(x['number']) for x in issues if not (root/'issue-comments'/f"{x['number']}.json").is_file()]
+if missing_pr or missing_issue:
+    raise SystemExit(f"INCOMPLETE GITHUB METADATA: PRs={missing_pr} issues={missing_issue}")
+print(f"GitHub metadata verified: {len(prs)} PRs, {len(issues)} issues")
+PY
   echo captured > "$ROOT/backup/metadata/github-metadata-status.txt"
 else
   [[ "$REQUIRE_METADATA" != 1 ]] || { echo "gh and GH_TOKEN required for metadata" >&2; exit 1; }
