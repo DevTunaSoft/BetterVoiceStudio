@@ -1,40 +1,41 @@
-# BetterVoiceStudio — User Guide
+# BetterVoiceStudio — Beginner's User Manual
 
-**Status:** Living documentation, under development. Instructions below describe intended workflows; exact controls and screenshots must be verified against the released build. **This is not a certification that the app or every feature currently works.**
+**Reviewed:** November 7, 2026 · **Status:** Living fork-specific guide. Automated packaging is tested; real-user-machine acceptance is not complete.
 
-BetterVoiceStudio is an independent modernization fork of VoiceStudio. It is intended for local-first voice and audio workflows. See [credits and licenses](../FORK_AND_ATTRIBUTION.md) before distributing generated material or third-party models.
+BetterVoiceStudio is an independent modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). The desktop app processes audio with local runtimes and installed models. During migration, its executable and some screens still use the **VoiceStudio** name.
 
-## Documentation quality and verification
+## Seven steps to start
 
-This guide follows the [comprehensive documentation standard](DOCUMENTATION_STANDARD.md): every feature requires reproducible steps, failure recovery, privacy/accessibility guidance, platform applicability and linked test evidence. Until verified, instructions are labeled as preliminary.
+1. **Use a fork-owned build.** No stable BetterVoiceStudio release is published. For experimental builds, use the [installer guide](installation.md) and inspect the individual GitHub Actions packaging job for your operating system.
+2. **Save your existing work.** Back up recordings, scripts, projects and model data. Do not replace an existing upstream installation.
+3. **Choose storage.** The local runtime and models can require substantial disk space. Record the destination before installation.
+4. **Install the local runtime.** The first-run screen offers **Install local runtime** on supported platforms. The packaged acceptance test verifies that visiting setup or changing location alone does not install anything.
+5. **Open Settings → Models.** Review speech, transcription and related model categories. A category tile does not prove a model has been downloaded.
+6. **Try authorized audio.** After installing a compatible licensed engine, start with a short recording or script and inspect the result. Real speech generation and hardware audio remain unverified on users' devices.
+7. **Preserve evidence of problems.** Use [Troubleshooting and recovery](troubleshooting.md) before changing runtime directories or reinstalling.
 
-## Start here
+## Manual chapters
 
-1. **Install:** Obtain an installer only from a verified BetterVoiceStudio release. Do not assume upstream VoiceStudio installers are fork releases. Current modernization builds are **not release-ready**.
-2. **First launch:** Follow the application's on-screen setup and permission prompts. The precise installer and first-run steps will be documented after Windows/macOS/Linux installation acceptance tests.
-3. **Models:** Open the application's model management area and inspect the available models, requirements and licenses. Exact download, selection and configuration steps require UI verification.
-4. **Create a voice or audio project:** Use the application's available project/voice workflow. Only use voice recordings you own or are authorized to use. Model-specific inputs and limits will be added as each workflow is tested.
-5. **Generate or process audio:** Select an appropriate installed model and use the workflow presented in the application. Verify the generated output before sharing it.
-6. **Export and preserve your work:** Use the app's export/save controls if available. Project storage locations, formats, backup/restore and failure recovery instructions are pending real-platform verification.
-
-## Workflow chapters
-
-| Chapter | Status | What will be documented |
+| Task | Page | Evidence level |
 | --- | --- | --- |
-| [Installation and first run](installation.md) | Verification pending | OS prerequisites, download authenticity, installer, permissions, startup, updates |
-| [Models and resources](models.md) | Verification pending | Model choice, license, storage, CPU/GPU, download and troubleshooting |
-| [Voice and audio workflows](workflows.md) | Verification pending | Creating projects, authorized voice cloning, speech generation, editing, transcription and exports |
-| [Troubleshooting and recovery](troubleshooting.md) | In progress | Logs, model failures, crashes, interrupted jobs, safe recovery, support |
-| [Feature verification ledger](feature-verification.md) | In progress | Exactly which controls and workflows have been tested |
+| Download and run an experimental package | [Installation and first run](installation.md) | Automated CI setup tests, not real-device acceptance |
+| Understand CPU, GPU and model requirements | [Models and resources](models.md) | Settings route tested; real model inference pending |
+| Clone, synthesize, transcribe or dub | [Voice and audio workflows](workflows.md) | Preliminary inherited workflow documentation |
+| Investigate startup or audio failures | [Troubleshooting and recovery](troubleshooting.md) | Source-inspected diagnostics and safe recovery guidance |
+| See exactly what passed | [Feature verification ledger](feature-verification.md) | Specific run IDs, limitations and missing acceptance |
 
-## Privacy and responsible use
+## Visual guide and evidence
 
-Treat recordings, scripts and projects as sensitive. Prefer local processing. Never clone or impersonate a voice without appropriate consent and authorization. Verify each model's license and usage terms independently.
+The [GitHub homepage GUI gallery](../../README.md#inside-the-studio) shows existing Electron-renderer screenshots inherited by the fork. An independent **actual packaged Windows x64 Settings → Models screenshot**, 1024×728, was captured in [Actions run #42426554733](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42426554733), under `electron-rehearsal-win32-x64`. It shows a loading placeholder, not a successfully downloaded model. The artifact may expire.
 
-## Reporting a problem
+## Terms and privacy
 
-Use [BetterVoiceStudio issues](https://github.com/DevTunaSoft/BetterVoiceStudio/issues) for non-sensitive bugs and feature requests. For security vulnerabilities, follow the repository's [security policy](https://github.com/DevTunaSoft/BetterVoiceStudio/security/policy) and use private reporting rather than a public issue.
+A **runtime** is the Python software environment that runs compatible models. A **model** is a set of trained files used for a speech task. **Inference** is processing text or audio with a model. **VRAM** is graphics-card memory. **Reference audio** is a voice recording used to guide generation; use it only with permission.
 
-## Documentation acceptance rule
+Keep private recordings and diagnostic exports confidential. Confirm model-specific licenses separately from the app's AGPL license. Remote services may send data off the device. A functioning window or successful CI test is not proof of microphone input, speaker output or real speech-generation quality.
 
-Every new or changed user-facing feature must update the relevant chapter **in the same development cycle**. Record: feature name, intended user, prerequisites, exact UI navigation, numbered steps, expected result, common failures, recovery, supported OS, screenshot/evidence link and verification commit. If untested, label it explicitly. Keep this guide accurate across renames and UI redesigns; do not invent buttons, installers, model compatibility or screenshots.
+## Support and status
+
+GitHub Issues and Discussions are **currently disabled** for this fork, so inherited bug-report buttons may lead to non-working destinations. Preserve diagnostic bundles for a verified maintainer channel; submit source fixes through [pull requests](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls). Vulnerabilities require the [private security reporting policy](../../.github/SECURITY.md).
+
+Every changed feature must update this manual and the [documentation quality standard](DOCUMENTATION_STANDARD.md) with reproducible evidence. No invented UI controls, performance claims or fake screenshots.

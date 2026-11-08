@@ -1,19 +1,34 @@
 # Troubleshooting and recovery
 
-**Status:** General safety guidance; specific buttons, logs and recovery paths require verification.
+**Reviewed:** November 7, 2026. **Status:** Practical safe diagnostics; target-hardware fixes and migration recovery remain unverified.
 
-## When something goes wrong
+## App stuck during startup
 
-1. Preserve original audio, projects and model files. Avoid deleting folders to force a reset.
-2. Record what you were doing, the exact error text, the app version and your operating system.
-3. Note whether the failure occurred during installation, model download, generation, playback, saving or export.
-4. If safe, retry once with a small non-sensitive test project; do not repeat destructive actions.
-5. Report reproducible non-sensitive defects through [BetterVoiceStudio issues](https://github.com/DevTunaSoft/BetterVoiceStudio/issues). Report vulnerabilities privately using the repository security policy.
+1. **Preserve files**: do not delete projects, models, cache or runtime directories.
+2. Record the exact stage/error, app version, OS architecture and available disk space.
+3. On Windows ARM64, confirm you are using a supported ARM64 shell with x64 Python CPU emulation; the AMD ROCm runtime is not supported there.
+4. Confirm the local runtime destination before choosing **Install local runtime**. CI verifies that merely opening setup or choosing another folder does not trigger installation.
+5. If retrying fails, preserve diagnostics; do not blindly remove Python/torch packages.
 
-## Known development limitations
+## Model or audio failure
 
-- Current modernization CI has experienced Electron typecheck and desktop UI failures; these are not evidence of a releasable build.
-- Platform-specific installer and upgrade behavior is not verified.
-- Model recovery, backup and restore steps are not yet acceptance-tested.
+1. Check **Settings → Models** for available engine categories and readiness; a tile by itself is not a complete model download.
+2. Record model ID, storage, RAM/VRAM, the CPU/GPU runtime choice and any backend error.
+3. For silence, confirm whether the app produced an output file, then check Windows/macOS/Linux output routing and system mute state.
+4. Try a short non-sensitive test project if it is safe; avoid repeatedly submitting long jobs or deleting user data.
+5. Keep copied logs private until you have reviewed them for credentials and personal information.
 
-This chapter will gain error-specific diagnoses, safe repair steps and verified logs as issues are resolved.
+## Diagnostics and reporting
+
+The inherited **Settings → About** source includes **Run self-check**, **Save Diagnostic Bundle** and **Copy Diagnostics** actions. These controls are source-inspected; full platform support must still be verified. Include precise reproduction steps and non-sensitive error messages; sanitize home paths, voice content and tokens before sharing.
+
+GitHub Issues and Discussions are **disabled** for this fork. Do not rely on existing app buttons that navigate to dead Issues URLs. Code fixes may be submitted through [pull requests](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls); vulnerabilities belong in the [private security reporting workflow](../../.github/SECURITY.md).
+
+## Evidence and release caveats
+
+- [Full CI #42439650200](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42439650200) passed Python, Electron, desktop UI, renderer, installer contracts and all four platform smoke jobs.
+- [Packaging #42426554733](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42426554733) passed the five-platform package matrix and Windows local-runtime setup, including experimental Windows ARM64.
+- The packaged Windows x64 Settings → Models screenshot still contained a loading placeholder. It verifies a real renderer route, **not** a working speech model.
+- Real device installation/upgrade, GPU inference, project save/recovery, microphone and playback are still unverified.
+
+[Back to user manual](README.md) · [Installation](installation.md) · [Feature verification ledger](feature-verification.md)
