@@ -1,12 +1,12 @@
-# BetterVoiceStudio — Beginner's User Manual
+# VoiceBlueprint Pro — Beginner's User Manual
 
 **Reviewed:** November 7, 2026 · **Status:** Living fork-specific guide. Automated packaging is tested; real-user-machine acceptance is not complete.
 
-BetterVoiceStudio is an independent modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). The desktop app processes audio with local runtimes and installed models. During migration, its executable and some screens still use the **VoiceStudio** name.
+VoiceBlueprint Pro is an independent modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). The desktop app processes audio with local runtimes and installed models. Previous builds may still display the upstream **VoiceStudio** name; new VoiceBlueprint Pro builds are under validation.
 
 ## Start here: Seven steps to start
 
-1. **Use a fork-owned build.** No stable BetterVoiceStudio release is published. For experimental builds, use the [installer guide](installation.md) and inspect the individual GitHub Actions packaging job for your operating system.
+1. **Use a fork-owned build.** No stable VoiceBlueprint Pro release is published. For experimental builds, use the [installer guide](installation.md) and inspect the individual GitHub Actions packaging job for your operating system.
 2. **Save your existing work.** Back up recordings, scripts, projects and model data. Do not replace an existing upstream installation.
 3. **Choose storage.** The local runtime and models can require substantial disk space. Record the destination before installation.
 4. **Install the local runtime.** The first-run screen offers **Install local runtime** on supported platforms. The packaged acceptance test verifies that visiting setup or changing location alone does not install anything.
@@ -26,7 +26,7 @@ BetterVoiceStudio is an independent modernization fork of [VoiceStudio](https://
 
 ## Visual guide and evidence
 
-The [GitHub homepage GUI gallery](../../README.md#inside-the-studio) shows existing Electron-renderer screenshots inherited by the fork. An independent **actual packaged Windows x64 Settings → Models screenshot**, 1024×728, was captured in [Actions run #42426554733](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42426554733), under `electron-rehearsal-win32-x64`. It shows a loading placeholder, not a successfully downloaded model. The artifact may expire.
+The [GitHub homepage GUI gallery](../../README.md#inside-the-studio) shows existing Electron-renderer screenshots inherited by the fork. An independent **actual packaged Windows x64 Settings → Models screenshot**, 1024×728, was captured in [Actions run #42426554733](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/actions/runs/42426554733), under `electron-rehearsal-win32-x64`. It shows a loading placeholder, not a successfully downloaded model. The artifact may expire.
 
 ## Terms and privacy
 
@@ -36,7 +36,7 @@ Keep private recordings and diagnostic exports confidential. Confirm model-speci
 
 ## Support and status
 
-GitHub Issues and Discussions are **currently disabled** for this fork, so inherited bug-report buttons may lead to non-working destinations. Preserve diagnostic bundles for a verified maintainer channel; submit source fixes through [pull requests](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls). Vulnerabilities require the [private security reporting policy](../../.github/SECURITY.md).
+GitHub Issues and Discussions are **currently disabled** for this fork, so inherited bug-report buttons may lead to non-working destinations. Preserve diagnostic bundles for a verified maintainer channel; submit source fixes through [pull requests](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/pulls). Vulnerabilities require the [private security reporting policy](../../.github/SECURITY.md).
 
 Every changed feature must update this manual and the [documentation quality standard](DOCUMENTATION_STANDARD.md) with reproducible evidence. No invented UI controls, performance claims or fake screenshots.
 
