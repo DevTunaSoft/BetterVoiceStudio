@@ -27,7 +27,7 @@ const macRuntimeArch = process.env.VOICESTUDIO_RUST_TARGET?.startsWith('x86_64')
     ? 'arm64'
     : process.arch;
 const bundlesMasRuntime = isMacAppStore && macRuntimeArch === 'arm64';
-// Direct downloads are `VoiceStudio-<version>-<os>-<arch>.<ext>`; store builds
+// Direct downloads use the configured product name (VoiceBlueprint-Pro). Store builds
 // keep a label so they never collide with them. Releases up to v0.5.7-beta.3
 // used `VoiceStudio-Electron-*`; the installers still resolve those names.
 const artifactLabel = {
@@ -49,7 +49,7 @@ if (
 ) {
   throw new Error(`Unsupported Electron update channel: ${updateChannel}`);
 }
-const updateUrl = 'https://github.com/debpalash/VoiceStudio/releases/latest/download';
+const updateUrl = 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/latest/download';
 
 export function distributionPackaging(target = DISTRIBUTION_TARGET) {
   if (target === 'snap-store') {
