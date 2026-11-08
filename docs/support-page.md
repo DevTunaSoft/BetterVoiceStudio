@@ -1,16 +1,13 @@
-# Support page
+# VoiceBlueprint Pro support and identity
 
-The support page puts the monthly development goal, donation amounts, and Ko-fi / PayPal links first. Selecting an amount carries it into PayPal; Ko-fi lets you choose the amount on its own page. No checkout opens until you choose a provider.
+**Implemented in draft PR #3, not yet accepted as a production release.**
 
-Star and community links offer other ways to help. Sponsors remain visible. The Electron page uses the official VoiceStudio logo, a single donation panel, visible sponsor and Pro cards, and an icon grid for contact channels. No accordion hides those actions. Controls support keyboard navigation, and decorative interaction animations respect reduced-motion preferences.
+The desktop Support and Project pages now identify VoiceBlueprint Pro as an independent open-source product developed by DevTunaSoft contributors. The canonical destination is [DevTunaSoft/VoiceBlueprint-Pro](https://github.com/DevTunaSoft/VoiceBlueprint-Pro).
 
-Workspace headers link to Support immediately before Search. Integrations is reachable from the sidebar and opens the directory; sponsored entries carry a Featured badge on their card. There is no app-wide footer, partnership form or sponsor tooltip; sponsor and contact details live on this page and in Settings.
+The inherited VoiceStudio payment providers, sponsor roster, Discord, personal email, commercial checkout, and social accounts are **not** official VoiceBlueprint Pro channels. The new desktop support UI no longer offers those destinations. The legacy Support route remains for navigation compatibility but now displays Project, Licensing and Contact information.
 
+The Pro route explains that no paid VoiceBlueprint Pro subscription, checkout, or commercial licence is currently offered. It does not imply that the original project's paid plans belong to this fork. Model and component licences remain applicable.
 
-The workspace Get Pro shortcut, and Support page Pro card open a dedicated `/pro` page. It leads with $99 per-user yearly, $199 per-user lifetime, and Enterprise contact cards. Pro and Lifetime include user selectors, live totals, and links that preserve the selected plan and quantity on website checkout. The page then presents the proposed application-licensing, batch-rule, revision-history, delivery and preflight benefits. Remote compute devices, remote workers and GPU sharing are VoiceStudio Pro features and are no longer included in the open-source app. Recipes, watch folders and core local generation remain free and unlimited; the Pro and Support introductions do not imply that a purchase unlocks voice cloning. The open-source page does not expose licence activation; that flow belongs to the separate Pro distribution. Checkout stays disabled until the paid tools, quantity fulfilment, merchant offer, and terms pass the release gates. Commercial software distribution terms remain a separate agreement. See [the Pro specification](specs/desktop-pro-page.md).
+Android and iOS support pages similarly replace the inherited donation and sponsor catalog with independent project information. Mobile navigation route IDs are retained for compatibility until a separately tested migration.
 
-On the Integrations page, only entries with a built-in setup show Works with VoiceStudio and capability chips; the rest are marked External link. Setup details and source links are recorded in [the directory notes](integration-directory.md).
-
-License keys require OS-backed encryption; activation fails with a storage error
-when the keyring is unavailable or Electron selects plaintext storage. Existing
-legacy key files remain readable for deactivation.
+**Remaining verification:** run desktop and mobile tests, inspect CI results, validate visible labels and external links on actual Windows/Android/iOS devices, and audit remaining upstream-specific documentation and integration endpoints. Do not label these screens production-accepted before that evidence exists.

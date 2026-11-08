@@ -6,7 +6,7 @@
 
 **A local-first AI voice production suite focused on reliability, performance, accessibility, audio quality and professional workflows.**
 
-VoiceBlueprint Pro is an independent, open-source fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). We are modernizing its voice production experience, improving its existing capabilities, and retaining upstream attribution.
+VoiceBlueprint Pro is an independent, open-source AI voice production suite maintained by **DevTunaSoft**. It incorporates open-source components, including work originally published as VoiceStudio, but is not affiliated with the original project's maintainers. Legal attribution is preserved.
 
 [Features](#what-voiceblueprint-pro-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Beginner manual](docs/user-guide/README.md) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/actions) · [Fork releases](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases) · [Credits](#open-source-credits-and-licensing)
 
@@ -149,7 +149,7 @@ This repository currently retains upstream build identifiers and development too
 
 ```sh
 git clone https://github.com/DevTunaSoft/VoiceBlueprint-Pro.git
-cd VoiceBlueprint Pro
+cd VoiceBlueprint-Pro
 git switch engineering/modernization-foundation
 bun install
 bun run typecheck

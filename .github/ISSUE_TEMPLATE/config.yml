@@ -1,11 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Discord — questions & quick help
-    url: https://discord.gg/bzQavDfVV9
-    about: Usage questions, setup help, and chat. Faster than an issue for "how do I…".
-  - name: 🗣️ GitHub Discussions
-    url: https://github.com/debpalash/VoiceStudio/discussions
-    about: Ideas, show-and-tell, and open-ended Q&A that isn't a bug or a specific feature ask.
-  - name: 🔒 Security vulnerability
-    url: https://github.com/debpalash/VoiceStudio/security/policy
-    about: Please report security issues privately — do NOT open a public issue.
+  - name: VoiceBlueprint Pro project and documentation
+    url: https://github.com/DevTunaSoft/VoiceBlueprint-Pro
+    about: Check the README and user manual for current support status and instructions.
+  - name: Security vulnerability (private reporting guidance)
+    url: https://github.com/DevTunaSoft/VoiceBlueprint-Pro/security/policy
+    about: Never disclose vulnerabilities publicly. Check the security policy for available private reporting channels.
