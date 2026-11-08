@@ -40,3 +40,12 @@ it('only saves local diagnostics when explicitly requested', async () => {
   expect(mock.diagnostics).toHaveBeenCalledTimes(1);
   expect(mock.open).not.toHaveBeenCalled();
 });
+
+
+it('shows an actionable local-save error and never opens GitHub', async () => {
+  mock.saveData.mockRejectedValueOnce(new Error('disk full'));
+  render(<ReportBug />);
+  fireEvent.click(screen.getByRole('button', { name: 'Save setup diagnostics' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Check free space');
+  expect(mock.open).not.toHaveBeenCalled();
+});

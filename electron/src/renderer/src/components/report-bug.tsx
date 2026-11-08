@@ -335,7 +335,7 @@ export function ReportBug({ error, setup = false }: { error?: Error | string; se
         ) : null}
         {saveFailed ? (
           <p role="alert" className="text-sm text-destructive">
-            {t('reportBug.save_diagnostics_failed', { defaultValue: 'Could not save setup diagnostics.' })}
+            {t('reportBug.save_diagnostics_failed_local', { defaultValue: 'Could not save setup diagnostics. Check free space and try another folder; no report has been submitted.' })}
           </p>
         ) : null}
       </div>

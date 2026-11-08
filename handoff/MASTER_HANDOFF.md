@@ -216,3 +216,8 @@ Public repo metadata verifies `has_issues=false`, so the fork's old bug-report a
 ## QA checkpoint BVS-QA-0024 — New renderer issue reporting respects fork intake state
 
 The current renderer's separate `ReportBug` component bypassed the shared legacy openBugReport guard and could still navigate users to the fork's disabled GitHub Issues form, including a prefilled diagnostic URL. Added `ISSUES_AVAILABLE` gate there too: when disabled, present a clear no-intake notice, collect no report data automatically, and offer a user-initiated local **Save setup diagnostics** action. Original issue-report logic is preserved and tested under an explicit `ISSUES_AVAILABLE=true` mock so it remains usable if repository Issues is genuinely enabled later. Added a separate disabled-state renderer regression test. This source fix and its contracts are pending the next Electron/full CI run. No claim that all support destinations are working until tested.
+
+
+## QA checkpoint BVS-QA-0025 — Translate disabled-Issues UI and cover disk-full reporting
+
+Latest full CI [42441779672](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42441779672) surfaced a renderer translation-contract failure: `reportBug.issues_disabled` was missing from `en.json`. Added the required English key plus a local-only failed-diagnostics-save message that does not misleadingly encourage submission to disabled Issues. Strengthened reporter tests: the enabled-issue fixture now preserves all real contact-link exports when overriding the flag, and the disabled branch tests disk-full save errors without opening external URLs. Full CI and packaged Electron verification remain pending on the new commit.
