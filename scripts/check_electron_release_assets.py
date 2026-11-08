@@ -45,7 +45,7 @@ def artifact_name(version: str, os_token: str, arch: str, extension: str) -> str
     Releases up to v0.5.7-beta.3 were `VoiceStudio-Electron-*`; they are built
     and verified from their own tags, so only the current name is checked here.
     """
-    return f"VoiceStudio-{version}-{os_token}-{arch}{extension}"
+    return f"VoiceBlueprint-Pro-{version}-{os_token}-{arch}{extension}"
 
 
 class ReleaseContractError(RuntimeError):

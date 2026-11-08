@@ -12,7 +12,7 @@ import { inflateRawSync } from 'node:zlib';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const releaseDir = resolve(root, process.argv[2] || 'release');
 const version = JSON.parse(readFileSync(resolve(root, '../package.json'), 'utf8')).version;
-const filename = `VoiceStudio-${version}-linux-x64.AppImage`;
+const filename = `VoiceBlueprint-Pro-${version}-linux-x64.AppImage`;
 const image = resolve(releaseDir, filename);
 const zsync = `${image}.zsync`;
 const channel = process.env.VOICESTUDIO_UPDATE_CHANNEL || 'electron-stable-linux-x64';
@@ -25,9 +25,9 @@ assert(
 const isBeta = channel === 'electron-beta-linux-x64';
 const releaseTag = `v${version}`;
 const manifestPath = resolve(releaseDir, `${channel}-linux.yml`);
-const updateInfo = `gh-releases-zsync|debpalash|VoiceStudio|${
+const updateInfo = `gh-releases-zsync|DevTunaSoft|VoiceBlueprint-Pro|${
   isBeta ? releaseTag : 'latest'
-}|VoiceStudio-*-linux-x64.AppImage.zsync`;
+}|VoiceBlueprint-Pro-*-linux-x64.AppImage.zsync`;
 
 // The pinned electron-builder runtime reserves a fixed-size .upd_info ELF
 // section. Read its actual offset instead of assuming a particular runtime
@@ -93,7 +93,7 @@ const { appendBlockmap } = require(
 const { size, sha512, blockMapSize } = await appendBlockmap(image);
 assert.equal((await stat(image)).size, size);
 
-const url = `https://github.com/debpalash/VoiceStudio/releases/download/${releaseTag}/${filename}`;
+const url = `https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/download/${releaseTag}/${filename}`;
 execFileSync('zsyncmake', ['-u', url, '-o', zsync, image], { stdio: 'inherit' });
 
 const manifest = readFileSync(manifestPath, 'utf8');
