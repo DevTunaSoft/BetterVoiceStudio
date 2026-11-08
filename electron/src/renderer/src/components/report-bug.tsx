@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { composeBugReportUrl } from '@shared/utils/bugReportDocument';
+import { ISSUES_AVAILABLE } from '@shared/utils/contactLinks';
 import { formatBreadcrumbs } from '@shared/utils/breadcrumbs';
 import { contactAge, lastBackendContact } from '@shared/utils/backendContact';
 import { clampCrashTail } from '@shared/utils/crashReport';
@@ -315,6 +316,31 @@ export function ReportBug({ error, setup = false }: { error?: Error | string; se
       setBusy(false);
     }
   };
+  // The fork has GitHub Issues disabled. Never gather report context or open
+  // its dead /issues/new URL from this newer renderer entry point. Retain an
+  // explicit local save path so users can preserve setup evidence privately.
+  if (!ISSUES_AVAILABLE) {
+    return (
+      <div role="status" className="space-y-2 text-sm text-muted-foreground">
+        <p>
+          {t('reportBug.issues_disabled', {
+            defaultValue: 'Bug submissions are unavailable because GitHub Issues is disabled for BetterVoiceStudio. No report has been sent. Preserve diagnostics privately until a verified support channel is available.',
+          })}
+        </p>
+        {getBridge() ? (
+          <Button type="button" variant="outline" size="sm" disabled={saving}
+            onClick={() => void saveDiagnostics()}>
+            {t('reportBug.save_diagnostics', { defaultValue: 'Save setup diagnostics' })}
+          </Button>
+        ) : null}
+        {saveFailed ? (
+          <p role="alert" className="text-sm text-destructive">
+            {t('reportBug.save_diagnostics_failed', { defaultValue: 'Could not save setup diagnostics.' })}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
   return (
     <>
       <div className="space-y-2">

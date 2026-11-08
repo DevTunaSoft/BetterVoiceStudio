@@ -48,6 +48,9 @@ vi.mock('./bridge', () => ({
         }
       : null,
 }));
+// Existing tests exercise the enabled Issues path so it remains correct if
+// the fork administrator later enables GitHub Issues.
+vi.mock('@shared/utils/contactLinks', () => ({ ISSUES_AVAILABLE: true }));
 vi.mock('@/router', () => ({ router: { navigate: mock.navigate } }));
 vi.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key }) }));
 import { ReportBug } from './report-bug';
