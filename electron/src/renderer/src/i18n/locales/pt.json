@@ -2721,6 +2721,8 @@
     "sent_logs": "Últimas linhas do registro do mecanismo, sem o caminho da sua pasta pessoal e tokens",
     "sent_install_failure": "Detalhes da falha de instalação: nome do programa que falhou, estado de segurança, nomes de arquivos bloqueados e de antivírus",
     "save_diagnostics": "Salvar o diagnóstico completo para anexar",
+    "issues_disabled": "O GitHub Issues está desativado para o BetterVoiceStudio. Nenhum relatório foi enviado. Guarde os dados de diagnóstico em privado até existir um canal de suporte verificado.",
+    "save_diagnostics_failed_local": "Não foi possível guardar os dados de diagnóstico da configuração. Verifique o espaço livre e tente outra pasta. Nenhum relatório foi enviado.",
     "save_diagnostics_failed": "Não foi possível salvar o diagnóstico. Tente outra pasta ou envie o relatório sem ele.",
     "sent_pages": "Nomes das páginas visitadas recentemente",
     "not_sent": "Nunca enviados: seu áudio, texto ou vozes. Nomes de arquivo podem aparecer nos registros ou na sua descrição, então revise a prévia do GitHub antes de enviar.",
