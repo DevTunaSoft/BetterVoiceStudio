@@ -366,3 +366,59 @@ async def test_cancelled_stop_caller_does_not_abandon_inflight_shutdown():
     finally:
         release_cleanup.set()
         await q.stop()
+
+
+@pytest.mark.asyncio
+async def test_seeded_shutdown_stress_settles_every_waiter_and_keeps_new_generation_clean():
+    """Fault-inject cancellation during multi-worker shutdown without relying on wall time."""
+    import random
+
+    for seed in range(12):
+        rng = random.Random(seed)
+        q = JobQueue(name=f"shutdown-stress-{seed}", concurrency=2)
+        await q.start()
+        entered = asyncio.Event()
+        never_release = asyncio.Event()
+        executed = []
+
+        async def blocking(job):
+            executed.append(job.id)
+            entered.set()
+            await never_release.wait()
+            return job.id
+
+        jobs = await asyncio.wait_for(
+            asyncio.gather(
+                *(q.submit(f"work-{n}", blocking, job_id=f"{seed}-{n}") for n in range(30))
+            ),
+            timeout=3,
+        )
+        try:
+            await asyncio.wait_for(entered.wait(), 2)
+            for job in jobs:
+                if rng.randrange(4) == 0:
+                    await q.cancel(job.id)
+            await asyncio.wait_for(
+                asyncio.gather(q.stop(), q.stop(), q.stop()),
+                timeout=3,
+            )
+            for job in jobs:
+                assert (await q.wait(job.id, timeout=0.2)).state == JobState.CANCELLED
+                assert job.done_event.is_set()
+            assert not q._workers
+            assert q._queue.empty()
+
+            # Fresh work must run exactly once; no stale canceled work leaks.
+            await q.start()
+            marker = []
+
+            async def fresh(job):
+                marker.append(job.id)
+                return "recovered"
+
+            new = await q.submit("fresh", fresh, job_id=f"{seed}-fresh")
+            assert (await q.wait(new.id, timeout=2)).result == "recovered"
+            assert marker == [new.id]
+        finally:
+            never_release.set()
+            await asyncio.wait_for(q.stop(), 3)

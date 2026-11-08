@@ -456,7 +456,21 @@ try {
         `Expected device scale ${scaleFactor}, received ${layout.devicePixelRatio}`,
       );
     if (process.env.VOICESTUDIO_SCREENSHOT && !extractAndRun) {
-      await window.screenshot({ path: process.env.VOICESTUDIO_SCREENSHOT });
+      const screenshotPath = process.env.VOICESTUDIO_SCREENSHOT;
+      const screenshot = await window.screenshot({ path: screenshotPath });
+      // A successfully exited smoke is not evidence of a usable GUI image
+      // unless the PNG is real, has non-trivial dimensions, and was persisted.
+      assert.equal(
+        screenshot.subarray(0, 8).toString('hex'),
+        '89504e470d0a1a0a',
+        'Packaged screenshot is not a PNG',
+      );
+      const width = screenshot.readUInt32BE(16);
+      const height = screenshot.readUInt32BE(20);
+      assert(width >= 640 && height >= 400, 'Packaged GUI screenshot is unexpectedly small');
+      assert(screenshot.length >= 8192, 'Packaged GUI screenshot is empty or truncated');
+      assert(existsSync(resolve(screenshotPath)), 'Packaged GUI screenshot was not saved');
+      console.log(`PASS: packaged GUI screenshot persisted: ${width}x${height}`);
     }
     console.log(
       `PASS: packaged ${process.platform}${wayland ? ' Wayland' : ''} renderer, preload bridge and same-origin live backend connection`,

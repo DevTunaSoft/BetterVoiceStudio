@@ -61,3 +61,7 @@ def test_packaged_windows_smokes_verify_cpu_inside_electron():
     assert "VOICESTUDIO_SCREENSHOT:" in workflow
     assert "electron/release/BetterVoiceStudio-model-manager-win-x64.png" in workflow
     assert "matrix.arch == 'x64'" in workflow
+    assert "Packaged screenshot is not a PNG" in smoke
+    assert "Packaged GUI screenshot was not saved" in smoke
+    assert "screenshot.readUInt32BE(16)" in smoke
+    assert "screenshot.length >= 8192" in smoke
