@@ -166,6 +166,8 @@ Before adding features, we search the entire repository for existing code, APIs,
 
 Every substantive change should include a reproducible test, regression verification, multiple distinct fault/fuzz scenarios where appropriate, and a record of remaining risks. We do not claim an application is error-free or production-ready without supporting evidence.
 
+For optional container-based server deployments, see the [Docker installation guide](docs/install/docker.md). Docker is **not required** for the desktop application.
+
 ## Maintainer skills
 
 The inherited [VoiceStudio skill](skills/voicestudio/SKILL.md) remains available in this fork for developers. Review its upstream-specific commands before use; it is not an official VoiceBlueprint Pro release installer.

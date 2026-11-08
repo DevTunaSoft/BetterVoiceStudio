@@ -42,7 +42,7 @@ jobs:
           for directory in ('electron/src/shared/i18n/locales', 'electron/src/renderer/src/i18n/locales'):
               for path in Path(directory).glob('*.json'):
                   before = path.read_text(encoding='utf-8')
-                  after = before.replace('VoiceStudio', 'VoiceBlueprint Pro')
+                  after = before.replace('VoiceStudio', 'VoiceBlueprint Pro').replace('VoiceBlueprint Pro.sh Open Source', 'VoiceBlueprint Pro')
                   if after != before:
                       json.loads(after)
                       path.write_text(after, encoding='utf-8')
