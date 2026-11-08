@@ -20,6 +20,9 @@ def test_modernization_ci_has_push_and_pull_request_triggers():
 def test_modernization_push_and_pr_share_concurrency_namespace():
     workflow = CI.read_text(encoding="utf-8")
     assert "github.event.pull_request.head.repo.full_name || github.repository" in workflow
-    assert "github.event.pull_request.head.ref || github.ref_name || github.sha" in workflow
-    assert "github.event_name == 'pull_request'" in workflow
-    assert "github.ref_name == 'engineering/modernization-foundation'" in workflow
+    assert "github.event.pull_request.head.ref || github.event.pull_request.number" in workflow
+    assert "(github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation' && github.ref_name)" in workflow
+    assert "|| github.sha }}" in workflow
+    # Only PRs and development pushes cancel older work, never main or
+    # merge-queue checks. Main commits must also not share a pending-run group.
+    assert "github.event_name == 'pull_request' || (github.event_name == 'push'" in workflow

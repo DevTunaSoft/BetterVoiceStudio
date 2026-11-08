@@ -21,7 +21,12 @@ def test_ci_cancels_superseded_pr_runs_but_never_main_commits():
     concurrency = _load("ci.yml")["concurrency"]
     assert "pull_request.number" in concurrency["group"]
     assert concurrency["group"].endswith("github.sha }}"), "main pushes are keyed by commit"
-    assert concurrency["cancel-in-progress"] == "${{ github.event_name == 'pull_request' }}"
+    assert "github.event.pull_request.head.ref" in concurrency["group"]
+    assert "(github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation' && github.ref_name)" in concurrency["group"]
+    assert concurrency["cancel-in-progress"] == (
+        "${{ github.event_name == 'pull_request' || "
+        "(github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation') }}"
+    )
 
 
 def test_docker_cancels_only_older_main_pushes_never_releases_or_backfills():

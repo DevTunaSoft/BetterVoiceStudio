@@ -23,10 +23,12 @@ permissions:
 # notifications for the SAME commit. Coalesce them by repository + source
 # branch so the newest run replaces duplicates and superseded commits.
 # Fork branches with identical names remain isolated by owner/repository.
-# Never cancel main-branch CI: every main commit needs independent evidence.
+# Main and merge-group events must key by github.sha, not ref_name; otherwise
+# GitHub concurrency can replace *pending* main runs even when cancellation is
+# false. Only development push + PR synchronize events coalesce by head ref.
 concurrency:
-  group: ci-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.ref_name == 'engineering/modernization-foundation' }}
+  group: ci-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.event.pull_request.number || (github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation' && github.ref_name) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref_name == 'engineering/modernization-foundation') }}
 
 env:
   # Run all JavaScript actions on Node 24 (GH deprecates Node 20 in Sep 2026).
