@@ -14,7 +14,7 @@ describe('installAppIdentity', () => {
     installAppIdentity({ setName });
 
     expect(setName).toHaveBeenCalledOnce();
-    expect(setName).toHaveBeenCalledWith('VoiceStudio');
+    expect(setName).toHaveBeenCalledWith('VoiceBlueprint Pro');
   });
 
   it('defines the complete native macOS menu with VoiceStudio app labels', () => {

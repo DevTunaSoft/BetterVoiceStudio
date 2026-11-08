@@ -497,7 +497,7 @@ describe('DesktopUpdater', () => {
     expect(fetcher).toHaveBeenCalledWith(
       expect.stringContaining('/DevTunaSoft/VoiceBlueprint-Pro/releases?per_page=30'),
       expect.objectContaining({
-        headers: expect.objectContaining({ 'User-Agent': 'VoiceStudio' }),
+        headers: expect.objectContaining({ 'User-Agent': 'VoiceBlueprint-Pro' }),
         signal: expect.any(AbortSignal),
       }),
     );

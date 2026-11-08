@@ -10,7 +10,8 @@ import pytest
 
 _ROOT = Path(__file__).resolve().parents[1]
 _CONFIG = _ROOT / "electron" / "src" / "shared" / "config" / "sponsors.js"
-_READMES = [_ROOT / "README.md", *sorted((_ROOT / "docs" / "readme").glob("README_*.md"))]
+# The fork homepage is independent of upstream commercial sponsor agreements.
+_READMES = sorted((_ROOT / "docs" / "readme").glob("README_*.md"))
 
 _README_REPOSITORIES = {
     "OpenGTM": "/debpalash/OpenGTM",

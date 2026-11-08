@@ -45,7 +45,10 @@ AVATARS = HOME / "contributors"
 XCASSETS = ROOT / "mobile/ios/VoiceStudio/Resources/Contributors.xcassets"
 SWIFT = ROOT / "mobile/ios/VoiceStudio/Features/HomeContributors.swift"
 KOTLIN = ROOT / "mobile/android/features/src/main/kotlin/com/voicestudio/mobile/features/HomeContributors.kt"
-READMES = (ROOT / "README.md", *sorted((ROOT / "docs/readme").glob("README_*.md")))
+# The fork README intentionally does not advertise upstream contributor avatar
+# and sponsor rows. Keep historical translated README snapshots consistent
+# without overwriting the independently maintained VoiceBlueprint Pro homepage.
+READMES = tuple(sorted((ROOT / "docs/readme").glob("README_*.md")))
 
 # Automation accounts that GitHub reports as ``type: User``.
 AUTOMATION_LOGINS = frozenset({

@@ -47,6 +47,11 @@ def test_docker_commands_use_the_mounted_data_directory(relative_path):
         for block in re.findall(r"```(?:bash|sh)\n(.*?)```", text, flags=re.DOTALL)
         if "docker run" in block and ":/app/omnivoice_data" in block
     ]
+    if relative_path == "README.md":
+        # Fork homepage links to dedicated tested container instructions.
+        assert "docs/install/docker.md" in text
+        assert not commands
+        return
     assert commands
     for command in commands:
         assert "-e OMNIVOICE_DATA_DIR=/app/omnivoice_data" in command

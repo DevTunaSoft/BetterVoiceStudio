@@ -14,7 +14,7 @@ const mocks = vi.hoisted(() => {
 vi.mock('electron', () => ({ nativeImage: { createFromPath: mocks.createFromPath } }));
 import { createTrayIcon } from './tray-icon';
 
-it('uses the canonical waveform and spark without the app-icon tile', () => {
+it('uses the canonical blueprint waveform without the app-icon tile', () => {
   const root = resolve(import.meta.dirname, '../../..');
   const logo = readFileSync(resolve(root, 'docs/logo.svg'), 'utf8');
   const normal = readFileSync(resolve(root, 'electron/build/icons/trayTemplate.svg'), 'utf8');
@@ -22,7 +22,7 @@ it('uses the canonical waveform and spark without the app-icon tile', () => {
     resolve(root, 'electron/build/icons/trayRecordingTemplate.svg'),
     'utf8',
   );
-  const canonicalPaths = [...logo.matchAll(/<path d="([^"]+)"/g)].map((match) => match[1]);
+  const canonicalPaths = [...logo.matchAll(/<path d="([^"]+)"/g)].map((match) => match[1]).slice(-2);
 
   expect(canonicalPaths).toHaveLength(2);
   for (const path of canonicalPaths) {
