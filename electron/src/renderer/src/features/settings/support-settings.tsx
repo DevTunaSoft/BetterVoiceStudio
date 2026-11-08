@@ -2,7 +2,7 @@ import { LightbulbIcon, ShieldCheckIcon, BookOpenIcon, StarIcon } from 'lucide-r
 import { brandIcon } from '@/lib/brand';
 import { ReportBug } from '@/components/report-bug';
 import { ExternalLink } from '@/components/external-link';
-import { ISSUES_URL, REPO_URL, SECURITY_URL, CREDITS_URL } from '@shared/utils/contactLinks';
+import { ISSUES_URL, ISSUES_AVAILABLE, REPO_URL, SECURITY_URL, CREDITS_URL } from '@shared/utils/contactLinks';
 import './support-settings.css';
 
 /** Fork-owned support and upstream credit; no inherited payment or Pro offerings. */
@@ -19,10 +19,16 @@ export function SupportSettings() {
       <section className="support-contact" aria-labelledby="support-contact-heading">
         <div className="support-contact-heading">
           <h2 id="support-contact-heading">Help and contribute</h2>
-          <ReportBug />
+          {ISSUES_AVAILABLE ? <ReportBug /> : null}
         </div>
+        {!ISSUES_AVAILABLE ? (
+          <p role="status" className="text-sm text-muted-foreground">
+            GitHub Issues is currently disabled for BetterVoiceStudio. Keep diagnostic reports private
+            until a supported bug-reporting channel is available. Security disclosures can be sent privately.
+          </p>
+        ) : null}
         <div className="support-channel-grid">
-          <ExternalLink href={ISSUES_URL}><LightbulbIcon aria-hidden="true" /><span>Report an issue or suggest a feature</span></ExternalLink>
+          {ISSUES_AVAILABLE ? <ExternalLink href={ISSUES_URL}><LightbulbIcon aria-hidden="true" /><span>Report an issue or suggest a feature</span></ExternalLink> : null}
           <ExternalLink href={REPO_URL}><StarIcon aria-hidden="true" /><span>BetterVoiceStudio source</span></ExternalLink>
           <ExternalLink href={SECURITY_URL}><ShieldCheckIcon aria-hidden="true" /><span>Report a security vulnerability privately</span></ExternalLink>
           <ExternalLink href={CREDITS_URL}><BookOpenIcon aria-hidden="true" /><span>Open-source credits and licenses</span></ExternalLink>

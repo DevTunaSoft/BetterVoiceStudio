@@ -22,7 +22,7 @@ import ReportBugButton from '../components/ReportBugButton';
 // One home for every outward channel. The repo/Discord/security URLs match the
 // values the rest of the app uses (bug reporter, footer, SECURITY.md) so a link
 // change here can never leave one surface pointing somewhere stale (#contact).
-import { REPO_URL, ISSUES_URL, SECURITY_URL } from '../utils/contactLinks';
+import { REPO_URL, ISSUES_URL, ISSUES_AVAILABLE, SECURITY_URL } from '../utils/contactLinks';
 
 // Compact action cards for every outward channel. `kind` picks CTA behaviour:
 //   bug      → reuse ReportBugButton (prefilled GitHub issue + scrubbed diag)
@@ -61,7 +61,7 @@ const SECTIONS = [
     ctaKey: 'contact.security_cta',
     ctaDefault: 'Report privately',
   },
-];
+].filter((section) => ISSUES_AVAILABLE || section.id === 'security');
 
 /**
  * ExternalCta — a subtle-button-styled link that opens in the system browser.
@@ -152,6 +152,14 @@ export function ContactSections({ onSupport }) {
           );
         })}
       </section>
+
+      {!ISSUES_AVAILABLE && (
+        <p role="status" className="text-sm text-[var(--chrome-fg-muted)]">
+          GitHub Issues is disabled for this fork, so bug and feature submission is temporarily
+          unavailable. Preserve diagnostic information through Settings → About; no report is
+          sent automatically. Security disclosures use the private reporting link.
+        </p>
+      )}
 
       <div className="flex flex-wrap items-center justify-center gap-2">
         <ExternalCta href={REPO_URL} label="BetterVoiceStudio source" leading={<Globe size={13} />} />

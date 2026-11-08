@@ -206,3 +206,8 @@ The fork-specific user manual now documents the actual successful 2026-11-07 pac
 ## QA checkpoint BVS-DOC-0022 — Fix mandatory manual validation contract
 
 Handoff-validation run [42441116136](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42441116136) failed immediately because the revised manual omitted required **Start here**, **Documentation acceptance rule**, **Functional verification** and **Required evidence** strings used by `scripts/validate_user_guide.py`. Restored these existing structural contracts without weakening the validator. Extended `tests/test_fork_user_manual.py` to protect them. The prior doc commit was not fully validated; rerun handoff and full CI on the updated commit.
+
+
+## QA checkpoint BVS-QA-0023 — Hide inactive GitHub Issues entry points
+
+Public repo metadata verifies `has_issues=false`, so the fork's old bug-report and feature-request UI exposed dead `/issues` paths. Added central `ISSUES_AVAILABLE=false` to `contactLinks.js`/its type declaration; the legacy ContactPage and the current renderer Support Settings now **hide** unavailable bug/feature CTAs and show an accurate no-intake notice, while preserving source, credits and private security routes. Legacy `openBugReport()` now fails closed: it displays a clear user-facing dialog, never collects or submits a report, and optionally opens fork-owned troubleshooting documentation. Added unit tests and updated support UI test. This does **not** yet refactor the separate full renderer report dialog, so that path and all other reporting entry points require further inspection and completion before release. New CI required; do not claim full reporting is fixed on this commit.

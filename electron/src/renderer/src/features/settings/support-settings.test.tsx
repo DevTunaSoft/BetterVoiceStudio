@@ -20,7 +20,6 @@ it('shows fork-owned help destinations without upstream payment or Pro promotion
   render(<SupportSettings />);
   expect(screen.getByRole('heading', { name: 'BetterVoiceStudio' })).toBeVisible();
   const destinations = [
-    ['Report an issue or suggest a feature', 'https://github.com/DevTunaSoft/BetterVoiceStudio/issues'],
     ['BetterVoiceStudio source', 'https://github.com/DevTunaSoft/BetterVoiceStudio'],
     ['Report a security vulnerability privately', 'https://github.com/DevTunaSoft/BetterVoiceStudio/security/advisories/new'],
     ['Open-source credits and licenses', 'https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/FORK_AND_ATTRIBUTION.md'],
@@ -28,7 +27,10 @@ it('shows fork-owned help destinations without upstream payment or Pro promotion
   for (const [name, href] of destinations) {
     expect(screen.getByRole('link', { name })).toHaveAttribute('href', href);
   }
-  for (const label of ['PayPal', 'Ko-fi', 'GitHub Sponsors', 'supportPlans.get_pro']) {
+  expect(screen.queryByRole('link', { name: 'Report an issue or suggest a feature' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'reportBug.label' })).not.toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('GitHub Issues is currently disabled');
+    for (const label of ['PayPal', 'Ko-fi', 'GitHub Sponsors', 'supportPlans.get_pro']) {
     expect(screen.queryByRole('link', { name: label })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: label })).not.toBeInTheDocument();
   }
