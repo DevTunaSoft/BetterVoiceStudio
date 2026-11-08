@@ -1,1 +1,4 @@
-export const GITHUB_SPONSORS_URL: string, KOFI_URL: string, PAYPAL_URL: string;
+export const GITHUB_SPONSORS_URL: string;
+export const KOFI_URL: string;
+export const PAYPAL_URL: string;
+export const FUNDING_ENABLED: boolean;

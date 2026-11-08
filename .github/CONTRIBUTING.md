@@ -2,24 +2,25 @@
 
 Thanks for your interest in improving VoiceBlueprint Pro! This guide covers everything you need to get started.
 
-> **Independent project:** VoiceBlueprint Pro is maintained by DevTunaSoft. Historical integration, CLA, account and cloud sections below describe inherited architecture and do not authorize use of the original project's support, billing or social accounts. See [Support](SUPPORT.md) and [Security](SECURITY.md) for fork-owned channels.\n\n## Quick Links
+> **Independent project:** VoiceBlueprint Pro is maintained by DevTunaSoft. Historical integration, CLA, account and cloud sections below describe inherited architecture and do not authorize use of the original project's support, billing or social accounts. See [Support](SUPPORT.md) and [Security](SECURITY.md) for fork-owned channels.
+
+## Quick Links
 
 | | |
 |---|---|
 | 📖 **Support guide** | [VoiceBlueprint Pro support](SUPPORT.md) |
 | 🐛 **Bugs** | [GitHub Issues](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) |
-| 🏷️ **Good First Issues** | [Filtered list](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue) |
+| 🏷️ **Good First Issues** | [Filtered list](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/labels/good%20first%20issue) |
 | 📋 **Roadmap** | [docs/ROADMAP.md](../docs/ROADMAP.md) |
 
 ---
 
-> **Before your first pull request:** unless exempt under the
-> [CLA checker’s policy](#contribution-licensing), sign the
-> [Contributor License Agreement](CLA-1.0.md) once. GitHub cannot stop you opening a pull request first, so it is checked at
-> merge instead: an unsigned pull request cannot merge unless a maintainer applies
-> the `cla-override` label after manual review. The fork's CLA intake process is not yet independently configured. Do **not** sign the original project's CLA issue; ask in the PR if the CLA check blocks merging. Every other non-exempt human commit
-> author and co-author must also sign before the check passes. Details are in
-> [Contribution licensing](#contribution-licensing).
+> **Contributor licensing:** This fork inherited a CLA check and legacy
+> signing instructions. The maintainer must establish an independent
+> contribution policy before accepting outside changes. **Do not sign the
+> original project's CLA or post signatures on its issues.** If a check
+> blocks your pull request, discuss it on that pull request.
+
 
 ---
 
@@ -604,7 +605,7 @@ replace the CLA.
 ## Need Help?
 
 - **Stuck on setup?** Ask in [VoiceBlueprint Pro support](SUPPORT.md)
-- **Not sure where to start?** Check [good first issues](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue)
+- **Not sure where to start?** Check [good first issues](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/labels/good%20first%20issue)
 - **Want to discuss a big change?** Open a [discussion](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) before coding
 
 Thank you for contributing! 🎙️

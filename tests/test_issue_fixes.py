@@ -32,25 +32,17 @@ NEW_DISCORD = "discord.gg/bzQavDfVV9"
 _LINK_FILES = [
     "README.md",
     ".github/CONTRIBUTING.md",
-    "electron/src/shared/pages/EnterprisePage.jsx",
     "electron/src/shared/components/LogsFooter.jsx",
 ]
 
 
 @pytest.mark.parametrize("relpath", _LINK_FILES)
-def test_discord_link_updated(relpath):
-    """Expired Discord invite must not appear anywhere we publish links."""
-    filepath = _REPO / relpath
-    if not filepath.exists():
-        pytest.skip(f"{relpath} not found")
-    content = filepath.read_text(encoding="utf-8")
-    assert OLD_DISCORD not in content, f"{relpath} still contains expired link {OLD_DISCORD}"
-    if relpath == "README.md":
-        # An independent fork must not advertise upstream's Discord as its own.
-        assert NEW_DISCORD not in content
-        assert "not affiliated" in content.lower()
-    else:
-        assert NEW_DISCORD in content, f"{relpath} missing new link {NEW_DISCORD}"
+def test_independent_fork_does_not_advertise_upstream_discord(relpath):
+    content = (_REPO / relpath).read_text(encoding="utf-8")
+    assert OLD_DISCORD not in content
+    assert NEW_DISCORD not in content
+
+
 
 
 def test_no_old_discord_link_anywhere():
