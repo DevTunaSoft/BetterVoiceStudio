@@ -328,20 +328,20 @@ jobs:
         run: |
           set -eu
           mkdir -p out
-          cp assets/VoiceStudio-android-release/VoiceStudio.apk "out/VoiceStudio-${TAG}.apk"
-          cp assets/VoiceStudio-android-release/VoiceStudio.aab "out/VoiceStudio-${TAG}.aab"
-          cp assets/VoiceStudio-ios-release/*.ipa "out/VoiceStudio-${TAG}-appstore.ipa"
-          cp assets/VoiceStudio-ios-unsigned/VoiceStudio-unsigned.ipa "out/VoiceStudio-${TAG}-unsigned.ipa"
+          cp assets/VoiceStudio-android-release/VoiceStudio.apk "out/VoiceBlueprint-Pro-${TAG}.apk"
+          cp assets/VoiceStudio-android-release/VoiceStudio.aab "out/VoiceBlueprint-Pro-${TAG}.aab"
+          cp assets/VoiceStudio-ios-release/*.ipa "out/VoiceBlueprint-Pro-${TAG}-appstore.ipa"
+          cp assets/VoiceStudio-ios-unsigned/VoiceStudio-unsigned.ipa "out/VoiceBlueprint-Pro-${TAG}-unsigned.ipa"
           (cd out && sha256sum * > SHA256SUMS.txt)
           cat > notes.md <<NOTES
-          VoiceStudio phone apps ${TAG}. Preview builds; they run models on the phone.
+          VoiceBlueprint Pro phone apps ${TAG}. Preview builds; they run models on the phone.
 
           | File | Use |
           |---|---|
-          | \`VoiceStudio-${TAG}.apk\` | Android: install directly (allow installs from this source) |
-          | \`VoiceStudio-${TAG}.aab\` | Android App Bundle for Google Play |
-          | \`VoiceStudio-${TAG}-unsigned.ipa\` | iPhone: sideload with your own Apple ID (for example Sideloadly) |
-          | \`VoiceStudio-${TAG}-appstore.ipa\` | App Store Connect build; it only installs through TestFlight |
+          | \`VoiceBlueprint-Pro-${TAG}.apk\` | Android: install directly (allow installs from this source) |
+          | \`VoiceBlueprint-Pro-${TAG}.aab\` | Android App Bundle for Google Play |
+          | \`VoiceBlueprint-Pro-${TAG}-unsigned.ipa\` | iPhone: sideload with your own Apple ID (for example Sideloadly) |
+          | \`VoiceBlueprint-Pro-${TAG}-appstore.ipa\` | App Store Connect build; it only installs through TestFlight |
 
           Verify downloads against \`SHA256SUMS.txt\`. Details: docs/mobile.md.
           NOTES
@@ -349,5 +349,5 @@ jobs:
             test "$(gh release view "$TAG" --repo "$REPO" --json isDraft --jq .isDraft)" = true || { echo "Refusing to replace a published release"; exit 1; }
             gh release upload "$TAG" out/* --repo "$REPO" --clobber
           else
-            gh release create "$TAG" out/* --repo "$REPO" --verify-tag --draft --prerelease --title "$TAG — VoiceStudio mobile" --notes-file notes.md
+            gh release create "$TAG" out/* --repo "$REPO" --verify-tag --draft --prerelease --title "$TAG — VoiceBlueprint Pro mobile" --notes-file notes.md
           fi

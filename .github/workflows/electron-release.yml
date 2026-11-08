@@ -382,9 +382,9 @@ jobs:
       - name: Collect phone binaries
         run: |
           VERSION="${TAG#v}"
-          cp phone-assets/VoiceStudio-android-release/VoiceStudio.apk "release-assets/VoiceStudio-${VERSION}-android.apk"
-          cp phone-assets/VoiceStudio-android-release/VoiceStudio.aab "release-assets/VoiceStudio-${VERSION}-android.aab"
-          cp phone-assets/VoiceStudio-ios-unsigned/VoiceStudio-unsigned.ipa "release-assets/VoiceStudio-${VERSION}-ios-unsigned.ipa"
+          cp phone-assets/VoiceStudio-android-release/VoiceStudio.apk "release-assets/VoiceBlueprint-Pro-${VERSION}-android.apk"
+          cp phone-assets/VoiceStudio-android-release/VoiceStudio.aab "release-assets/VoiceBlueprint-Pro-${VERSION}-android.aab"
+          cp phone-assets/VoiceStudio-ios-unsigned/VoiceStudio-unsigned.ipa "release-assets/VoiceBlueprint-Pro-${VERSION}-ios-unsigned.ipa"
       - name: Validate all platforms before creating a release
         run: |
           python3 scripts/prepare_electron_release.py --assets release-assets --tag "$TAG" --repo "$GITHUB_REPOSITORY"
