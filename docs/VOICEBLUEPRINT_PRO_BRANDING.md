@@ -1,6 +1,6 @@
 # VoiceBlueprint Pro — Brand and Repository Rename Specification
 
-Status: **Approved working identity; GitHub repository rename and software rebrand not yet performed.**
+Status: **GitHub repository rename verified; internal application and packaging rebrand still pending.**
 Decision date: 2026-11-07.
 
 ## Approved naming
@@ -25,13 +25,13 @@ VoiceBlueprint Pro is a local-first, professional AI voice and audio-production 
 - Preserve attribution, original copyright notices, license obligations, and traceable upstream history. Detaching a fork or renaming does **not** erase legal obligations.
 - Before public launch, conduct trademark, product-name, domain, and app-store conflict reviews. Names are not yet legally cleared.
 
-## Required GitHub owner actions
+## GitHub repository status and owner actions
 
-The connected automation does not currently expose GitHub's repository settings operations for leaving a fork network or renaming the repository.
+GitHub currently identifies repository ID `1449033543` as `DevTunaSoft/VoiceBlueprint-Pro` (public, default branch `main`). The repository rename is verified; fork detachment status has not been established. The connected automation does not expose GitHub's repository settings operations for leaving a fork network or renaming the repository.
 
 1. Make a restorable backup, including all branches, tags, and important PR/issue discussions.
 2. If desired, use repository **Settings > General > Danger Zone > Leave fork network**. Confirm that the repository meets GitHub's fork detachment criteria and review metadata losses first.
-3. Use repository **Settings > General > Repository name** to rename `BetterVoiceStudio` to `VoiceBlueprint-Pro`.
+3. **Completed/verified:** repository is now named `VoiceBlueprint-Pro`.
 4. Verify the new URL, default branch, branch protections, collaborators, repository metadata, remote remotes, and GitHub Actions links.
 
 Do not delete or recreate the original repository merely to rename it.
@@ -40,7 +40,7 @@ Do not delete or recreate the original repository merely to rename it.
 
 - [ ] Validate backup, history, all branches/tags, and important issue/PR details
 - [ ] GitHub fork detachment (only if desired and eligible)
-- [ ] GitHub repository rename to `VoiceBlueprint-Pro`
+- [x] GitHub repository rename to `VoiceBlueprint-Pro` (verified via GitHub repository metadata)
 - [ ] Update repository About description, topics, website, and social preview
 - [ ] Update main README header, tagline, badge URLs, release links, roadmap, and user guide
 - [ ] Update desktop window titles, About screen, icons, installer and binary display names
@@ -53,4 +53,4 @@ Do not delete or recreate the original repository merely to rename it.
 
 ## Baseline at naming decision
 
-Current GitHub repository: `DevTunaSoft/BetterVoiceStudio`. Default branch: `main`. Modernization work is also tracked on `engineering/modernization-foundation`. Naming this product does not establish a successful repository rename, executable rebrand, or production release.
+Current GitHub repository: `DevTunaSoft/VoiceBlueprint-Pro` (verified). Default branch: `main`. Modernization work is also tracked on `engineering/modernization-foundation`. The GitHub repository rename is complete, but this does not establish an executable rebrand or production release.
