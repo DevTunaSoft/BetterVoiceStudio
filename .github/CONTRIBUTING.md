@@ -2,13 +2,13 @@
 
 Thanks for your interest in improving VoiceBlueprint Pro! This guide covers everything you need to get started.
 
-> **Independent fork guidance:** VoiceBlueprint Pro is maintained by DevTunaSoft and is not affiliated with the original project's support, billing, social, or cloud services. Some lower sections document inherited architecture and may refer to upstream endpoints or historic CLA workflows; these are not fork-owned offerings. See [Support](SUPPORT.md) and [Security](SECURITY.md) for official channels.\n\n## Quick Links
+> **Independent project:** VoiceBlueprint Pro is maintained by DevTunaSoft. Historical integration, CLA, account and cloud sections below describe inherited architecture and do not authorize use of the original project's support, billing or social accounts. See [Support](SUPPORT.md) and [Security](SECURITY.md) for fork-owned channels.\n\n## Quick Links
 
 | | |
 |---|---|
 | 📖 **Support guide** | [VoiceBlueprint Pro support](SUPPORT.md) |
 | 🐛 **Bugs** | [GitHub Issues](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) |
-| 🏷️ **Good First Issues** | [Filtered list](https://github.com/debpalash/VoiceBlueprint Pro/labels/good%20first%20issue) |
+| 🏷️ **Good First Issues** | [Filtered list](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue) |
 | 📋 **Roadmap** | [docs/ROADMAP.md](../docs/ROADMAP.md) |
 
 ---
@@ -17,7 +17,7 @@ Thanks for your interest in improving VoiceBlueprint Pro! This guide covers ever
 > [CLA checker’s policy](#contribution-licensing), sign the
 > [Contributor License Agreement](CLA-1.0.md) once. GitHub cannot stop you opening a pull request first, so it is checked at
 > merge instead: an unsigned pull request cannot merge unless a maintainer applies
-> the `cla-override` label after manual review. The fork's CLA intake process is not yet independently configured. Do **not** sign the original project's CLA issue to contribute here; ask in the PR if a CLA check blocks merging. Every other non-exempt human commit
+> the `cla-override` label after manual review. The fork's CLA intake process is not yet independently configured. Do **not** sign the original project's CLA issue; ask in the PR if the CLA check blocks merging. Every other non-exempt human commit
 > author and co-author must also sign before the check passes. Details are in
 > [Contribution licensing](#contribution-licensing).
 
@@ -98,7 +98,7 @@ bun run dev:web     # maintained Electron renderer in a browser + backend
 
 `bun run dev` keeps one desktop dev instance per checkout: starting it again
 stops the earlier dev app and its dev server (only this checkout's, never an
-installed VoiceBlueprint Pro or another project) instead of failing with "Port 3902 is
+installed VoiceStudio or another project) instead of failing with "Port 3902 is
 already in use". To run two side by side, start the second one with
 `VOICESTUDIO_ALLOW_MULTIPLE_INSTANCES=1` plus its own ports, for example
 `VOICESTUDIO_UI_PORT=3912 VOICESTUDIO_ELECTRON_PROXY_PORT=3913`.
@@ -134,7 +134,7 @@ modules and native helpers used by Electron remain maintained.
 ## Project Structure
 
 ```
-VoiceBlueprint Pro/
+VoiceStudio/
 ├── backend/                 # Python FastAPI server
 │   ├── api/                 # Route handlers
 │   ├── core/                # Config, prefs, constants
@@ -190,7 +190,7 @@ Open an [issue](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues/new) wi
 
 ### Adding a New TTS Engine
 
-VoiceBlueprint Pro's TTS backend is a plugin registry. Adding a new engine takes ~50 lines:
+VoiceStudio's TTS backend is a plugin registry. Adding a new engine takes ~50 lines:
 
 1. Open `backend/services/tts_backend.py`
 2. Create a class extending `TTSBackend`:
@@ -422,7 +422,7 @@ that — the agent recalls the architecture, conventions, and your past findings
 instead of re-reading the tree each time. [**memxt**](https://github.com/debpalash/memxt)
 (100% local, MCP-based, built by this project's maintainer) exists for exactly
 this; any MCP memory server works. Pair it with the repo's agent skill —
-the inherited local skill at `skills/voicestudio/SKILL.md` (upstream-specific; not a fork installer) — so your agent knows the project's
+the inherited local skill at `skills/voicestudio/SKILL.md` (not a fork installer) — so your agent knows the project's
 hard rules from the first prompt.
 
 ## Quality gates your PR must pass
@@ -520,7 +520,7 @@ test-only PR. Docker Hub overview edits still publish through the small
     the user (`electron/src/main/updater.ts`).
   - **yt-dlp updates** from PyPI, only when the user clicks update
     (`backend/services/media_tools.py`).
-  - **VoiceBlueprint Pro Cloud account features, only after the user turns them on**
+  - **VoiceStudio Cloud account features, only after the user turns them on**
     (first-run setup or Settings → Account; off by default, skipping = off):
     browser sign-in against `voicestudio.sh/identity` and the account API at
     `appapi.voicestudio.sh` from Electron main (`electron/src/main/account/`),
@@ -529,7 +529,7 @@ test-only PR. Docker Hub overview edits still publish through the small
     (`backend/services/cloud_sync/`), which can call only with a token main
     hands out. Turning either off stops every request at once; switching
     account features off sends one best-effort token revocation. Hidden in
-    packaged builds until VoiceBlueprint Pro Cloud launches.
+    packaged builds until VoiceStudio Cloud launches.
   - Bug reports as prefilled GitHub Issue URLs opened in the user's browser.
   - **Phone content reports, only when the user taps Send** in a generated
     result's Report sheet: `appapi.voicestudio.sh/v1/content-reports` with the
@@ -553,16 +553,16 @@ test-only PR. Docker Hub overview edits still publish through the small
 
 ## Contribution licensing
 
-VoiceBlueprint Pro is **AGPL-3.0-only**, and the maintainer also offers a
+VoiceStudio is **AGPL-3.0-only**, and the maintainer also offers a
 **commercial license** (see [LICENSE-NOTICE.md](../LICENSE-NOTICE.md)). Before
 a pull request can merge, every non-exempt human contributor — the opener,
 commit authors and co-authors — signs the [Contributor License Agreement](CLA-1.0.md)
 once. The [checker](scripts/cla_check.py) exempts its configured maintainer and
 bot account IDs. You keep
 your copyright. The agreement lets Yupcha Softwares Private Limited, the
-company that maintains VoiceBlueprint Pro, ship your work in both the AGPL-3.0 app and
+company that maintains VoiceStudio, ship your work in both the AGPL-3.0 app and
 commercial builds. In return, the company commits that while your contribution
-is in the public VoiceBlueprint Pro repository, it stays available there under
+is in the public VoiceStudio repository, it stays available there under
 AGPL-3.0 or another OSI-approved licence (CLA section 4). AI agents can't be co-authors (see
 [Contributing with AI agents](#contributing-with-ai-agents)); the person
 submitting the work signs for it.
@@ -578,7 +578,7 @@ The **CLA** check comments on your pull request when someone still needs to
 sign. To sign, post this as a new comment, on its own line:
 
 ```text
-I have read the VoiceBlueprint Pro CLA 1.0 and I hereby sign it.
+I have read the VoiceStudio CLA 1.0 and I hereby sign it.
 ```
 
 The signature covers your earlier and future contributions. The CLA check
@@ -604,7 +604,7 @@ replace the CLA.
 ## Need Help?
 
 - **Stuck on setup?** Ask in [VoiceBlueprint Pro support](SUPPORT.md)
-- **Not sure where to start?** Check [good first issues](https://github.com/debpalash/VoiceBlueprint Pro/labels/good%20first%20issue)
+- **Not sure where to start?** Check [good first issues](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue)
 - **Want to discuss a big change?** Open a [discussion](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) before coding
 
 Thank you for contributing! 🎙️
