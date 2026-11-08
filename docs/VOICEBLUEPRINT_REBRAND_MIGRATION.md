@@ -37,3 +37,26 @@ The direct update endpoint now targets this fork. Until matching signed assets a
 5. Verify every newly generated visual asset is present and licenses/credits remain intact.
 
 No task above is marked complete without direct evidence.
+
+## Engineering verification — November 8, 2026
+
+- The canonical `docs/logo.svg` and `electron/public/favicon.svg` now use the blue B-shaped waveform/blueprint design. The in-app React mark and macOS tray vectors have corresponding geometry.
+- [Asset generation run #42502149756](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/actions/runs/42502149756) **passed** on macOS; it generated and committed ICO, ICNS, PNG, tray art and localized visible brand strings. The job reported **37 passed** branding/packaging tests. Its earlier attempt #42502098135 failed only at staging gitignored binary icons; the follow-up corrected that defect.
+- Offline Linux local checkout (restored from the verified November 8 Git bundle, with rebrand changes applied) passed **85 Python tests** for branding/release contracts and **28 Node shell-installer safety tests**. The local environment did not have PowerShell or Bun dependencies, so these do **not** establish Windows installation or full Electron test acceptance.
+- The Electron artifact-only [packaging rehearsal](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/actions/workflows/electron-build.yml) now has a scoped push trigger for this branch. Its Windows x64/ARM64, macOS and Linux outcomes must be inspected before merging.
+- PR [#3](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/pull/3) remains draft. No signed release, real-Windows upgrade test or auto-update round trip has been verified.
+- The installer scripts now use this fork's release URLs and the `VoiceBlueprint-Pro-<version>` artifact prefix. Source builds point to this fork. Historical data paths and `VOICESTUDIO_*` environment variables are intentionally preserved.
+- Android/iOS display labels were updated without changing package/bundle identifiers. Actual mobile builds and store ownership must be validated separately.
+
+## Known blockers and migration cautions
+
+1. **Repository settings:** GitHub repository description and homepage still refer to BetterVoiceStudio; the available GitHub connection cannot edit repository administration settings. Update them in GitHub Settings → General. GitHub Issues and Discussions are disabled, so the inherited bug-report/contact links cannot be treated as functional until an owned reporting channel is enabled.
+2. **Store ownership:** `store/metadata.json` retains the upstream publisher legal name and Apple App Store ID. These cannot be represented as owned by this fork. No store submission until independent registrations and signing identities are configured and tested.
+3. **Legacy identity:** `com.voicestudio.desktop`, Python package names, `OMNIVOICE_*` and `VOICESTUDIO_*` environment variables, engine IDs, persisted data directories, local API header names and old model references remain by design. Rename only after migration/rollback tests.
+4. **Upstream services:** inherited commercial-license, donation, cloud account, Discord, social and sponsor links must not be presented as official VoiceBlueprint Pro services. Audit or remove these flows before release.
+5. **Update safety:** the fork has no published compatible signed update feed. A new update URL alone does not establish a working updater. Do not ship without manifest, signature, rollback and upgrade-in-place verification.
+6. **Release test:** GitHub Actions package rehearsal is not a substitute for testing a real Windows x64 installation, data migration, uninstall, crash recovery, and actual voice generation.
+
+## Next continuation point
+
+Inspect the latest PR #3 CI, Install smoke and Electron packaging rehearsal jobs; fix failures at their root cause. Then audit inherited first-party UI links, finish mobile/release artifact consistency, verify Windows EXE metadata and update manifest names, and run real-Windows installation/upgrade acceptance. Preserve original upstream authorship, licenses and engine lineage.
