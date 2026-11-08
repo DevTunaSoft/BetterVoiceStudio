@@ -1,6 +1,6 @@
-# VoiceStudio brand
+# VoiceBlueprint Pro brand
 
-VoiceStudio uses a waveform-and-spark mark. The waveform identifies audio; the
+The inherited VoiceStudio artwork uses a waveform-and-spark mark; replacement assets remain pending design and packaging validation. The waveform identifies audio; the
 spark identifies creation. The product voice is clear, calm, and direct.
 
 ## Assets
@@ -56,7 +56,9 @@ together; do not put text inside the icon or add another enclosing ring.
 
 ## Name and copy
 
-- Product name: **VoiceStudio**—one word, capital V and S.
+- Product name: **VoiceBlueprint Pro**. Tagline: **Design. Clone. Create.**
+- Repository: `DevTunaSoft/VoiceBlueprint-Pro`.
+- Legacy source identifiers, compatibility names and upstream author attributions are retained where necessary.
 - Voice: concise, professional, warm, and direct.
 - Promise: local-first creation without a subscription or usage meter.
 - Avoid absolute privacy claims: network-backed engines, downloads, analytics,
