@@ -201,3 +201,8 @@ Next QA iteration adds strict PNG signature, minimum dimensions, non-trivial byt
 ## QA checkpoint BVS-DOC-0021 — Fork user manual and verified feature status
 
 The fork-specific user manual now documents the actual successful 2026-11-07 packaging and CI evidence, without asserting real hardware/audio production readiness. Revised six chapters (overview, installation, models, workflows, troubleshooting and verification ledger) to include actionable beginner setup steps, supported x64/experimental ARM64 CPU runtime, data safety, licensing/privacy, accessible navigation, troubleshooting and a verified packaged GUI screenshot artifact link. **Disabled GitHub Issues** links are removed; contributors use pull requests and private security reporting. Root README now links the existing canonical manual, avoiding a competing manual. Added Python static regression tests for fork-owned artifact links, evidence accuracy and working manual navigation. Changes remain pending fresh CI at their new commit.
+
+
+## QA checkpoint BVS-DOC-0022 — Fix mandatory manual validation contract
+
+Handoff-validation run [42441116136](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42441116136) failed immediately because the revised manual omitted required **Start here**, **Documentation acceptance rule**, **Functional verification** and **Required evidence** strings used by `scripts/validate_user_guide.py`. Restored these existing structural contracts without weakening the validator. Extended `tests/test_fork_user_manual.py` to protect them. The prior doc commit was not fully validated; rerun handoff and full CI on the updated commit.

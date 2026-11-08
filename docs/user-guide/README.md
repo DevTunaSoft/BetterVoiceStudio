@@ -4,7 +4,7 @@
 
 BetterVoiceStudio is an independent modernization fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). The desktop app processes audio with local runtimes and installed models. During migration, its executable and some screens still use the **VoiceStudio** name.
 
-## Seven steps to start
+## Start here: Seven steps to start
 
 1. **Use a fork-owned build.** No stable BetterVoiceStudio release is published. For experimental builds, use the [installer guide](installation.md) and inspect the individual GitHub Actions packaging job for your operating system.
 2. **Save your existing work.** Back up recordings, scripts, projects and model data. Do not replace an existing upstream installation.
@@ -39,3 +39,7 @@ Keep private recordings and diagnostic exports confidential. Confirm model-speci
 GitHub Issues and Discussions are **currently disabled** for this fork, so inherited bug-report buttons may lead to non-working destinations. Preserve diagnostic bundles for a verified maintainer channel; submit source fixes through [pull requests](https://github.com/DevTunaSoft/BetterVoiceStudio/pulls). Vulnerabilities require the [private security reporting policy](../../.github/SECURITY.md).
 
 Every changed feature must update this manual and the [documentation quality standard](DOCUMENTATION_STANDARD.md) with reproducible evidence. No invented UI controls, performance claims or fake screenshots.
+
+## Documentation acceptance rule
+
+A user-facing feature is not documented as released until its exact UI controls, prerequisites, expected output, failure recovery, accessibility and privacy behavior have reproducible test evidence on the applicable hardware. The [verification ledger](feature-verification.md) records remaining gaps; incomplete areas stay explicitly marked unverified.

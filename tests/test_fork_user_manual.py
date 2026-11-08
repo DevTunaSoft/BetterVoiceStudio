@@ -32,3 +32,12 @@ def test_fork_homepage_links_to_canonical_manual():
     index = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
     assert "[Beginner manual](docs/user-guide/README.md)" in readme
     assert "(user-guide/README.md)" in index
+
+
+def test_fork_manual_preserves_required_quality_validator_contract():
+    guide = (GUIDE / "README.md").read_text(encoding="utf-8")
+    ledger = (GUIDE / "feature-verification.md").read_text(encoding="utf-8")
+    assert "## Start here" in guide
+    assert "## Documentation acceptance rule" in guide
+    assert "Functional verification" in ledger
+    assert "Required evidence" in ledger

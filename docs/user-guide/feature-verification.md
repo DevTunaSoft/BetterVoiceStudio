@@ -2,7 +2,7 @@
 
 **Reviewed:** November 7, 2026. **Evidence baseline:** Full CI `af3f97d8` passed. Later changes require their own CI; "automated" is not "release verified."
 
-| Feature | Verified automated evidence | Pending real-device validation |
+| Feature | Functional verification | Required evidence / remaining real-device validation |
 | --- | --- | --- |
 | Windows x64 package and CPU runtime | [Packaging #42426554733](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/runs/42426554733): installer, startup, managed backend | User PC installation and uninstall, speech, microphone, speakers, GPU |
 | Windows ARM64 packaging | Same run: native shell plus emulated x64 Python/CPU runtime passed | Real Snapdragon device, sustained performance, audio |
