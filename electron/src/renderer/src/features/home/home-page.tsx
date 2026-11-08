@@ -219,7 +219,7 @@ export function HomePage() {
                       <TooltipTrigger
                         render={
                           <a
-                            href="https://voicestudio.sh"
+                            href="https://github.com/DevTunaSoft/VoiceBlueprint-Pro"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="rounded-md transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-ring"
@@ -229,7 +229,7 @@ export function HomePage() {
                               event.preventDefault();
                               event.currentTarget.focus();
                               runRendererTask('Preview official website', () =>
-                                browser.open('https://voicestudio.sh'),
+                                browser.open('https://github.com/DevTunaSoft/VoiceBlueprint-Pro'),
                               );
                             }}
                           />

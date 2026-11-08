@@ -307,11 +307,11 @@ it('explains unsupported Windows proxy bypass rules before retrying setup', () =
   );
   expect(screen.getByText(i18n.t('backend.proxy_bypass_help'))).toBeVisible();
   expect(i18n.t('backend.proxy_bypass_help')).toMatch(
-    /quit VoiceStudio.*launch VoiceStudio from that terminal/,
+    /quit VoiceBlueprint Pro.*launch VoiceBlueprint Pro from that terminal/,
   );
 });
 
-const LATEST_RELEASE_URL = 'https://github.com/debpalash/VoiceStudio/releases/latest';
+const LATEST_RELEASE_URL = 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/latest';
 
 it('sends Apple Silicon users running the Intel build to the arm64 download (#2598)', () => {
   backendStatus.setupIssue = 'wrong_architecture';
