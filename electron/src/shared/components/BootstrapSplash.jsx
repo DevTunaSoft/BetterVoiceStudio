@@ -34,6 +34,7 @@ import { startSplashWatchdog, startHealthRecoveryPoll } from '../utils/splashWat
 import { flushApplicationPersistence } from '../utils/persistenceLifecycle';
 import { Button, Progress, Select } from '../ui';
 import UiScaleControl from './UiScaleControl';
+import VoiceStudioMark from './brand/VoiceStudioMark';
 
 // First-run only: keep the setup screen out of the main bundle so every
 // regular launch pays nothing for it.
@@ -746,6 +747,7 @@ export function BootstrapSplash({ stage, message, attempt = 0 }) {
           data-tauri-drag-region
         >
           <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
           {installWorkSeen && <JourneyRail t={t} />}
           <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
             <div className="min-w-0">

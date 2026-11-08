@@ -1,3 +1,4 @@
+import VoiceStudioMark from '../components/brand/VoiceStudioMark';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader, RotateCw } from 'lucide-react';
@@ -332,6 +333,7 @@ export default function SetupWizard({ onReady }) {
           onDoubleClick={doubleClickMaximize}
         >
           <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
           <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-2.5" data-tauri-drag-region>

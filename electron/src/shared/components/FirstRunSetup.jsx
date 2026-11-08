@@ -23,6 +23,7 @@ import i18n, { LANGUAGES } from '../i18n';
 import { useAppStore } from '../store';
 import { Badge, Button, Input, Progress, Select } from '../ui';
 import UiScaleControl from './UiScaleControl';
+import VoiceStudioMark from './brand/VoiceStudioMark';
 
 const APP_VERSION = __APP_VERSION__ || '0.0.0';
 const GIB = 1024 * 1024 * 1024;
@@ -470,6 +471,7 @@ export default function FirstRunSetup() {
             data-tauri-drag-region
           >
             <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
             {/* Journey rail: this page is stage 1 of the install flow. */}
             <JourneyRail active="setup" t={t} />
             <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
