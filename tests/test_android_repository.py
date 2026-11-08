@@ -104,7 +104,7 @@ class AndroidRepositoryTests(unittest.TestCase):
         link = publisher.obtainium_link(config)
         deep = parse_qs(urlparse(link).query)['r'][0]
         self.assertEqual(json.loads(unquote(deep.removeprefix('obtainium://app/'))), config)
-        self.assertEqual(config['url'], 'https://github.com/debpalash/VoiceStudio')
+        self.assertEqual(config['url'], 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro')
 
     @unittest.skipIf(os.name == 'nt' or shutil.which('bash') is None, 'requires the POSIX workflow shell')
     def test_release_workflow_dispatches_the_repository_only_for_stable(self):
