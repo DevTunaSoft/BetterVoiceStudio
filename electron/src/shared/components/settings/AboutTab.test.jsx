@@ -38,6 +38,13 @@ describe('AboutTab — external links', () => {
     expect(REPO_URL).toBe('https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
   });
 
+  it('shows independent developer identity without upstream commercial sales', () => {
+    render(<AboutTab {...baseProps} />);
+    expect(screen.getByText('DevTunaSoft contributors')).toBeInTheDocument();
+    expect(screen.getByText('Design. Clone. Create.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /commercial license/i })).toBeNull();
+  });
+
   it('has no "Model card" link — the app is multi-engine with no single model card', () => {
     render(<AboutTab {...baseProps} />);
     expect(screen.queryByRole('button', { name: /model card/i })).toBeNull();

@@ -6,10 +6,10 @@ import { runRendererTask } from '@/lib/global-error-recovery';
 import { REPO_URL } from '@shared/utils/contactLinks';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
-const STARS_URL = 'https://api.github.com/repos/debpalash/VoiceStudio';
+const STARS_URL = 'https://api.github.com/repos/DevTunaSoft/VoiceBlueprint-Pro';
 const REFRESH_MS = 20 * 60 * 1000;
-// The last bundled count remains visible when GitHub cannot be reached.
-const BUNDLED_STARS = 43_638;
+// Do not display the original project's star count as this fork's popularity.
+const BUNDLED_STARS: number | null = null;
 const formatCount = new Intl.NumberFormat('en');
 
 async function fetchStarCount(signal: AbortSignal): Promise<number> {
@@ -62,7 +62,7 @@ export function GithubStar() {
           <StarIcon aria-hidden="true" className="size-3.5" />
           <span>{t('support.star_short')}</span>
         </span>
-        <span className="github-star-count">{formatCount.format(stars.data ?? BUNDLED_STARS)}</span>
+        <span className="github-star-count">{stars.data == null ? '—' : formatCount.format(stars.data)}</span>
       </TooltipTrigger>
       <TooltipContent surface="theme" side="bottom">
         {t('support.star_github')}

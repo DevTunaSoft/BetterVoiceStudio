@@ -6,8 +6,7 @@
   "homepage": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro",
   "license": "AGPL-3.0-only",
   "author": {
-    "name": "VoiceStudio contributors",
-    "email": "hi@voicestudio.sh"
+    "name": "DevTunaSoft contributors"
   },
   "type": "module",
   "main": "./out/main/index.js",
