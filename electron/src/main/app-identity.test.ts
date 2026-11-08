@@ -17,10 +17,10 @@ describe('installAppIdentity', () => {
     expect(setName).toHaveBeenCalledWith('VoiceBlueprint Pro');
   });
 
-  it('defines the complete native macOS menu with VoiceStudio app labels', () => {
+  it('defines the complete native macOS menu with VoiceBlueprint Pro app labels', () => {
     const template = createMacApplicationMenuTemplate();
 
-    expect(template[0]).toMatchObject({ label: 'VoiceStudio' });
+    expect(template[0]).toMatchObject({ label: 'VoiceBlueprint Pro' });
     expect(template[0]?.submenu).toEqual(
       expect.arrayContaining([{ role: 'about' }, { role: 'hide' }, { role: 'quit' }]),
     );
@@ -54,7 +54,7 @@ describe('installAppIdentity', () => {
     installMacApplicationMenu(application, menu, '0.5.6');
 
     expect(application.setAboutPanelOptions).toHaveBeenCalledWith({
-      applicationName: 'VoiceStudio',
+      applicationName: 'VoiceBlueprint Pro',
       applicationVersion: '0.5.6',
       version: '0.5.6',
     });

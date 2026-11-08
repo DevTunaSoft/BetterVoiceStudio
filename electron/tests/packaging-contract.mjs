@@ -104,7 +104,8 @@ const artifactExecutable = resolve(
       : (config.linux.executableName ?? 'voicestudio-electron'),
 );
 const electronPackage = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
-assert.match(electronPackage.author?.email ?? '', /@/, 'Linux package declares a maintainer email');
+assert.match(electronPackage.author?.name ?? '', /DevTunaSoft/, 'Package identifies the independent maintainer');
+assert.doesNotMatch(JSON.stringify(electronPackage.author), /voicestudio\\.sh|palash/i, 'Package must not claim upstream maintainer contacts');
 assert.equal(config.productName, PRODUCT_NAME, 'Builder uses the central product name');
 assert.equal(
   config.appId,

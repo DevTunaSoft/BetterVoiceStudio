@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DISCORD_URL } from '@shared/utils/contactLinks';
+import { ISSUES_URL } from '@shared/utils/contactLinks';
 import type { BackendStatus, SetupConnectionCheck } from '../../../preload/index.d';
 import { getBridge } from './bridge';
 import { Button } from './ui/button';
@@ -52,7 +52,7 @@ export function SetupSupport({ status }: { status: BackendStatus }) {
               const data = await bridge!.backend.getSetupDiagnostics();
               await bridge!.files.saveData({
                 data: new TextEncoder().encode(data),
-                suggestedName: 'voicestudio-setup.log',
+                suggestedName: 'VoiceBlueprint-Pro-setup.log',
               });
             } catch {
               setFailed(true);
@@ -66,7 +66,7 @@ export function SetupSupport({ status }: { status: BackendStatus }) {
         {help && (
           <>
             <ReportBug error={status.message || t('setupHelp.title')} setup />
-            <ExternalLink href={DISCORD_URL}>{t('setupHelp.discord')}</ExternalLink>
+            <ExternalLink href={ISSUES_URL}>VoiceBlueprint Pro project support</ExternalLink>
           </>
         )}
       </div>

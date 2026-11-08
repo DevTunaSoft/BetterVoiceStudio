@@ -1,5 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, expect, it } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
+import type { ReactNode } from 'react';
+vi.mock('@/components/app-shell/workspace-header', () => ({
+  WorkspaceHeader: ({ children }: { children: ReactNode }) => <header>{children}</header>,
+}));
 import { ProPage } from './pro-page';
 
 afterEach(() => cleanup());

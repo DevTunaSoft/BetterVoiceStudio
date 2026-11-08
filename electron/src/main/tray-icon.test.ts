@@ -22,7 +22,7 @@ it('uses the canonical blueprint waveform without the app-icon tile', () => {
     resolve(root, 'electron/build/icons/trayRecordingTemplate.svg'),
     'utf8',
   );
-  const canonicalPaths = [...logo.matchAll(/<path d="([^"]+)"/g)].map((match) => match[1]).slice(-2);
+  const canonicalPaths = [...logo.matchAll(/<path d="([^"]+)"/g)].map((match) => match[1]).filter((path) => path.startsWith('M18 ') || path.startsWith('M11 '));
 
   expect(canonicalPaths).toHaveLength(2);
   for (const path of canonicalPaths) {
