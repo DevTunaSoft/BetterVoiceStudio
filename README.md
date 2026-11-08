@@ -4,7 +4,7 @@
 
 BetterVoiceStudio is an independent, open-source fork of [VoiceStudio](https://github.com/debpalash/VoiceStudio). We are modernizing its voice production experience, improving its existing capabilities, and retaining upstream attribution.
 
-[Features](#what-bettervoicestudio-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Credits](#open-source-credits-and-licensing)
+[Features](#what-bettervoicestudio-is) · [Get a development build](#try-a-development-build) · [How to use](#how-to-use-the-app) · [Beginner manual](docs/user-guide/README.md) · [Developer setup](#build-and-test-from-source) · [Documentation](docs/README.md) · [Roadmap](https://github.com/DevTunaSoft/BetterVoiceStudio/blob/engineering/modernization-foundation/docs/roadmap/CONSOLIDATED_CAPABILITY_PROGRAM.md) · [Build status](https://github.com/DevTunaSoft/BetterVoiceStudio/actions) · [Fork releases](https://github.com/DevTunaSoft/BetterVoiceStudio/releases) · [Credits](#open-source-credits-and-licensing)
 
 [![Development CI](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml/badge.svg?branch=engineering%2Fmodernization-foundation)](https://github.com/DevTunaSoft/BetterVoiceStudio/actions/workflows/ci.yml) [![AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
 
@@ -131,7 +131,7 @@ After the runtime and appropriate models are installed:
 5. **Stories and audiobooks:** create longer narration, review sections and manage output or projects.
 6. **Model management and automation:** download supported local models, manage projects, and explore the local API, recipes and integrations.
 
-The app's available workflows depend on the build, operating system, installed engines, model licenses and available CPU/GPU resources. Start with the [feature catalog](docs/feature-catalog.md), [model download guide](docs/downloading-models.md), [Electron app instructions](electron/README.md) and [documentation index](docs/README.md). Offline inference is possible with compatible local engines after their model files have been downloaded. Optional online services remain separate.
+For a guided walkthrough, use the [BetterVoiceStudio beginner's manual](docs/user-guide/README.md). The app's available workflows depend on the build, operating system, installed engines, model licenses and available CPU/GPU resources. Start with the [feature catalog](docs/feature-catalog.md), [model download guide](docs/downloading-models.md), [Electron app instructions](electron/README.md) and [documentation index](docs/README.md). Offline inference is possible with compatible local engines after their model files have been downloaded. Optional online services remain separate.
 
 ## Build and test from source
 
