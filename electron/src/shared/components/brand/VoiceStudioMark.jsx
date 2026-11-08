@@ -1,9 +1,8 @@
 import React from 'react';
 
-/**
- * VoiceStudio's compact mark: a rounded speech waveform with one small spark.
- * The desktop icon uses the same silhouette on a dark tile; app chrome keeps
- * it transparent so it stays crisp at titlebar sizes and in every theme.
+/** VoiceBlueprint Pro mark: a B-shaped signal and a blueprint waveform.
+ * Keep its paths aligned with the canonical docs/logo.svg asset. The legacy
+ * module filename remains an internal import compatibility alias.
  */
 export default function VoiceStudioMark({ className = '', title, ...props }) {
   return (
@@ -17,16 +16,21 @@ export default function VoiceStudioMark({ className = '', title, ...props }) {
     >
       {title ? <title>{title}</title> : null}
       <path
-        d="M6 34c4 0 5-7 9-7 5 0 4 14 9 14 5 0 4-23 9-23s4 28 9 28 4-21 9-21c4 0 5 9 8 9"
+        d="M18 16V48M18 16H31C41 16 45 20 45 25C45 30 41 33 32 33H18M18 33H33C43 33 47 37 47 41C47 46 42 48 33 48H18"
+        fill="none"
         stroke="currentColor"
-        strokeWidth="5.5"
+        strokeWidth="4.4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M50 9c.7 4.3 3.7 7.3 8 8-4.3.7-7.3 3.7-8 8-.7-4.3-3.7-7.3-8-8 4.3-.7 7.3-3.7 8-8Z"
-        fill="currentColor"
-        opacity="0.72"
+        d="M11 33H21L25 27L30 39L35 28L39 33H53"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.8"
       />
     </svg>
   );
