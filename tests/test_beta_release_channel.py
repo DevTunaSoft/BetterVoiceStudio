@@ -65,7 +65,7 @@ def test_beta_release_uses_beta_notes_and_skips_sunset_feeds(release_module, mon
     assets = tmp_path / "assets"
     assets.mkdir()
     for suffix in ("mac-arm64.dmg", "mac-x64.dmg", "linux-x64.deb"):
-        (assets / f"VoiceStudio-1.2.3-beta.2-{suffix}").write_bytes(b"x")
+        (assets / f"VoiceBlueprint-Pro-1.2.3-beta.2-{suffix}").write_bytes(b"x")
     payload = b"foo"
     digest = base64.b64encode(hashlib.sha512(payload).digest()).decode()
     (assets / "electron-beta-win32-x64.yml").write_text(

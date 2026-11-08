@@ -110,6 +110,8 @@ These describe the **inherited application** and are maintained as the fork evol
 | Automation | [Local API](docs/speech-platform.md) · [MCP](docs/mcp.md) |
 | Developer reference | [Architecture](docs/STRUCTURE.md) · [Development documentation](docs/README.md) |
 
+<a id="get-started"></a>
+
 ## Try a development build
 
 There is **no signed, stable VoiceBlueprint Pro installer yet**. Technically experienced testers can inspect and try CI-generated artifacts:
@@ -137,6 +139,8 @@ After the runtime and appropriate models are installed:
 
 For a guided walkthrough, use the [VoiceBlueprint Pro beginner's manual](docs/user-guide/README.md). The app's available workflows depend on the build, operating system, installed engines, model licenses and available CPU/GPU resources. Start with the [feature catalog](docs/feature-catalog.md), [model download guide](docs/downloading-models.md), [Electron app instructions](electron/README.md) and [documentation index](docs/README.md). Offline inference is possible with compatible local engines after their model files have been downloaded. Optional online services remain separate.
 
+<a id="platforms"></a>
+
 ## Build and test from source
 
 This repository currently retains upstream build identifiers and development tooling. These commands are **developer workflows**, not a claim that an independently packaged VoiceBlueprint Pro installer is available.
@@ -162,9 +166,15 @@ Before adding features, we search the entire repository for existing code, APIs,
 
 Every substantive change should include a reproducible test, regression verification, multiple distinct fault/fuzz scenarios where appropriate, and a record of remaining risks. We do not claim an application is error-free or production-ready without supporting evidence.
 
+## Maintainer skills
+
+The inherited [VoiceStudio skill](skills/voicestudio/SKILL.md) remains available in this fork for developers. Review its upstream-specific commands before use; it is not an official VoiceBlueprint Pro release installer.
+
 ## Historical upstream translations
 
-The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain available for historical reference and attribution. **They describe the original upstream application, not the current VoiceBlueprint Pro fork**, and may contain upstream installation, sponsorship, commercial or community links. Do not interpret them as translated VoiceBlueprint Pro documentation. Their English reference is preserved in the modernization branch at [legacy_upstream_readme.md](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/blob/engineering/modernization-foundation/tests/fixtures/legacy_upstream_readme.md) until verified fork-specific translations are available.
+The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain available for historical reference and attribution. **They describe the original upstream application, not the current VoiceBlueprint Pro fork**, and may contain upstream installation, sponsorship, commercial or community links. Do not interpret them as translated VoiceBlueprint Pro documentation. Their English reference is preserved in the modernization branch at [archived English upstream README](tests/fixtures/legacy_upstream_readme.md) until verified fork-specific translations are available.
+
+<a id="license--responsible-use"></a>
 
 ## Open source, credits and licensing
 
@@ -173,6 +183,8 @@ The inherited VoiceStudio translations in [docs/readme/](docs/readme/) remain av
 The application declares **AGPL-3.0-only** for its main codebase; certain incorporated components, model weights, tokenizers, datasets and media assets have **different licenses**. In particular, some model weights have non-commercial restrictions. The application license alone does not grant rights to use every model or voice commercially. Read the applicable terms before use or redistribution.
 
 We retain upstream Git history and attribution rather than taking credit for inherited work. If attribution is missing, please submit a [documentation pull request](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/pulls) with the relevant sources.
+
+<a id="contribution-licensing"></a>
 
 ## Contributing and reporting issues
 

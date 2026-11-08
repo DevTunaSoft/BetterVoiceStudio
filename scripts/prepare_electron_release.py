@@ -20,7 +20,10 @@ def validate_sunset(manifest, tag):
         raise ValueError("Missing Tauri platforms")
     for entry in manifest["platforms"].values():
         url = urlparse(entry.get("url", ""))
-        prefix = f"/DevTunaSoft/VoiceBlueprint-Pro/releases/download/{tag}/"
+        # Legacy Tauri clients were signed and published by the original project.
+        # Repointing their immutable sunset feed to this fork breaks signatures.
+        # Only new Electron feeds use this fork.
+        prefix = f"/debpalash/VoiceStudio/releases/download/{tag}/"
         if url.scheme != "https" or url.netloc != "github.com" or not url.path.startswith(prefix):
             raise ValueError("Tauri URLs must point to immutable sunset assets")
         if not entry.get("signature"):

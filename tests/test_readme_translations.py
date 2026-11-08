@@ -10,6 +10,9 @@ from pathlib import Path
 import pytest
 
 _ROOT = Path(__file__).resolve().parents[1]
+# Historical translations correspond to the original English README, not the
+# independently rewritten VoiceBlueprint Pro landing page.
+_LEGACY_ENGLISH = _ROOT / 'tests' / 'fixtures' / 'legacy_upstream_readme.md'
 _TRANSLATIONS = sorted((_ROOT / "docs" / "readme").glob("README_*.md"))
 _TARGET = re.compile(r'(?:src(?:set)?="|href="|\]\()([^")\s]+)')
 _FENCE = re.compile(r"^```([^\n]*)\n(.*?)^```[ \t]*$", re.MULTILINE | re.DOTALL)
@@ -22,9 +25,8 @@ _EXPECTED = {
 
 def test_translations_are_present_and_the_root_readme_links_to_them():
     assert _EXPECTED <= {p.name for p in _TRANSLATIONS}, "English plus 19 translations must be available"
-    root = (_ROOT / "README.md").read_text(encoding="utf-8")
-    for path in _TRANSLATIONS:
-        assert f'href="docs/readme/{path.name}"' in root
+    root = (_ROOT / 'README.md').read_text(encoding='utf-8')
+    assert 'docs/readme/' in root and 'historical' in root.lower()
     assert not list(_ROOT.glob("README_*.md")), "translations belong in docs/readme/, not the repo root"
 
 
@@ -51,7 +53,7 @@ def test_every_relative_link_in_a_translation_resolves(path):
 @pytest.mark.parametrize("path", _TRANSLATIONS, ids=lambda p: p.name)
 def test_translations_preserve_install_commands(path):
     """Translated shell comments are allowed; commands, flags and URLs stay intact."""
-    source = _FENCE.findall((_ROOT / "README.md").read_text(encoding="utf-8"))
+    source = _FENCE.findall(_LEGACY_ENGLISH.read_text(encoding="utf-8"))
     translated = _FENCE.findall(path.read_text(encoding="utf-8"))
     assert len(translated) == len(source), f"{path.name} omits a command or copyable example"
     for (source_kind, original), (kind, localized) in zip(source, translated):
@@ -92,11 +94,11 @@ def test_translations_preserve_documentation_links(path):
                 result[target] += 1
             else:
                 name, separator, anchor = target.partition("#")
-                relative = (file.parent / name).resolve().relative_to(_ROOT).as_posix()
+                relative = ((_ROOT if file == _LEGACY_ENGLISH else file.parent) / name).resolve().relative_to(_ROOT).as_posix()
                 result[relative + separator + anchor] += 1
         return result
 
-    assert links(path) == links(_ROOT / "README.md"), f"{path.name} omits or changes a documentation link"
+    assert links(path) == links(_LEGACY_ENGLISH), f"{path.name} omits or changes a documentation link"
 
 
 @pytest.mark.parametrize("path", _TRANSLATIONS, ids=lambda p: p.name)

@@ -85,13 +85,13 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           if [ "$(uname)" = Darwin ]; then
-            test -f /Applications/VoiceBlueprint Pro.app/Contents/Resources/app.asar
+            test -f "/Applications/VoiceBlueprint Pro.app/Contents/Resources/app.asar"
           else
             test -x "$HOME/.local/bin/VoiceBlueprint-Pro"
           fi
           sh scripts/install.sh --uninstall
           if [ "$(uname)" = Darwin ]; then
-            test ! -e /Applications/VoiceBlueprint Pro.app
+            test ! -e "/Applications/VoiceBlueprint Pro.app"
           else
             test ! -e "$HOME/.local/bin/VoiceBlueprint-Pro"
           fi
