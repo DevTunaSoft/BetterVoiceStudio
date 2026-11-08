@@ -2,6 +2,17 @@ name: Electron packaging rehearsal
 
 # Explicitly artifact-only: no tag, schedule, release, or publishing permission.
 on:
+  # One-time rebrand acceptance rehearsal. Artifact-only, no publishing.
+  push:
+    branches: [engineering/voiceblueprint-rebrand]
+    paths:
+      - .github/workflows/electron-build.yml
+      - config/app.json
+      - electron/electron-builder.config.mjs
+      - electron/build/icons/**
+      - electron/src/main/updater.ts
+      - scripts/install.ps1
+      - scripts/install.sh
   workflow_dispatch:
 
 permissions:
