@@ -90,7 +90,12 @@ def test_current_files_round_trip_unchanged():
         assert "static let coreMaintainers: Set<String> = []" in swift
     else:
         assert uc.render_swift(swift, logins) == swift
-    assert uc.render_kotlin(uc.KOTLIN.read_text(), logins) == uc.KOTLIN.read_text()
+    kotlin = uc.KOTLIN.read_text()
+    if "DevTunaSoft/VoiceBlueprint-Pro" in kotlin:
+        assert "val logins: List<String> = emptyList()" in kotlin
+        assert "val coreMaintainers: Set<String> = emptySet()" in kotlin
+    else:
+        assert uc.render_kotlin(kotlin, logins) == kotlin
     core = uc.parse_core(ts)
     for readme in uc.READMES:
         assert uc.render_readme(readme.read_text(), [l for l in logins if l not in core], readme) == readme.read_text()
