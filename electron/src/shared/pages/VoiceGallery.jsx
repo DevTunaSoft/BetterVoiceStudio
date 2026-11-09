@@ -248,7 +248,7 @@ export default function VoiceGallery({ clearSelectedProfile = NOOP }) {
           </span>
           <div className="min-w-0">
             <h2 className="m-0 truncate [font-family:var(--font-serif)] text-[1.5rem] font-normal leading-tight tracking-[-0.02em] text-[color:var(--chrome-fg)]">
-              {t('gallery.title', { defaultValue: 'VoiceStudio Gallery' })}
+              {t('gallery.title', { defaultValue: 'VoiceBlueprint Pro Gallery' })}
             </h2>
             <p className="m-0 mt-[2px] truncate text-[0.72rem] text-[color:var(--chrome-fg-muted)]">
               {t('gallery.subtitle', {
@@ -259,7 +259,7 @@ export default function VoiceGallery({ clearSelectedProfile = NOOP }) {
         </div>
         <Tabs value={zone} onValueChange={setZone} activationMode="manual" className="gap-0">
           <TabsList
-            aria-label={t('gallery.title', { defaultValue: 'VoiceStudio Gallery' })}
+            aria-label={t('gallery.title', { defaultValue: 'VoiceBlueprint Pro Gallery' })}
             className="grid h-auto w-auto grid-cols-3 gap-[3px] rounded-[var(--chrome-radius-pill)] border border-transparent bg-[var(--chrome-bg)] p-[3px]"
           >
             {zoneItems.map(({ value, Icon, label }) => (

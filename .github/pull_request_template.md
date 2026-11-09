@@ -1,11 +1,8 @@
 <!--
-First pull request? Unless exempt under the CLA checker’s policy, sign the
-Contributor License Agreement once, before or after
-opening it: https://github.com/debpalash/VoiceStudio/issues/2586
-Your signature covers your future contributions. Every other non-exempt human commit
-author and co-author must also sign before merge. If this pull request contains
-`Supersedes #N`, that also includes the non-exempt human opener, commit authors
-and co-authors of pull request #N.
+VoiceBlueprint Pro is an independent DevTunaSoft project.
+Do not sign the original VoiceStudio CLA or post signatures to upstream issues.
+The fork's contribution-licensing policy is under review; maintainers must not
+merge non-exempt external contributions before an independent policy is approved.
 -->
 
 ## Summary
@@ -39,7 +36,7 @@ and co-authors of pull request #N.
 ## Checklist
 
 - [ ] I've tested this locally
-- [ ] Every non-exempt human commit author has signed the [CLA](https://github.com/debpalash/VoiceStudio/blob/main/.github/CLA-1.0.md) (the **CLA** check tells you how)
+- [ ] Contributor licensing has been reviewed under the independent VoiceBlueprint Pro policy; no upstream CLA signatures were requested
 - [ ] I've updated relevant documentation (if applicable)
 - [ ] User-visible change: I added a one-line `changelog.d/<PR#>.<type>.md` fragment (not `CHANGELOG.md`)
 - [ ] No local machine paths, logs, or personal env details in this PR
@@ -48,7 +45,7 @@ and co-authors of pull request #N.
 
 ## Release cadence
 
-VoiceStudio ships **continuous-to-main** — no release candidates, no soak windows.
+VoiceBlueprint Pro is in active development. Merges require the fork's own acceptance checks; no release cadence has been approved.
 Every merged PR is immediately part of rolling source (`main`) and Docker
 `:latest`. Electron artifact rehearsals validate desktop packages without publishing.
 Version bumps require owner approval; validated releases are tagged from `main`

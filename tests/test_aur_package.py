@@ -25,4 +25,4 @@ def test_desktop_entry_matches_app_identity():
 def test_ci_validates_the_installed_desktop_entry():
     filename, _ = _desktop_entry()
     workflow = (ROOT / ".github/workflows/aur-package.yml").read_text(encoding="utf-8")
-    assert f"desktop-file-validate pkg/voicestudio-git/usr/share/applications/{filename}" in workflow
+    assert f'desktop-file-validate pkg/voicestudio-git/usr/share/applications/"{filename}"' in workflow

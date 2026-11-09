@@ -25,7 +25,7 @@ class ContractTest {
         val l=L10n.load(ApplicationProvider.getApplicationContext<Context>(),"en")
         val error=com.voicestudio.mobile.network.BackendErrors.parse(403,"""{"detail":{"code":"model_licence_required","message":"Licence not accepted for org/model, org/other. Review and accept it in Model Catalogue.","models":[{"repo_id":"org/model","license":"Example licence"},{"repo_id":"org/other","license":"Other terms"},{"repo_id":"org/model","license":"Example licence"}]}}""")
         val copy=l.t(error.key,error.params)
-        assertEquals("org/model · Example licence\norg/other · Other terms\nAccept it on your computer in VoiceStudio \u2192 Model Catalogue",copy)
+        assertEquals("org/model · Example licence\norg/other · Other terms\nAccept it on your computer in VoiceBlueprint Pro \u2192 Model Catalogue",copy)
     }
     @Test fun unreadableLicenceRecordsKeepServerRecoveryAdvice() {
         val l=L10n.load(ApplicationProvider.getApplicationContext<Context>(),"en")

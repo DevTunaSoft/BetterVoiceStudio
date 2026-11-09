@@ -36,12 +36,12 @@ struct SettingsView: View {
                 InfoButton(title: model.t("mobile.simple.privacy"), detail: model.t("mobile.local.privacy"), row: true, icon: "shield")
                 Toggle(isOn: $model.analytics) { Label(model.t("mobile.simple.analytics"),systemImage: "chart.bar") }.frame(minHeight: 44).accessibilityIdentifier("settings.analytics")
             }
-            Section(model.t("donate.title")) {
-                NavigationLink { DonateView() } label: { Label(model.t("mobile.support.donate"), systemImage: "heart") }
+            Section("VoiceBlueprint Pro") {
+                NavigationLink { DonateView() } label: { Label("Project", systemImage: "info.circle") }
                     .accessibilityIdentifier("settings.donate")
-                NavigationLink { ProView() } label: { Label(model.t("proPage.title"), systemImage: "sparkles") }
+                NavigationLink { ProView() } label: { Label("Licensing", systemImage: "doc.text") }
                     .accessibilityIdentifier("settings.pro")
-                NavigationLink { OtherAppsView() } label: { Label(model.t("mobile.support.other_apps"), systemImage: "square.grid.2x2") }
+                NavigationLink { OtherAppsView() } label: { Label("About", systemImage: "info.circle") }
                     .accessibilityIdentifier("settings.other-apps")
             }
             Section {

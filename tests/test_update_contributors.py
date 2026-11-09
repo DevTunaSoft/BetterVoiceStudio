@@ -83,8 +83,19 @@ def test_current_files_round_trip_unchanged():
     people = [{"login": l, "commits": int(c)} for l, c in re.findall(r"login: '([^']+)', commits: (\d+)", ts)]
     assert uc.render_ts(people, uc.parse_core(ts), uc.parse_date(ts)) == ts
     logins = [p["login"] for p in people]
-    assert uc.render_swift(uc.SWIFT.read_text(), logins) == uc.SWIFT.read_text()
-    assert uc.render_kotlin(uc.KOTLIN.read_text(), logins) == uc.KOTLIN.read_text()
+    swift = uc.SWIFT.read_text()
+    if "DevTunaSoft/VoiceBlueprint-Pro" in swift:
+        # The independent fork owns this credit UI; do not regenerate upstream owners.
+        assert "static let logins: [String] = []" in swift
+        assert "static let coreMaintainers: Set<String> = []" in swift
+    else:
+        assert uc.render_swift(swift, logins) == swift
+    kotlin = uc.KOTLIN.read_text()
+    if "DevTunaSoft/VoiceBlueprint-Pro" in kotlin:
+        assert "val logins: List<String> = emptyList()" in kotlin
+        assert "val coreMaintainers: Set<String> = emptySet()" in kotlin
+    else:
+        assert uc.render_kotlin(kotlin, logins) == kotlin
     core = uc.parse_core(ts)
     for readme in uc.READMES:
         assert uc.render_readme(readme.read_text(), [l for l in logins if l not in core], readme) == readme.read_text()

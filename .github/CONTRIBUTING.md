@@ -1,27 +1,26 @@
-# Contributing to VoiceStudio
+# Contributing to VoiceBlueprint Pro
 
-Thanks for your interest in improving VoiceStudio! This guide covers everything you need to get started.
+Thanks for your interest in improving VoiceBlueprint Pro! This guide covers everything you need to get started.
+
+> **Independent project:** VoiceBlueprint Pro is maintained by DevTunaSoft. Historical integration, CLA, account and cloud sections below describe inherited architecture and do not authorize use of the original project's support, billing or social accounts. See [Support](SUPPORT.md) and [Security](SECURITY.md) for fork-owned channels.
 
 ## Quick Links
 
 | | |
 |---|---|
-| 💬 **Chat** | [Discord](https://discord.gg/bzQavDfVV9) |
-| 🐛 **Bugs** | [GitHub Issues](https://github.com/debpalash/VoiceStudio/issues) |
-| 🏷️ **Good First Issues** | [Filtered list](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue) |
+| 📖 **Support guide** | [VoiceBlueprint Pro support](SUPPORT.md) |
+| 🐛 **Bugs** | [GitHub Issues](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) |
+| 🏷️ **Good First Issues** | [Filtered list](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/labels/good%20first%20issue) |
 | 📋 **Roadmap** | [docs/ROADMAP.md](../docs/ROADMAP.md) |
 
 ---
 
-> **Before your first pull request:** unless exempt under the
-> [CLA checker’s policy](#contribution-licensing), sign the
-> [Contributor License Agreement](CLA-1.0.md) once. GitHub cannot stop you opening a pull request first, so it is checked at
-> merge instead: an unsigned pull request cannot merge unless a maintainer applies
-> the `cla-override` label after manual review. You can sign now on the
-> [signing issue (#2586)](https://github.com/debpalash/VoiceStudio/issues/2586) and
-> your signature covers your future contributions. Every other non-exempt human commit
-> author and co-author must also sign before the check passes. Details are in
-> [Contribution licensing](#contribution-licensing).
+> **Contributor licensing:** This fork inherited a CLA check and legacy
+> signing instructions. The maintainer must establish an independent
+> contribution policy before accepting outside changes. **Do not sign the
+> original project's CLA or post signatures on its issues.** If a check
+> blocks your pull request, discuss it on that pull request.
+
 
 ---
 
@@ -60,8 +59,8 @@ for Fedora and Arch packages.
 ### Clone & Run
 
 ```bash
-git clone https://github.com/debpalash/VoiceStudio.git
-cd VoiceStudio
+git clone https://github.com/DevTunaSoft/VoiceBlueprint-Pro.git
+cd VoiceBlueprint-Pro
 bun run dev
 ```
 
@@ -162,7 +161,7 @@ VoiceStudio/
 
 ### Bug Reports
 
-Open an [issue](https://github.com/debpalash/VoiceStudio/issues/new) with:
+Open an [issue](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues/new) with:
 
 1. **What happened** vs **what you expected**
 2. **Steps to reproduce**
@@ -424,7 +423,7 @@ that — the agent recalls the architecture, conventions, and your past findings
 instead of re-reading the tree each time. [**memxt**](https://github.com/debpalash/memxt)
 (100% local, MCP-based, built by this project's maintainer) exists for exactly
 this; any MCP memory server works. Pair it with the repo's agent skill —
-`npx skills add debpalash/VoiceStudio` — so your agent knows the project's
+the inherited local skill at `skills/voicestudio/SKILL.md` (not a fork installer) — so your agent knows the project's
 hard rules from the first prompt.
 
 ## Quality gates your PR must pass
@@ -586,13 +585,13 @@ I have read the VoiceStudio CLA 1.0 and I hereby sign it.
 The signature covers your earlier and future contributions. The CLA check
 identifies other required signers or cases needing manual review.
 New contributors can sign first: post the same line on the
-[signing issue (#2586)](https://github.com/debpalash/VoiceStudio/issues/2586)
+[fork contributor support](SUPPORT.md)
 before opening a pull request, or on the pull request itself if you prefer. The
 same signature applies if a maintainer folds your pull request into another one.
 If a pull request contains `Supersedes #N`, its CLA check also covers the
 non-exempt human opener, commit authors and co-authors of pull request #N.
 Contributed before and have no open pull request? Post
-the same line on the [issue labelled `cla`](https://github.com/debpalash/VoiceStudio/issues?q=label%3Acla). If it lists a commit it cannot link to a GitHub
+the same line on the [issue labelled `cla`](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues). If it lists a commit it cannot link to a GitHub
 account, either add that commit email to your account (Settings → Emails), or
 rewrite the commits with an email that is on it (`git commit --amend
 --reset-author`, or an interactive rebase) and push again. Comment `recheck` to
@@ -605,8 +604,8 @@ replace the CLA.
 
 ## Need Help?
 
-- **Stuck on setup?** Ask in [Discord #help](https://discord.gg/bzQavDfVV9)
-- **Not sure where to start?** Check [good first issues](https://github.com/debpalash/VoiceStudio/labels/good%20first%20issue)
-- **Want to discuss a big change?** Open a [discussion](https://github.com/debpalash/VoiceStudio/discussions) or Discord thread before coding
+- **Stuck on setup?** Ask in [VoiceBlueprint Pro support](SUPPORT.md)
+- **Not sure where to start?** Check [good first issues](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/labels/good%20first%20issue)
+- **Want to discuss a big change?** Open a [discussion](https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues) before coding
 
 Thank you for contributing! 🎙️

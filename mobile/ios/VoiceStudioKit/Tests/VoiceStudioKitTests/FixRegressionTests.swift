@@ -52,7 +52,7 @@ func licenceMessageListsModelsAndComputerActionOnce(_ message: String) throws {
     do { _ = try APIClient.validate(reply, authenticated: true); Issue.record("Expected licence error") }
     catch let error as ClientError {
         let rendered = try L10n(catalogs: catalogs()).t(error.key, error.params)
-        #expect(rendered == "org/voice · Research licence\norg/other · Community licence\nAccept it on your computer in VoiceStudio → Model Catalogue")
+        #expect(rendered == "org/voice · Research licence\norg/other · Community licence\nAccept it on your computer in VoiceBlueprint Pro → Model Catalogue")
     }
 }
 
@@ -61,7 +61,7 @@ func licenceMessageListsModelsAndComputerActionOnce(_ message: String) throws {
     let payload: [String: Any] = ["detail": ["code": "model_licence_required", "message": diagnostic, "models": []]]
     let error = try #require(ServerFailure.parse(JSONSerialization.data(withJSONObject: payload), status: 403))
     let rendered = try L10n(catalogs: catalogs()).t(error.key, error.params)
-    #expect(rendered == diagnostic + "\nAccept it on your computer in VoiceStudio → Model Catalogue")
+    #expect(rendered == diagnostic + "\nAccept it on your computer in VoiceBlueprint Pro → Model Catalogue")
 }
 
 @Test func presetGenerationOmitsProfileAndAutomaticLanguage() async throws {

@@ -34,6 +34,7 @@ import { startSplashWatchdog, startHealthRecoveryPoll } from '../utils/splashWat
 import { flushApplicationPersistence } from '../utils/persistenceLifecycle';
 import { Button, Progress, Select } from '../ui';
 import UiScaleControl from './UiScaleControl';
+import VoiceStudioMark from './brand/VoiceStudioMark';
 
 // First-run only: keep the setup screen out of the main bundle so every
 // regular launch pays nothing for it.
@@ -259,7 +260,7 @@ function JourneyRail({ t }) {
   return (
     <nav
       className="flex flex-wrap items-center gap-x-5 gap-y-2"
-      aria-label={t('bootstrap.title', 'VoiceStudio')}
+      aria-label={t('bootstrap.title', 'VoiceBlueprint Pro')}
     >
       {stages.map(([label, state]) => (
         <span
@@ -746,6 +747,7 @@ export function BootstrapSplash({ stage, message, attempt = 0 }) {
           data-tauri-drag-region
         >
           <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
           {installWorkSeen && <JourneyRail t={t} />}
           <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
             <div className="min-w-0">
@@ -754,7 +756,7 @@ export function BootstrapSplash({ stage, message, attempt = 0 }) {
                   screenshot from any of them identifies the build. */}
               <div className="flex flex-wrap items-baseline gap-2.5">
                 <h1 className="m-0 font-serif text-[clamp(1.6rem,3vw,2.2rem)] font-semibold leading-tight tracking-tight">
-                  {t('bootstrap.title', 'VoiceStudio')}
+                  {t('bootstrap.title', 'VoiceBlueprint Pro')}
                 </h1>
                 <span className="font-mono text-[0.62rem] tracking-[0.14em] text-fg-subtle">
                   v{APP_VERSION}

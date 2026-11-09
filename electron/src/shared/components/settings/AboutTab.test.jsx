@@ -31,11 +31,18 @@ describe('AboutTab — external links', () => {
 
   it('the GitHub button opens the canonical repo (derived from the shared REPO_URL constant)', () => {
     render(<AboutTab {...baseProps} />);
-    fireEvent.click(screen.getByRole('button', { name: 'VoiceStudio on GitHub' }));
+    fireEvent.click(screen.getByRole('button', { name: 'VoiceBlueprint Pro on GitHub' }));
     expect(openExternal).toHaveBeenCalledWith(REPO_URL);
     // Belt-and-braces: the constant itself must point at this project, not a
     // lookalike (the original bug linked github.com/k2-fsa/OmniVoice).
-    expect(REPO_URL).toBe('https://github.com/debpalash/VoiceStudio');
+    expect(REPO_URL).toBe('https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
+  });
+
+  it('shows independent developer identity without upstream commercial sales', () => {
+    render(<AboutTab {...baseProps} />);
+    expect(screen.getByText('DevTunaSoft contributors')).toBeInTheDocument();
+    expect(screen.getByText('Design. Clone. Create.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /commercial license/i })).toBeNull();
   });
 
   it('has no "Model card" link — the app is multi-engine with no single model card', () => {

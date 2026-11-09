@@ -257,8 +257,8 @@ omnivoice-demo = "omnivoice.cli.demo:main"
 omnivoice-dub = "omnivoice.cli.dub:main"
 
 [project.urls]
-Homepage = "https://github.com/debpalash/VoiceStudio"
-Repository = "https://github.com/debpalash/VoiceStudio"
+Homepage = "https://github.com/DevTunaSoft/VoiceBlueprint-Pro"
+Repository = "https://github.com/DevTunaSoft/VoiceBlueprint-Pro"
 Documentation = "https://github.com/debpalash/VoiceStudio/tree/main/docs"
 "Bug Tracker" = "https://github.com/debpalash/VoiceStudio/issues"
 "Upstream TTS Model" = "https://github.com/k2-fsa/OmniVoice"

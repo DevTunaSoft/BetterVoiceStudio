@@ -69,62 +69,31 @@ class SupportPagesTest {
         }
     }
 
-    @Test fun donationsRemainOptionalAndOpenOnlyTheChosenLinkAtLargeTextSize() {
+    @Test fun independentProjectPageHasOnlyForkOwnedLink() {
         compose.setContent {Content(large=true) {DonateScreen()}}
-        compose.waitUntil(5000) {compose.onAllNodesWithTag("support.donate.github").fetchSemanticsNodes().isNotEmpty()}
-        capture("android-donate-large-text")
+        compose.onNodeWithText("Design. Clone. Create.").assertExists()
+        compose.onNodeWithText("No official donations, sponsors, or payment accounts are available for this fork.").assertExists()
         assertTrue(opened.isEmpty())
-        val expected=listOf("github" to "https://github.com/sponsors/debpalash","kofi" to "https://ko-fi.com/debpalash","paypal" to "https://paypal.me/palashCoder",
-            "star" to "https://github.com/debpalash/VoiceStudio","discord" to "https://discord.gg/bzQavDfVV9")
-        for((id,url) in expected) {
-            compose.onNodeWithTag("support.donate.$id").performScrollTo().assertIsDisplayed().assertHeightIsAtLeast(48.dp).performClick()
-            assertEquals(url,opened.last())
-        }
-        assertEquals(5,opened.size)
-        compose.onNodeWithText(L10n.load(app,"en").t("mobile.support.gift_note")).assertExists()
+        compose.onNodeWithTag("support.project.github").performScrollTo().assertIsDisplayed().assertHeightIsAtLeast(48.dp).performClick()
+        assertEquals(listOf("https://github.com/DevTunaSoft/VoiceBlueprint-Pro"),opened)
+        assertTrue(compose.onAllNodesWithTag("support.donate.paypal").fetchSemanticsNodes().isEmpty())
+        capture("android-project-large-text")
     }
 
-    @Test fun projectArtAndSponsorLabelsAreBundledAndLinksRequireATap() {
-        val expected=listOf("opengtm" to "https://github.com/debpalash/OpenGTM","opal" to "https://github.com/debpalash/Opal",
-            "supermetry" to "https://github.com/velixio/supermetry","spicrawl" to "https://spicrawl.com")
-        compose.setContent {Content(light=true,large=true) {OtherAppsScreen()}}
-        compose.waitUntil(5000) {expected.all {(id,_) ->
-            compose.onAllNodesWithTag("support.artwork.$id",useUnmergedTree=true).fetchSemanticsNodes().isNotEmpty()
-        }}
-        capture("android-other-apps-large-text")
-        assertTrue(opened.isEmpty())
-        for((id,url) in expected) {
-            compose.onNodeWithTag("support.artwork.$id",useUnmergedTree=true).assertExists()
-            compose.onNodeWithTag("support.project.$id").performScrollTo().assertIsDisplayed().assertHeightIsAtLeast(48.dp).performClick()
-            assertEquals(url,opened.last())
-        }
-        compose.onNodeWithText(L10n.load(app,"en").t("mobile.support.special_sponsor")).assertExists()
-        assertEquals(4,opened.size)
-    }
-
-    @Test fun proExplainsDesktopScopeAndFreePhoneToolsWithoutPurchaseControls() {
+    @Test fun licensingDoesNotOfferUpstreamCheckout() {
         compose.setContent {Content(large=true) {ProScreen()}}
-        capture("android-pro-large-text")
-        val l=L10n.load(app,"en")
-        compose.onNodeWithText(l.t("mobile.support.pro_scope")).assertExists()
-        compose.onNodeWithText(l.t("proPage.free_note")).assertExists()
-        compose.onNodeWithText(l.t("proPage.commercial_body")).assertExists()
-        for(feature in listOf("automation","history","delivery","preflight")) {
-            compose.onNodeWithTag("support.pro.$feature").performScrollTo().assertIsDisplayed()
-        }
+        compose.onNodeWithText("No paid VoiceBlueprint Pro checkout or subscription is offered.").assertExists()
         assertTrue(compose.onAllNodes(hasClickAction()).fetchSemanticsNodes().isEmpty())
         assertTrue(opened.isEmpty())
+        capture("android-licensing-large-text")
     }
 
-    @Test @Config(qualifiers="w900dp-h1000dp") fun projectCardsUseTwoColumnsOnTablets() {
-        compose.setContent {Content {OtherAppsScreen()}}
-        compose.waitUntil(5000) {compose.onAllNodesWithTag("support.project.opal").fetchSemanticsNodes().isNotEmpty()}
-        capture("android-other-apps-tablet")
-        val first=compose.onNodeWithTag("support.project.opengtm").fetchSemanticsNode().boundsInRoot
-        val second=compose.onNodeWithTag("support.project.opal").fetchSemanticsNode().boundsInRoot
-        assertEquals(first.top,second.top,1f)
-        assertTrue(first.right<second.left)
+    @Test fun aboutPageDisclaimsUpstreamAffiliation() {
+        compose.setContent {Content(light=true,large=true) {OtherAppsScreen()}}
+        compose.onNodeWithText("Developed independently by DevTunaSoft contributors.").assertExists()
+        compose.onNodeWithText("The original project's apps, sponsors, social accounts, and businesses are not affiliated with VoiceBlueprint Pro.").assertExists()
         assertTrue(opened.isEmpty())
+        capture("android-about-large-text")
     }
 
     @Test fun settingsPagesNavigateOfflineAndReturnWithoutBecomingTabs()=runBlocking {

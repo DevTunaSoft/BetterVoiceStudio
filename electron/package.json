@@ -2,12 +2,12 @@
   "name": "voicestudio-electron",
   "version": "0.0.0-electron",
   "private": true,
-  "description": "VoiceStudio desktop shell (Electron) - local voice cloning, no cloud.",
-  "homepage": "https://github.com/debpalash/VoiceStudio",
+  "description": "VoiceBlueprint Pro desktop shell (Electron) — local-first AI voice design, cloning, and production.",
+  "homepage": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro",
   "license": "AGPL-3.0-only",
   "author": {
-    "name": "VoiceStudio contributors",
-    "email": "hi@voicestudio.sh"
+    "name": "DevTunaSoft contributors",
+    "email": "349500589+DevTunaSoft@users.noreply.github.com"
   },
   "type": "module",
   "main": "./out/main/index.js",

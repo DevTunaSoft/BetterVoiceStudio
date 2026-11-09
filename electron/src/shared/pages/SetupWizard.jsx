@@ -1,3 +1,4 @@
+import VoiceStudioMark from '../components/brand/VoiceStudioMark';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader, RotateCw } from 'lucide-react';
@@ -303,7 +304,7 @@ export default function SetupWizard({ onReady }) {
   const STEP_LABELS = {
     system: t('setup.system_check'),
     models: t('firstrun.stage_models', 'Models & engines'),
-    consent: t('consent.step_label', 'Improve VoiceStudio'),
+    consent: t('consent.step_label', 'Improve VoiceBlueprint Pro'),
     dictation: t('setup.dictation_step_label', 'Dictation'),
   };
 
@@ -332,6 +333,7 @@ export default function SetupWizard({ onReady }) {
           onDoubleClick={doubleClickMaximize}
         >
           <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
           <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-2.5" data-tauri-drag-region>
@@ -339,7 +341,7 @@ export default function SetupWizard({ onReady }) {
                   className="m-0 font-serif text-[clamp(1.6rem,3vw,2.2rem)] font-semibold leading-tight tracking-tight"
                   data-tauri-drag-region
                 >
-                  VoiceStudio
+                  VoiceBlueprint Pro
                 </h1>
                 {/* Same identity mark as the install splash footer. */}
                 <span

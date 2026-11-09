@@ -58,9 +58,9 @@ it('escalates at five minutes without progress and clears help when bytes resume
   expect(screen.queryByText('Setup GitHub report')).not.toBeInTheDocument();
   rerender(<SetupSupport status={status(300)} />);
   expect(screen.getByText('Setup GitHub report')).toBeVisible();
-  expect(screen.getByRole('link', { name: i18n.t('setupHelp.discord') })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: 'VoiceBlueprint Pro project support' })).toHaveAttribute(
     'href',
-    'https://discord.gg/bzQavDfVV9',
+    'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues',
   );
   const moving = status(0);
   moving.setupProgress!.stalled = false;
@@ -89,7 +89,7 @@ it('exports during setup without requiring a backend and handles save cancellati
   fireEvent.click(screen.getByRole('button', { name: i18n.t('setupHelp.download_log') }));
   await waitFor(() => expect(mock.save).toHaveBeenCalled());
   expect(new TextDecoder().decode(mock.save.mock.calls[0][0].data)).toBe('Setup log: redacted');
-  expect(mock.save.mock.calls[0][0].suggestedName).toBe('voicestudio-setup.log');
+  expect(mock.save.mock.calls[0][0].suggestedName).toBe('VoiceBlueprint-Pro-setup.log');
   expect(mock.external).not.toHaveBeenCalled();
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });

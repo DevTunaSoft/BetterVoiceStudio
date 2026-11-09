@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "identity": {
-    "productName": "VoiceStudio",
+    "productName": "VoiceBlueprint Pro",
     "applicationId": "com.voicestudio.desktop",
     "macAppStore": {
       "applicationId": "sh.voicestudio.pro",
@@ -12,9 +12,9 @@
     "defaultLocale": "en-US"
   },
   "listing": {
-    "title": "VoiceStudio",
+    "title": "VoiceBlueprint Pro",
     "shortDescription": "Local voice cloning, voice design, dubbing and dictation on your computer.",
-    "description": "VoiceStudio is a local-first desktop studio for voice cloning, voice design, video dubbing, transcription and real-time dictation. Audio and projects remain on the user's computer by default, with no account or API key required. Models and the managed runtime are installed only through explicit setup or model-install actions.",
+    "description": "VoiceBlueprint Pro is a local-first desktop studio for voice cloning, voice design, video dubbing, transcription and real-time dictation. Audio and projects remain on the user's computer by default, with no account or API key required. Models and the managed runtime are installed only through explicit setup or model-install actions.",
     "keywords": [
       "voice cloning",
       "text to speech",
@@ -25,10 +25,10 @@
     ]
   },
   "urls": {
-    "website": "https://voicestudio.sh",
-    "privacyPolicy": "https://voicestudio.sh/privacy",
-    "support": "https://github.com/debpalash/VoiceStudio/issues",
-    "source": "https://github.com/debpalash/VoiceStudio"
+    "website": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro",
+    "privacyPolicy": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro/blob/main/docs/PRIVACY.md",
+    "support": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro/issues",
+    "source": "https://github.com/DevTunaSoft/VoiceBlueprint-Pro"
   },
   "requirements": {
     "diskGib": 10,

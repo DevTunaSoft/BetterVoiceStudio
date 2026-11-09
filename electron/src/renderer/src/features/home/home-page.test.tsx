@@ -27,7 +27,6 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 import { HomePage } from './home-page';
-import { homeContributors } from './home-contributors-data';
 import en from '@/i18n/locales/en.json';
 
 afterEach(cleanup);
@@ -42,16 +41,16 @@ it('keeps the heading and description together beside the contributor artwork', 
   expect(copy.nextElementSibling).toHaveClass('home-contributors');
 });
 
-it('previews the official website only when the title is clicked', () => {
+it('opens the fork repository only when the title is clicked', () => {
   browser.open.mockClear();
   render(<HomePage />);
   const title = screen.getByRole('link', { name: 'homeUi.title' });
-  expect(en.homeUi.title).toBe('VoiceStudio.sh Open Source');
-  expect(title).toHaveAttribute('href', 'https://voicestudio.sh');
+  expect(en.homeUi.title).toBe('VoiceBlueprint Pro');
+  expect(title).toHaveAttribute('href', 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
   fireEvent.mouseEnter(title);
   expect(browser.open).not.toHaveBeenCalled();
   fireEvent.click(title);
-  expect(browser.open).toHaveBeenCalledWith('https://voicestudio.sh');
+  expect(browser.open).toHaveBeenCalledWith('https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
 });
 
 it('names the feature Dubbing consistently while preserving the existing route', () => {
@@ -62,73 +61,17 @@ it('names the feature Dubbing consistently while preserving the existing route',
   expect(screen.getByRole('link', { name: /dubWorkspace.title/ })).toHaveAttribute('href', '/dub');
 });
 
-it('credits qualifying contributors and opens their GitHub profiles externally', () => {
+it('identifies DevTunaSoft and opens only fork-owned project and credit links', () => {
   render(<HomePage />);
-  const credits = screen.getAllByRole('listitem');
-  expect(
-    Array.from(document.querySelectorAll('[data-core-maintainer]'), (badge) =>
-      badge.getAttribute('data-core-maintainer'),
-    ),
-  ).toEqual(['debpalash', 'velixio']);
-  expect(credits).toHaveLength(homeContributors.length + 1);
-  expect(Array.from(document.querySelectorAll('.home-contributors-core li img')).length).toBe(2);
-  expect(document.querySelectorAll('.home-contributors-rest li')).toHaveLength(
-    homeContributors.length - 2 + 1,
-  );
-  expect(homeContributors.every((person) => person.commits > 10)).toBe(true);
-  const all = screen.getByRole('link', { name: 'homeUi.allContributors' });
-  expect(all).toHaveAttribute(
-    'href',
-    'https://github.com/debpalash/VoiceStudio/graphs/contributors',
-  );
-  fireEvent.click(all);
-  expect(files.openExternal).toHaveBeenCalledWith(
-    'https://github.com/debpalash/VoiceStudio/graphs/contributors',
-  );
-  for (const { login } of homeContributors) {
-    if (login === 'debpalash' || login === 'velixio') continue;
-    const profile = screen.getByRole('link', { name: `GitHub · @${login}` });
-    expect(profile).toHaveAttribute('href', `https://github.com/${login}`);
-    expect(profile.querySelector('img')?.src).not.toMatch(/^https?:\/\/(avatars|github)/);
-    fireEvent.click(profile);
-    expect(files.openExternal).toHaveBeenCalledWith(`https://github.com/${login}`);
-  }
-});
-
-it('opens both creator profiles from the accessible avatar card', async () => {
-  render(<HomePage />);
-  fireEvent.click(screen.getByRole('button', { name: '@debpalash' }));
-  const github = await screen.findByRole('link', { name: 'GitHub @debpalash' });
-  const x = screen.getByRole('link', { name: 'X @idebpalash' });
-  expect(screen.getByRole('link', { name: 'homeUi.website palash.dev' })).toHaveAttribute(
-    'href',
-    'https://palash.dev',
-  );
-  expect(screen.getByText('homeUi.creatorCoreTeam')).toBeVisible();
-  expect(screen.getByText('homeUi.maintainerPalash')).toBeVisible();
-  expect(screen.getAllByText('homeUi.follow')).toHaveLength(2);
-  expect(github).toHaveAttribute('href', 'https://github.com/debpalash');
-  expect(x).toHaveAttribute('href', 'https://x.com/idebpalash');
-  fireEvent.click(github);
-  expect(files.openExternal).toHaveBeenCalledWith('https://github.com/debpalash');
-  fireEvent.click(x);
-  expect(files.openExternal).toHaveBeenCalledWith('https://x.com/idebpalash');
-});
-
-it('gives velixio the same hover card as the creator', async () => {
-  render(<HomePage />);
-  fireEvent.click(screen.getByRole('button', { name: '@velixio' }));
-  const github = await screen.findByRole('link', { name: 'GitHub @velixio' });
-  expect(github).toHaveAttribute('href', 'https://github.com/velixio');
-  expect(screen.getByText('homeUi.maintainerShimul')).toBeVisible();
-  expect(screen.getByRole('link', { name: 'homeUi.website shimul.me' })).toHaveAttribute(
-    'href',
-    'https://shimul.me',
-  );
-  expect(screen.getByRole('link', { name: 'X @shimuldn' })).toHaveAttribute(
-    'href',
-    'https://x.com/shimuldn',
-  );
+  expect(screen.getByText('Developed by DevTunaSoft')).toBeVisible();
+  const project = screen.getByRole('link', { name: 'Project' });
+  expect(project).toHaveAttribute('href', 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
+  fireEvent.click(project);
+  expect(files.openExternal).toHaveBeenCalledWith('https://github.com/DevTunaSoft/VoiceBlueprint-Pro');
+  const credits = screen.getByRole('link', { name: 'Open-source credits' });
+  expect(credits).toHaveAttribute('href', 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/blob/main/LICENSE-NOTICE.md');
+  expect(screen.queryByRole('button', { name: '@debpalash' })).toBeNull();
+  expect(screen.queryByRole('button', { name: '@velixio' })).toBeNull();
 });
 
 it('separates three primary creation actions and describes all nine destinations', () => {

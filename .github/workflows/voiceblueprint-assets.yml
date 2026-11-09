@@ -1,0 +1,66 @@
+name: VoiceBlueprint Pro brand asset synchronization
+
+# Scoped to the active rebrand branch; this does not publish a release.
+on:
+  push:
+    branches: [engineering/voiceblueprint-rebrand]
+    paths:
+      - .github/workflows/voiceblueprint-assets.yml
+      - docs/logo.svg
+      - electron/build/icons/trayTemplate.svg
+      - electron/build/icons/trayRecordingTemplate.svg
+      - scripts/render_brand_icons.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: voiceblueprint-assets-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    if: github.ref == 'refs/heads/engineering/voiceblueprint-rebrand'
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: true
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: '0.12.13'
+          enable-cache: false
+      - name: Generate ICO, ICNS, PNG and tray icons from canonical SVG
+        run: uv run --no-project scripts/render_brand_icons.py
+      - name: Update translated user-facing brand mentions
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for directory in ('electron/src/shared/i18n/locales', 'electron/src/renderer/src/i18n/locales'):
+              for path in Path(directory).glob('*.json'):
+                  before = path.read_text(encoding='utf-8')
+                  after = before.replace('VoiceStudio', 'VoiceBlueprint Pro').replace('VoiceBlueprint Pro.sh Open Source', 'VoiceBlueprint Pro')
+                  if after != before:
+                      json.loads(after)
+                      path.write_text(after, encoding='utf-8')
+          PY
+      - name: Check regenerated assets and migration contracts
+        run: |
+          uv run --no-project --with pytest --with packaging --with pillow --with pyyaml             pytest -q tests/test_voicestudio_branding.py tests/test_macos_icon_grid.py tests/test_electron_release_assets.py
+      - name: Commit generated assets and localization
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/logo.png docs/logo-256.png electron/src/shared/i18n/locales electron/src/renderer/src/i18n/locales
+          # electron/build is gitignored: stage only approved generated icon assets.
+          git add -f electron/build/icons/icon.png electron/build/icons/icon-macos.png electron/build/icons/icon.ico electron/build/icons/icon.icns
+          git add -f electron/build/icons/32x32.png electron/build/icons/tray-recording.png electron/build/icons/trayTemplate.png electron/build/icons/trayRecordingTemplate.png
+          if git diff --cached --quiet; then
+            echo "Brand assets and localization already synchronized"
+            exit 0
+          fi
+          git commit -m "brand: regenerate desktop icons and localize VoiceBlueprint Pro"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

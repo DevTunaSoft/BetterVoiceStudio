@@ -2,6 +2,17 @@ name: Electron packaging rehearsal
 
 # Explicitly artifact-only: no tag, schedule, release, or publishing permission.
 on:
+  # One-time rebrand acceptance rehearsal. Artifact-only, no publishing.
+  push:
+    branches: [engineering/voiceblueprint-rebrand]
+    paths:
+      - .github/workflows/electron-build.yml
+      - config/app.json
+      - electron/electron-builder.config.mjs
+      - electron/build/icons/**
+      - electron/src/main/updater.ts
+      - scripts/install.ps1
+      - scripts/install.sh
   workflow_dispatch:
 
 permissions:
@@ -142,7 +153,7 @@ jobs:
         working-directory: electron
         run: |
           if [ "$RUNNER_OS" = Linux ]; then
-            for image in release/VoiceStudio-*-linux-x64.AppImage; do
+            for image in release/VoiceBlueprint-Pro-*-linux-x64.AppImage; do
               VOICESTUDIO_PACKAGED_EXE="electron/$image" xvfb-run -a node tests/packaged-smoke.mjs --setup
             done
           else
@@ -167,6 +178,6 @@ jobs:
           retention-days: 14
           if-no-files-found: error
           path: |
-            electron/release/VoiceStudio-*
+            electron/release/VoiceBlueprint-Pro-*
             electron/release/electron-*.yml
             electron/release/store-artifact-manifest-*.json

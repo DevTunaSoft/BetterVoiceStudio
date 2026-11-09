@@ -104,8 +104,8 @@ assert.equal(hashes.sha512, fileSha, 'Update metadata SHA-512 matches artifact b
 const osToken = platform === 'win32' ? 'win' : platform === 'darwin' ? 'mac' : 'linux';
 const artifactBrand =
   process.env.VOICESTUDIO_DISTRIBUTION === 'microsoft-store'
-    ? 'VoiceStudio-MicrosoftStore'
-    : 'VoiceStudio';
+    ? 'VoiceBlueprint-Pro-MicrosoftStore'
+    : 'VoiceBlueprint-Pro';
 assert(
   fileUrl.startsWith(`${artifactBrand}-${expectedVersion}-${osToken}-${arch}.`),
   'Update artifact preserves the branded version/platform/architecture name',
@@ -134,7 +134,7 @@ if (platform === 'win32') {
   const updateRelease = channel.startsWith('electron-beta-') ? `v${version}` : 'latest';
   assert.equal(
     updateInfo,
-    `gh-releases-zsync|debpalash|VoiceStudio|${updateRelease}|VoiceStudio-*-linux-x64.AppImage.zsync`,
+    `gh-releases-zsync|DevTunaSoft|VoiceBlueprint-Pro|${updateRelease}|VoiceBlueprint-Pro-*-linux-x64.AppImage.zsync`,
     'External AppImage updaters follow the channel their image was built for',
   );
   const control = `${artifactPath}.zsync`;
@@ -142,7 +142,7 @@ if (platform === 'win32') {
   const header = readFileSync(control).subarray(0, 4096).toString('utf8');
   assert(
     header.includes(
-      `URL: https://github.com/debpalash/VoiceStudio/releases/download/v${expectedVersion}/${fileUrl}\n`,
+      `URL: https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/download/v${expectedVersion}/${fileUrl}\n`,
     ),
     'zsync downloads the matching release artifact',
   );

@@ -7,7 +7,6 @@ import {
   Activity,
   Copy,
   ExternalLink,
-  Building2,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { openExternal } from '../../api/external';
@@ -87,10 +86,13 @@ export default function AboutTab({
         value={
           <span className="inline-flex items-center gap-[var(--space-2)]" translate="no">
             <VoiceStudioMark className="size-5 text-[var(--chrome-accent)]" />
-            VoiceStudio
+            VoiceBlueprint Pro
           </span>
         }
       />
+      <Row label="Developer" value="DevTunaSoft contributors" />
+      <Row label="Tagline" value="Design. Clone. Create." />
+      <Row label="Project" value="Independent, open-source AI voice production suite" />
       <Row label={t('about.version')} value={resolveAboutVersion(appVersion, info)} mono />
       <Row
         label={t('about.tauri_runtime')}
@@ -151,16 +153,6 @@ export default function AboutTab({
           onClick={() => openExternal(REPO_URL)}
         >
           {t('about.github')}
-        </Button>
-        <Button
-          variant="subtle"
-          size="md"
-          leading={<Building2 size={12} />}
-          onClick={() => {
-            useAppStore.getState().setMode?.('enterprise');
-          }}
-        >
-          {t('about.commercial_license')}
         </Button>
       </div>
       {selfCheck && (

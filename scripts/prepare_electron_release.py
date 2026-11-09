@@ -20,6 +20,9 @@ def validate_sunset(manifest, tag):
         raise ValueError("Missing Tauri platforms")
     for entry in manifest["platforms"].values():
         url = urlparse(entry.get("url", ""))
+        # Legacy Tauri clients were signed and published by the original project.
+        # Repointing their immutable sunset feed to this fork breaks signatures.
+        # Only new Electron feeds use this fork.
         prefix = f"/debpalash/VoiceStudio/releases/download/{tag}/"
         if url.scheme != "https" or url.netloc != "github.com" or not url.path.startswith(prefix):
             raise ValueError("Tauri URLs must point to immutable sunset assets")
@@ -102,7 +105,7 @@ def prepare(assets, tag, sunset_tag=None, repo=None, gh=_gh):
         if actual != expected:
             raise ValueError("Updater payload checksum mismatch")
     for suffix in ("mac-arm64.dmg", "mac-x64.dmg", "linux-x64.deb"):
-        if not (assets / f"VoiceStudio-{version}-{suffix}").is_file():
+        if not (assets / f"VoiceBlueprint-Pro-{version}-{suffix}").is_file():
             raise ValueError(f"Missing installer: {suffix}")
     # Archived Tauri clients read `latest/download`, which never serves a
     # prerelease, so betas carry no sunset feeds.

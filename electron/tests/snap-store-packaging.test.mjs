@@ -4,9 +4,9 @@ import test from 'node:test';
 import config, { distributionPackaging } from '../electron-builder.config.mjs';
 import metadata from '../../store/metadata.json' with { type: 'json' };
 
-test('names direct downloads VoiceStudio-<version>-<os>-<arch> without an Electron label', () => {
-  assert.equal(config.artifactName, 'VoiceStudio-${version}-${os}-${arch}.${ext}');
-  assert.equal(config.linux.artifactName, 'VoiceStudio-${version}-linux-x64.${ext}');
+test('names direct downloads VoiceBlueprint-Pro-<version>-<os>-<arch> without an Electron label', () => {
+  assert.equal(config.artifactName, 'VoiceBlueprint-Pro-${version}-${os}-${arch}.${ext}');
+  assert.equal(config.linux.artifactName, 'VoiceBlueprint-Pro-${version}-linux-x64.${ext}');
 });
 
 test('keeps direct Linux packaging and its updater unchanged', () => {
@@ -16,7 +16,7 @@ test('keeps direct Linux packaging and its updater unchanged', () => {
   assert.equal(packaging.snapcraft, undefined);
   assert.deepEqual(packaging.publish, {
     provider: 'generic',
-    url: 'https://github.com/debpalash/VoiceStudio/releases/latest/download',
+    url: 'https://github.com/DevTunaSoft/VoiceBlueprint-Pro/releases/latest/download',
     channel: `electron-stable-${process.platform}-${process.arch}`,
   });
 });

@@ -104,7 +104,8 @@ const artifactExecutable = resolve(
       : (config.linux.executableName ?? 'voicestudio-electron'),
 );
 const electronPackage = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
-assert.match(electronPackage.author?.email ?? '', /@/, 'Linux package declares a maintainer email');
+assert.match(electronPackage.author?.name ?? '', /DevTunaSoft/, 'Package identifies the independent maintainer');
+assert.doesNotMatch(JSON.stringify(electronPackage.author), /voicestudio\\.sh|palash/i, 'Package must not claim upstream maintainer contacts');
 assert.equal(config.productName, PRODUCT_NAME, 'Builder uses the central product name');
 assert.equal(
   config.appId,
@@ -117,8 +118,8 @@ const storeLabel = {
 }[DISTRIBUTION_TARGET];
 assert.equal(
   config.artifactName,
-  `${PRODUCT_NAME}-${storeLabel ?? ''}\${version}-\${os}-\${arch}.\${ext}`,
-  'Direct downloads are VoiceStudio-<version>-<os>-<arch>; store packages stay labelled',
+  `${PRODUCT_NAME.replace(/[^A-Za-z0-9]+/g, '-')}-${storeLabel ?? ''}\${version}-\${os}-\${arch}.\${ext}`,
+  'Direct downloads are VoiceBlueprint-Pro-<version>-<os>-<arch>; store packages stay labelled',
 );
 assert.equal(
   config.extraMetadata.voicestudioDistribution,
@@ -307,8 +308,8 @@ const platformIcons = {
   linux: 'build/icons/icon.png',
 };
 for (const [platform, icon] of Object.entries(platformIcons)) {
-  assert.equal(config[platform].icon, icon, `${platform} uses the shared VoiceStudio icon`);
-  assert(existsSync(resolve(root, icon)), `${platform} VoiceStudio icon exists`);
+  assert.equal(config[platform].icon, icon, `${platform} uses the shared VoiceBlueprint Pro icon`);
+  assert(existsSync(resolve(root, icon)), `${platform} VoiceBlueprint Pro icon exists`);
 }
 for (const icon of [
   'brand/icon.png',
@@ -342,7 +343,7 @@ if (artifactRequested) {
   if (process.platform === 'linux') {
     await verifyLinuxLibraries(resolve(artifactResources, 'native/voicestudio-desktop-bridge'));
   }
-  assert(existsSync(artifactExecutable), 'Packaged VoiceStudio executable');
+  assert(existsSync(artifactExecutable), 'Packaged VoiceBlueprint Pro executable');
   assert(
     existsSync(
       resolve(

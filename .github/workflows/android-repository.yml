@@ -70,7 +70,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           "$RUNNER_TEMP/fdroid-tools/bin/python" tests/test_android_repository.py
-          gh api repos/debpalash/VoiceStudio/releases/latest > "$RUNNER_TEMP/release.json"
+          # A new fork has no release yet. Do not silently consume the upstream APK.
+          if ! gh api "repos/$GITHUB_REPOSITORY/releases/latest" > "$RUNNER_TEMP/release.json"; then
+            mkdir -p "$RUNNER_TEMP/preview-site"
+            printf 'No VoiceBlueprint Pro APK release exists yet; preview not generated.\n' > "$RUNNER_TEMP/preview-site/STATUS.txt"
+            echo "::notice::No fork release yet; publisher unit tests passed, signed preview deferred."
+            exit 0
+          fi
           export FDROID_KEYSTORE_PASSWORD="$(python -c 'import secrets; print(secrets.token_urlsafe(36))')"
           echo "::add-mask::$FDROID_KEYSTORE_PASSWORD"
           keytool -genkeypair -keystore "$RUNNER_TEMP/preview.p12" -storetype PKCS12 -alias voicestudio -keyalg RSA -keysize 4096 -validity 2 -dname 'CN=Repository Preview' -storepass:env FDROID_KEYSTORE_PASSWORD -keypass:env FDROID_KEYSTORE_PASSWORD

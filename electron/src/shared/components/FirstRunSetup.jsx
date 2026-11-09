@@ -23,6 +23,7 @@ import i18n, { LANGUAGES } from '../i18n';
 import { useAppStore } from '../store';
 import { Badge, Button, Input, Progress, Select } from '../ui';
 import UiScaleControl from './UiScaleControl';
+import VoiceStudioMark from './brand/VoiceStudioMark';
 
 const APP_VERSION = __APP_VERSION__ || '0.0.0';
 const GIB = 1024 * 1024 * 1024;
@@ -470,6 +471,7 @@ export default function FirstRunSetup() {
             data-tauri-drag-region
           >
             <Waveform />
+          <VoiceStudioMark className="size-10 text-[var(--chrome-accent)]" title="VoiceBlueprint Pro" />
             {/* Journey rail: this page is stage 1 of the install flow. */}
             <JourneyRail active="setup" t={t} />
             <div className="mt-2 flex flex-wrap items-end justify-between gap-6">
@@ -479,7 +481,7 @@ export default function FirstRunSetup() {
                     a screenshot from any of them identifies the build. */}
                 <div className="flex flex-wrap items-baseline gap-2.5">
                   <h1 className="m-0 font-serif text-[clamp(1.6rem,3vw,2.2rem)] font-semibold leading-tight tracking-tight">
-                    {t('firstrun.title', 'Set up VoiceStudio')}
+                    {t('firstrun.title', 'Set up VoiceBlueprint Pro')}
                   </h1>
                   <span className="font-mono text-[0.62rem] tracking-[0.14em] text-fg-subtle">
                     v{APP_VERSION}
@@ -882,7 +884,7 @@ export function JourneyRail({ active, t }) {
   return (
     <nav
       className="flex flex-wrap items-center gap-x-5 gap-y-2"
-      aria-label={t('firstrun.title', 'Set up VoiceStudio')}
+      aria-label={t('firstrun.title', 'Set up VoiceBlueprint Pro')}
     >
       {stages.map(([id, label], i) => {
         const isActive = i === activeIdx;

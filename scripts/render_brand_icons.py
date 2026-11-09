@@ -15,7 +15,10 @@ import subprocess
 import sys
 import tempfile
 
-import resvg_py
+try:
+    import resvg_py
+except ImportError:  # offline QA may use CairoSVG; release CI uses pinned resvg
+    resvg_py = None
 from PIL import Image, ImageDraw
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -26,7 +29,11 @@ RECORDING = (0xEF, 0x44, 0x44, 255)
 
 
 def rasterize(svg):
-    png = resvg_py.svg_to_bytes(svg_string=svg.read_text(), width=1024, height=1024)
+    if resvg_py is not None:
+        png = resvg_py.svg_to_bytes(svg_string=svg.read_text(), width=1024, height=1024)
+    else:
+        import cairosvg
+        png = cairosvg.svg2png(url=str(svg), output_width=1024, output_height=1024)
     return Image.open(io.BytesIO(bytes(png))).convert("RGBA")
 
 
@@ -72,6 +79,9 @@ def main():
     mac = macos_master(master)
     scaled(mac, 512).save(ICONS / "icon-macos.png")
     recording(master).save(ICONS / "tray-recording.png")
+    # macOS menu-bar icons use template artwork, not the colored app tile.
+    for name in ("trayTemplate", "trayRecordingTemplate"):
+        scaled(rasterize(ICONS / f"{name}.svg"), 36).save(ICONS / f"{name}.png")
     master.save(ICONS / "icon.ico", sizes=[(size, size) for size in ICO_SIZES])
     if sys.platform == "darwin" and shutil.which("iconutil"):
         with tempfile.TemporaryDirectory() as tmp:

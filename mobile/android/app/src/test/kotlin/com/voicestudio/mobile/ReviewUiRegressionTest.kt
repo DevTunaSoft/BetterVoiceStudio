@@ -47,7 +47,7 @@ class ReviewUiRegressionTest {
         try {
             content {HomeScreen(vm) {destination=it}}
             await {!vm.phone.state.value.loading}
-            compose.onNodeWithText("VoiceStudio").assertExists()
+            compose.onNodeWithText("VoiceBlueprint Pro").assertExists()
             for(route in listOf("speak","voices","dub","dictate","models","connect")) {
                 compose.onNodeWithTag("home.$route").performScrollTo().performClick()
                 assertEquals(if(route=="voices") "clone" else route,destination)

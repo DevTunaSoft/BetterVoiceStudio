@@ -129,16 +129,16 @@ export function WorkspaceSidebar() {
             // The traffic lights own a strip above the brand (one shared constant
             // with the main process); this drag row pads past it, never under it.
             style={trafficLights ? { paddingTop: MAC_TRAFFIC_LIGHTS_BAND } : undefined}
-            className="workspace-titlebar box-content flex h-14 shrink-0 items-center gap-2 px-3"
+            className="workspace-titlebar box-content flex h-14 shrink-0 items-center gap-1 px-2"
           >
             <Link
               to="/"
               aria-label={`${t('app.name')} ${versionLabel}`}
-              className="flex min-w-0 flex-1 items-center gap-2 rounded outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex min-w-0 flex-1 items-center gap-1 rounded outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <img src={brandIcon} alt="" className="size-6 shrink-0" />
+              <img src={brandIcon} alt="" className="size-5 shrink-0" />
               <span className="flex min-w-0 flex-col leading-tight">
-                <span className="truncate text-[15px] font-semibold tracking-tight">
+                <span className="truncate text-[13px] font-semibold tracking-tight">
                   {t('app.name')}
                 </span>
                 <span className="mt-0.5 truncate text-[11px] leading-none text-muted-foreground tabular-nums">
