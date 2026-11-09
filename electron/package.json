@@ -7,7 +7,7 @@
   "license": "AGPL-3.0-only",
   "author": {
     "name": "DevTunaSoft contributors",
-    "email": "noreply@github.com"
+    "email": "349500589+DevTunaSoft@users.noreply.github.com"
   },
   "type": "module",
   "main": "./out/main/index.js",
