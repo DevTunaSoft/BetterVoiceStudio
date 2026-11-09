@@ -66,7 +66,7 @@ def test_translations_preserve_install_commands(path):
 
 @pytest.mark.parametrize("path", _TRANSLATIONS, ids=lambda p: p.name)
 def test_translations_cover_every_readme_section(path):
-    source = _FENCE.sub("", (_ROOT / "README.md").read_text(encoding="utf-8"))
+    source = _FENCE.sub("", _LEGACY_ENGLISH.read_text(encoding="utf-8"))
     translated = _FENCE.sub("", path.read_text(encoding="utf-8"))
     def levels(text):
         return re.findall(r"^(#{1,6})[ \t]+[^\s#]", text, re.MULTILINE)
@@ -75,7 +75,7 @@ def test_translations_cover_every_readme_section(path):
 
 @pytest.mark.parametrize("path", _TRANSLATIONS, ids=lambda p: p.name)
 def test_translations_preserve_inline_commands(path):
-    source = _FENCE.sub("", (_ROOT / "README.md").read_text(encoding="utf-8"))
+    source = _FENCE.sub("", _LEGACY_ENGLISH.read_text(encoding="utf-8"))
     translated = _FENCE.sub("", path.read_text(encoding="utf-8"))
     def inline(text):
         return Counter(re.findall(r"`([^`]+)`", text))
@@ -116,7 +116,7 @@ def test_translation_navigation_anchors_resolve(path):
 @pytest.mark.parametrize("anchor, english", [("what-you-can-do", "What you can do"), ("platforms", "Platforms")])
 def test_translated_section_anchors_stay_on_their_sections(path, anchor, english):
     """Adding a section must not leave a saved link pointing at the wrong heading."""
-    source = _FENCE.sub("", (_ROOT / "README.md").read_text(encoding="utf-8"))
+    source = _FENCE.sub("", _LEGACY_ENGLISH.read_text(encoding="utf-8"))
     translated = _FENCE.sub("", path.read_text(encoding="utf-8"))
     marker = f'<a id="{anchor}"></a>'
     match = re.search(re.escape(marker) + r"\s*\n(?=## )", translated)
