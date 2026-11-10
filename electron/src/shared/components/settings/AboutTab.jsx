@@ -87,10 +87,12 @@ export default function AboutTab({
         value={
           <span className="inline-flex items-center gap-[var(--space-2)]" translate="no">
             <VoiceStudioMark className="size-5 text-[var(--chrome-accent)]" />
-            VoiceStudio
+            VoiceBlueprint-Pro
           </span>
         }
       />
+      <Row label="Developer" value="DevTunaSoft" />
+      <Row label="Tagline" value="Design. Clone. Create." />
       <Row label={t('about.version')} value={resolveAboutVersion(appVersion, info)} mono />
       <Row
         label={t('about.tauri_runtime')}
